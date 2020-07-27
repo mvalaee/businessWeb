@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+function setCookie() {
+  var d = new Date();
+  var nowTime = d.getTime();
+  document.cookie = "sessionID=" + nowTime + ";" + "type=" +'temporary' +";" +
+  " path=/";
+}
+
+</script>
+</head>
+
+<body onload="setCookie()">
+<!-- <body> -->
+  <div id="info">
+    <h2 class="centre">${message}</h2>
+
+    <p class="centre"> Please enter your Username and Password to login. </p>
+
+
+    <form action="/login_page.html">
+      <label for="username">Username:</label><br>
+      <input class="textInput" type="text" id="username" name="username" placeholder="username" required><br>
+      <br>
+      <label for="password">Password:</label><br>
+      <input class="textInput" type="password" id="password" name="password" placeholder="password" required><br><br>
+      <input id="loginButton" type="submit" value="Submit">
+    </form> 
+
+
+    <br>
+    <h3 class="centre"> Don't have an account? Create one <a href="register.html">here</a></h3>
+    </form> 
+  </div>
+
+
+</body>
+<!-- <style type="text/css">
+  body {
+    background-image: url(http://wallpapercrafter.com/uploads/posts/100625-typewriter_book_notebook_paper_writing_write.jpg);
+    background-repeat: no-repeat;
+    background-size: 1400px 800px;
+    font-family: "Footlight MT Light", serif;
+  }
+
+  #info {
+    background-color: white;
+    padding: 40px 0px 10px 10px;
+    margin: 200px 450px 0px 490px;
+    height: 390px;
+    width: 380px;
+  }
+
+  #loginButton{
+    background-color: #1fa9db;
+    width: 80px;
+    height: 40px;
+    margin-left: 150px;
+  }
+
+  label {
+    font-size: 20px;
+  }
+
+  .textInput {
+    font-size: 20px;
+    font-family: "Footlight MT Light", serif;
+    width: 93%
+  }
+
+  .centre{
+    text-align: center;
+  }
+</style> -->
+</html>

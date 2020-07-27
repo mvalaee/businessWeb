@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+    </head>
+    <body>
+        <div class="container">
+            <ul>
+             <li><a href="home_page.html">Home</a></li>
+             <li><a href="create_post.html">Create a Post</a></li>
+             <li  class="active" ><a href="posts_page.html" class="dropbtn">Posts</a></li>
+             <li><a href="logOut_page.html">Log Out</a></li>
+            </ul>
+         </div>
+
+        <script>
+            document.write("<table>");
+            for(var a = 0; a < 10; a++){
+                document.write("<tr>");
+                for(var b = 0; b < 10; b++) {
+                    document.write("<td>" + (a*b) + "</td>");
+            }
+            document.write("</tr>");
+            }
+            document.write("</table>");
+        </script>
+        <style>
+            ul {
+                list-style-type: none;
+                margin-left: -10px;
+                padding: 0px;
+                overflow: hidden;
+                background-color: #212121;
+                display: inline-block;
+                font-size: 20px;
+                width: 1370px;
+            }
+            
+            li {
+                float: left;
+                margin-left: 90px;
+            }
+            
+            li a {
+                display: inline-block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+            
+            li a:hover {
+                background-color: #0088A8;
+            }
+            
+            .active {
+                        background: #0088A8;
+            }
+            
+            .container {
+                        margin-top: -30px;
+                        display: inline-block;
+                        position: relative;
+            }
+            
+            .container a:hover {
+                        text-decoration: underline;
+            }
+        </style>
+    </body>
+</html>
