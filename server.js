@@ -17,12 +17,9 @@ app.use(cookieParser());
  
 
 const MongoClient = require('mongodb').MongoClient;
-const ACCOUNT_DB_URL = "mongodb://localhost:27017";
-const ACCOUNT_DB_NAME = 'ACCOUNTDB';
+const DB_URL = "mongodb://localhost:27017";
+const DB_NAME = 'ACCOUNTDB';
 const ACCOUNT_COLLECTION = 'usernames';
-
-const POST_DB_URL = "mongodb://localhost:27018";
-const POST_DB_NAME = 'POSTDB';
 const POST_COLLECTION = 'titles';
 
 const COOKIE_EXPIRY_TIME = 60 * 60 *1000;
@@ -82,14 +79,12 @@ app.route('/registering_page.html').get(function(req,res){
     var firstName = q.query.firstname;
     var lastName  = q.query.lastname;
     var userName  = q.query.username;
-	var passWord  = q.query.password;
-
-	var blockSchedule = [['','','','',''], ['','','','',''], ['','','','',''], ['','','','','']];
-
-
+    var passWord  = q.query.password;
+    var accountType = q.query.accountType;
+    
 	var myQuery = {username: userName};
 
-	fetchUserFromDB ( myQuery, ACCOUNT_DB_URL, ACCOUNT_DB_NAME, ACCOUNT_COLLECTION, (result) => {
+	fetchUserFromDB ( myQuery, ACCOUNT_COLLECTION, (result) => {
 	 	if (result) { // user name already exists
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			// var message = "That username is already in use. Please choose another one";
@@ -104,10 +99,11 @@ app.route('/registering_page.html').get(function(req,res){
 						firstname: firstName, 
 						lastname: lastName, 
 						username: userName, 
-						password: passWord
+                        password: passWord,
+                        accountType: accountType
 					};
 
-			write2DB (myObj, ACCOUNT_DB_URL, ACCOUNT_DB_NAME, ACCOUNT_COLLECTION);
+			write2DB (myObj, ACCOUNT_COLLECTION);
 
 			var message = "You have successfully registered to deskPlan";
 			createPage('loginPage_template.html', 'loginPage.html', message, () => {
@@ -147,24 +143,35 @@ app.route('/creatingPost_page.html').get(function(req,res){
 
     var title = q.query.title;
     var location  = q.query.location;
+    var age = q.query.age;
+    var contactInfo = q.query.contactInfo;
+    var webLink = q.query.webLink;
     var supervisor  = q.query.supervisor;
     var description  = q.query.description;
+    // var keyWords = q.query.keyWords;
 
     var myObj = { 
         title: title,
+        // user: cookie,
         location: location,
         supervisor: supervisor,
-        description: description
+        description: description,
+        date: getDate()
     };
 
-    write2DB (myObj, POST_DB_URL, POST_DB_NAME, POST_COLLECTION);
+    write2DB (myObj, POST_COLLECTION);
 
-    var message = "You have successfully registered to deskPlan";
+
+
+    //  showFullDB(POST_DB_URL, POST_DB_NAME, POST_COLLECTION);
+
+    // var message = "You have successfully registered to deskPlan";
 
     findCookie(cookie, res, (row) => {
 		if (row) {
             extendExpiry(cookie);
-            res.send("Post has been created...");
+            displayPosts(POST_COLLECTION, res);
+            // res.send("Post has been created...");
 			// createProfilePage('profile_template.html', 'profile_page.html', row, () =>{
 			// 	res.sendFile(__dir + '/profile_page.html');
 			// })
@@ -187,14 +194,30 @@ app.route('/posts_page.html').get((req,res) => {
     findCookie(cookie, res, (row) => {
 		if (row) {
             extendExpiry(cookie);
-            res.sendFile(__dir+'/postPage.html');
-			// createProfilePage('profile_template.html', 'profile_page.html', row, () =>{
-			// 	res.sendFile(__dir + '/profile_page.html');
+            // var x = displayPosts(POST_COLLECTION);
+           displayPosts(POST_COLLECTION, res);
+
+            // res.send("Posts");
+            // res.sendFile(__dir+'/postPage.html');
+			// createPage('postPage_template.html', 'postPage.html', displayPosts(POST_COLLECTION), () =>{
+			// 	res.sendFile(__dir + '/postPage.html');
 			// })
 		} else {
 			console.log("Inprofile page: cookie was expired")
 			sendReloginPage(res);
 		}
+    });
+
+    
+//    console.log(displayPosts(POST_COLLECTION));
+
+    // displayPosts(POST_COLLECTION);
+});
+
+app.route('/logOut_page.html').get(function(req, res){
+	var message = "You have succesfully logged out";
+	createPage('loginPage_template.html', 'loginPage.html', message, () => {
+		res.sendFile(__dir+'/loginPage.html');
 	});
 });
 
@@ -203,12 +226,11 @@ app.route('/posts_page.html').get((req,res) => {
 ////////////////////////////////////////
 
 function checkPassword(q, callback) {
-
 	var userName = q.query.username;
 	var passWord = q.query.password;
 	var myQuery = { username: userName, password: passWord}; //, password: passWord };
 	var myObject;
-	fetchUserFromDB(myQuery, ACCOUNT_DB_URL, ACCOUNT_DB_NAME, ACCOUNT_COLLECTION, (result) => {
+	fetchUserFromDB(myQuery, ACCOUNT_COLLECTION, (result) => {
 		console.log(result);
 		if(result) {
 			console.log("user found.");
@@ -218,37 +240,35 @@ function checkPassword(q, callback) {
 			callback(null);
 		}
 	})
-	
 }
 
 
-function write2DB (myobj, url, db, collection){
-	MongoClient.connect(url, 
+function write2DB (myobj, collection){
+	MongoClient.connect(DB_URL, 
 		{ useUnifiedTopology: true }, 
 		(err, client) => {
 		 if (err) return console.log(err);
 
 		 // Storing a reference to the database so you can use it later
-		 var dbc = client.db(db).collection(collection);		  
+		 var dbc = client.db(DB_NAME).collection(collection);		  
 		 dbc.insertOne(myobj, function(err, res) {
 		  if (err) throw err;
 		  console.log("Inserted document =", myobj);
 		 })
 
-		 dbc.find({}).toArray(function(err, result) {
-			 if (err) throw err;
-			 console.log(result);
-			});
+		//  dbc.find({}).toArray(function(err, result) {
+		// 	 if (err) throw err;
+		// 	 console.log(result);
+		// 	});
 
 	})
 }
 
-
-function updateDB (myQuery, myobj, callback, url, db, collection) {
-	MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+function updateDB (myQuery, myobj, callback, collection) {
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 	 if (err) return console.log(err);
 
-	 var dbc = client.db(db).collection(collection);		  
+	 var dbc = client.db(DB_NAME).collection(collection);		  
 	 dbc.updateOne(myQuery, myobj, function(err, res) {
 	  if (err) throw err;
 	  console.log("Updated document =", myobj);
@@ -257,12 +277,11 @@ function updateDB (myQuery, myobj, callback, url, db, collection) {
   	});
 }
 
-
-function showFullDB (url, db, collection){
-	MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+function showFullDB (collection){
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if (err) return console.log(err);
 
-		var dbc = client.db(db).collection(collection);		  
+		var dbc = client.db(DB_NAME).collection(collection);		  
 		dbc.find({}).toArray(function(err, result) {
 			if (err) throw err;
 			console.log(result);
@@ -271,11 +290,11 @@ function showFullDB (url, db, collection){
 }
 
 
-function fetchUserFromDB (myQuery, url, db, collection, callback,) {
-	MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+function fetchUserFromDB (myQuery, collection, callback) {
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if (err) return console.log(err);
 
-		var dbc = client.db(db).collection(collection);	
+		var dbc = client.db(DB_NAME).collection(collection);	
 		dbc.findOne(myQuery).then(result => {
 			if (result) {
 				callback(result);	
@@ -284,6 +303,64 @@ function fetchUserFromDB (myQuery, url, db, collection, callback,) {
 			}
 		})
 	})	
+}
+
+function displayPosts (collection, res) {
+    MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+         if (err) return console.log(err);
+         var str = "";
+
+		 // Storing a reference to the database so you can use it later
+         
+         var dbc = client.db(DB_NAME).collection(collection);		  
+		 dbc.find({}).toArray(function(err, result) {
+             if (err) throw err;
+             str += "<table>";
+             
+             for (var i = 0; i < result.length; i++) {
+                 str += "<tr>";
+                 for(var j = 0; j < 5; j++) {
+                    str += "<td>";
+                     if(j === 0){
+                        str += ("Title: " + result[i].title);
+                    } else if(j === 1){
+                        str += ("Location: " + result[i].location);
+                    } else if(j === 2){
+                        str += ("Supervisor: " + result[i].supervisor);
+                    } else if(j === 3){
+                        str += ("Description: " + result[i].description);
+                    } else {
+                        str += ("Date: " + result[i].date);
+                    }
+                    str += "</td>";
+                }
+                str += "</tr>";
+            }
+            str += "</table>";
+            createPage('postPage_template.html', 'postPage.html', str, () =>{
+                	res.sendFile(__dir + '/postPage.html');
+                });
+            });
+	})
+}
+
+function getDate() {
+    var now = new Date();
+    var year = now.getFullYear() + " ";
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var numMonth = now.getMonth();
+    var month = months[numMonth] + " ";
+    var date = now.getDate() + " ";
+    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var numDay = now.getDay();
+    var day = days[numDay] + " ";
+    var hour = now.getHours() + ":";
+    var min = now.getMinutes() + " ";
+    if(min < 10){
+        min = "0" + min;
+    }
+    var d = "" + day + month + date + year + hour + min;
+    return d;
 }
 
 
@@ -394,7 +471,7 @@ function cookieToDB(cookie, callback) {
 		if (cookie.toString() === row[0]) { // cookie found
 			var userName = row[5];
 			var myQuery = {username: userName};
-			fetchUserFromDB(myQuery, ACCOUNT_DB_URL, ACCOUNT_DB_NAME, ACCOUNT_COLLECTION, (result) => {
+			fetchUserFromDB(myQuery, ACCOUNT_COLLECTION, (result) => {
 				if(result) {
 					callback(result);
 				} else {
