@@ -64,7 +64,7 @@ app.route('/login_page.html').get(function(req,res){
 				res.sendFile(__dir+'/loginPage.html');
 			});
 		}
-	});	
+    });	
 });	
 
 
@@ -80,7 +80,9 @@ app.route('/registering_page.html').get(function(req,res){
     var lastName  = q.query.lastname;
     var userName  = q.query.username;
     var passWord  = q.query.password;
-    var accountType = q.query.accountType;
+    var eMail = q.query.email;
+    var school = q.query.school;
+    var aCCountType = q.query.accountType;
     
 	var myQuery = {username: userName};
 
@@ -100,7 +102,9 @@ app.route('/registering_page.html').get(function(req,res){
 						lastname: lastName, 
 						username: userName, 
                         password: passWord,
-                        accountType: accountType
+                        email: eMail,
+                        school: school,
+                        accountType: aCCountType
 					};
 
 			write2DB (myObj, ACCOUNT_COLLECTION);
@@ -130,7 +134,8 @@ app.route('/home_page.html').get((req, res) => {
 		} else { // cookie invalid
 			sendReloginPage(res);
 		}
-	})
+    })
+    console.log(cookieTable);
 });
 
 app.route('/create_post.html').get((req,res) => {
@@ -214,6 +219,121 @@ app.route('/posts_page.html').get((req,res) => {
     // displayPosts(POST_COLLECTION);
 });
 
+app.route('/profile_page.html').get(function(req, res){
+	var cookie = req.cookies.sessionID;
+
+	findCookie(cookie, res, (row) => {
+		if (row) {
+			extendExpiry(cookie);
+			createProfilePage('profilePage_template.html', 'profilePage.html', row, () =>{
+				res.sendFile(__dir + '/profilePage.html');
+			})
+		} else {
+			console.log("Inprofile page: cookie was expired")
+			sendReloginPage(res);
+		}
+	});
+});
+
+app.route('/profile_update.html').get(function(req, res){
+
+	var q = url.parse(req.url, true);
+    var newFirstName = q.query.firstname;
+    var newLastName  = q.query.lastname;
+    var newUserName  = q.query.username;
+    var newPassWord  = q.query.password;
+    var newEmail = q.query.email;
+    var newSchool = q.query.school;
+    var newAccountType = q.query.accountType;
+	var myNewObj = { $set: {    firstname: newFirstName,
+								lastname: newLastName,
+								username: newUserName,
+                                password: newPassWord,
+                                email: newEmail,
+                                school: newSchool,
+                                accountType: newAccountType }
+							};
+
+	var cookie = req.cookies.sessionID; 
+
+	findCookie(cookie, res, (row) => {
+		if (row) {
+			extendExpiry(cookie);
+			cookieToDB(cookie, (result) => {
+				if (result) { //user found
+					var oldUserName  = result.username;
+					var myQuery = {username: oldUserName};
+					updateDB(myQuery, myNewObj, ACCOUNT_COLLECTION, () => {});
+				} else { // user not found
+					var message = "No such user! You may register a new account.";
+					createPage('loginPage_template.html', 'loginPage.html', message, () => {
+						res.sendFile(__dir+'/loginPage.html');
+					});
+				}
+			})
+
+			var d = new Date();
+			var expiryTime = d.getTime()+ COOKIE_EXPIRY_TIME;
+			var expireGMT  = d.toGMTString();
+			var row = [	cookie,
+						expiryTime,
+						expireGMT,
+						newFirstName,
+						newLastName,
+						newUserName,
+                        newPassWord,
+                        newEmail,
+                        newSchool,
+                        newAccountType ];
+
+			updateCookie(row, (newRow) => {
+				createProfilePage('profilePage_template.html', 'profilePage.html', row, () =>{
+					res.sendFile(__dir + '/profilePage.html');		
+				});
+			});	
+
+		} else {
+			sendReloginPage(res);
+		}
+	});
+
+	// console.log(" req.url =")
+	// console.log(q.query.filetoupload)
+
+	// var fileToUpload = q.query.filetoupload;
+	// console.log("filetoupload = ")
+	// console.log(fileToUpload)
+});
+
+
+app.route('/upload').post(function(req, res){
+
+	var q = url.parse(req.url, true);
+	var userName = q.query.username;
+
+	var cookie = req.cookies.sessionID;
+
+	findCookie(cookie, res, (row) => {
+		var userName = row[5];
+
+		var form = new formidable.IncomingForm();
+	   form.parse(req, function (err, fields, files) {
+	     var oldpath = files.photo.path;
+	     var newpath = __dir + "/images/" + userName;
+
+	     fs.rename(oldpath, newpath, function (err) {
+	       if (err) throw err;
+	       extendExpiry(cookie);
+			createProfilePage('profilePage_template.html', 'profilePage.html', row, () =>{
+				res.sendFile(__dir + '/profilePage.html');
+			})
+	     });
+
+	 	});
+	});
+	
+});
+
 app.route('/logOut_page.html').get(function(req, res){
 	var message = "You have succesfully logged out";
 	createPage('loginPage_template.html', 'loginPage.html', message, () => {
@@ -264,7 +384,7 @@ function write2DB (myobj, collection){
 	})
 }
 
-function updateDB (myQuery, myobj, callback, collection) {
+function updateDB (myQuery, myobj, collection, callback) {
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 	 if (err) return console.log(err);
 
@@ -391,7 +511,9 @@ function createPage(inputFile, outputFile, message, callback){
 
 function createProfilePage(inputFile, outputFile, myObj, callback){
 	var data = fs.readFile(inputFile, function(err, data) {
-    	
+        
+        console.log(myObj);
+
     	var str = data.toString();
     	var imagePath = __dir + "/images/" + myObj[5];
     	var imageFileName;
@@ -408,9 +530,13 @@ function createProfilePage(inputFile, outputFile, myObj, callback){
 	   var str1 = str0.replace('${firstname}', myObj[3]);
 	   var str2 = str1.replace('${lastname}' , myObj[4]);
 	   var str3 = str2.replace('${username}' , myObj[5]);
-	   var str4 = str3.replace('${password}' , myObj[6]);
+       var str4 = str3.replace('${password}' , myObj[6]);
+       var str5 = str4.replace('${email}', myObj[7]);
+       var str6 = str5.replace('${school}', myObj[8]);
+    //    var str6 = str5.replace('${accountType}', myObj[8]);
+       var str7 = str6.replace('${accountType}', myObj[9]);
     	
-    	fs.writeFile(outputFile, str4,  function (err) {
+    	fs.writeFile(outputFile, str7,  function (err) {
 		 	if (err) throw err;
 			callback();
 		});
@@ -441,7 +567,10 @@ function addToCookieTable (myobj, cookieValue){
 					myobj.firstname, 
 					myobj.lastname, 
 					myobj.username, 
-					myobj.password ];
+                    myobj.password,
+                    myobj.email,
+                    myobj.school,
+                    myobj.accountType ];
 	
 	cookieTable.push(cookieLine);
 
@@ -496,7 +625,9 @@ function updateCookie(row, callback) {
 			cookieTable[i][3] = row[3];
 			cookieTable[i][4] = row[4];
 			cookieTable[i][5] = row[5];
-			cookieTable[i][6] = row[6];
+            cookieTable[i][6] = row[6];
+            cookieTable[i][7] = row[7];
+            cookieTable[i][8] = row[8];
 			var newRow = cookieTable[i];
 		}
 	}

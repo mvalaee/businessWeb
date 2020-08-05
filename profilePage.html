@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Profile</title>
+</head>
+
+<body>
+
+<div class="container">
+  <ul>
+    <li><a href="home_page.html">Home</a></li>
+    <li><a href="create_post.html">Create a Post</a></li>
+    <li><a href="posts_page.html" class="dropbtn">Posts</a></li>
+    <li class="active"><a href="profile_page.html" class="dropbtn">Profile</a></li>
+    <li><a href="logOut_page.html">Log Out</a></li>
+  </ul>
+</div>
+
+
+<div id="content">
+  <div id="picture">
+ <img style="width: 400px; height: 400px" src="http://localhost:8000/cdevil" alt="default photo"> <br><br>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" accept="image/*" name="photo" >
+        <input type="submit" value="upload" name="thisname"> 
+      </form>  
+</div>
+
+<div id="profileInfo">
+  <form action="/profile_update.html">
+              
+              <label>First name:</label>
+              <input type="text" name="firstname" value="Carlos">
+              <label>Last name:</label>
+              <input type="text" name="lastname" value="De Vil">
+              <label>Username:</label>
+              <input type="text" name="username" value="cdevil">
+              <label>Password:</label>
+              <input type="text" name="password" value="dude">
+              <label>Email:</label>
+              <input type="text" name="email" value="cdevil@auradonprep.com">
+              <label>School/Place of Work:</label>
+              <input type="text" name="school" value="Auradon Prep">
+              <!-- <label>Bio:</label>
+              <input type="text" name="bio" style="width: 180px; height: 100px" value="${bio}"> -->
+              <!-- <textarea name="bio" rows="4" cols="50" id="bio" value="${bio}">Tell us a bit about yourself...</textarea> -->
+              <label>Account Type: </label>
+              <input type="text" name="accountType" value="student" readonly="readonly">
+
+              <!-- <label name="accountType" value="${accountType}">Account Type: ${accountType}</label> -->
+              <!-- <select id="accountType" name="accountType" value="${accountType}">
+                <option value="student">Student</option>
+                <option value="employer">Employer</option>
+            </select> -->
+              <input id="updateButton" type="submit" value="Update">
+  </form>
+</div>
+</div>
+
+</body>
+              
+
+
+<style type="text/css">
+    /*Nav Bar*/
+    ul {
+        list-style-type: none;
+        margin-left: -10px;
+        padding: 0px;
+        overflow: hidden;
+        background-color: #212121;
+        display: inline-block;
+        font-size: 20px;
+        width: 1370px;
+    }
+    
+    li {
+        float: left;
+        margin-left: 90px;
+    }
+    
+    li a {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    
+    li a:hover {
+        background-color: #0088A8;
+    }
+    
+    .active {
+                background: #0088A8;
+    }
+    
+    .container {
+                margin-top: -30px;
+                display: inline-block;
+                position: relative;
+    }
+    
+    .container a:hover {
+                text-decoration: underline;
+    }
+</style>
+</html>
