@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home</title>
+        <title>Posts</title>
     </head>
     <body>
         <div class="container">
             <ul>
              <li><a href="home_page.html">Home</a></li>
              <li><a href="create_post.html">Create a Post</a></li>
-             <li><a href="posts_page.html" class="dropbtn">Posts</a></li>
+             <li class="active"><a href="posts_page.html" class="dropbtn">Posts</a></li>
              <li><a href="profile_page.html" class="dropbtn">Profile</a></li>
              <li><a href="logOut_page.html">Log Out</a></li>
+             <li><form action="/userSearch.html">
+                <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+                <input id="submitButton" type="submit" value="Submit">
+            </form></li>
             </ul>
          </div>
 
-        <p><table></table></p>
+         <form action="/search.html">
+            <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+            <input id="submitButton" type="submit" value="Submit">
+        </form>
+        <form action="/posts_page.html">
+            <button id="seeAllButton" value="SeeAll">See all posts</button>
+        </form>
+
+        <p><table><tr><td>Name: undefined</td><td>Username: undefined</td><td>Title: volunteer</td><td>Location: north york</td><td>Minimum Age: undefined</td><td>Supervisor: dr doof</td><td>Contact Information: undefined</td><td>Opportunity Type: undefined</td><td>Description: doctor thing</td><td>Date: Tue Aug 11 2020 19:29 </td></tr><tr><td>Name: undefined</td><td>Username: undefined</td><td>Title: Comparative ISP Essay</td><td>Location: toronto</td><td>Minimum Age: undefined</td><td>Supervisor: Carlos</td><td>Contact Information: undefined</td><td>Opportunity Type: undefined</td><td>Description: ma cherie</td><td>Date: Wed Aug 12 2020 13:26 </td></tr><tr><td>Name: undefined</td><td>Username: undefined</td><td>Title: side B</td><td>Location: la</td><td>Minimum Age: undefined</td><td>Supervisor: EMERSON</td><td>Contact Information: undefined</td><td>Opportunity Type: undefined</td><td>Description: dying in a hot tub</td><td>Date: Wed Aug 12 2020 13:30 </td></tr><tr><td>Name: Carlos De Vil</td><td>Username: cdevil</td><td>Title: New opp</td><td>Location: canada</td><td>Minimum Age: 16</td><td>Supervisor: EMERSON</td><td>Contact Information: email: skjd@kfj.com</td><td>Opportunity Type: Volunteer</td><td>Description: corn farmer</td><td>Date: Wed Aug 12 2020 15:45 </td></tr></table></p>
 
         <style>
             ul {

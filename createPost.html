@@ -11,6 +11,10 @@
              <li><a href="posts_page.html" class="dropbtn">Posts</a></li>
              <li><a href="profile_page.html" class="dropbtn">Profile</a></li>
              <li><a href="logOut_page.html">Log Out</a></li>
+             <li><form action="/userSearch.html">
+                <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+                <input id="submitButton" type="submit" value="Submit">
+            </form></li>
             </ul>
          </div>
 
@@ -24,8 +28,15 @@
             <label for="description">Description:</label><br>
             <input class="textInput" type="text" id="description" name="description" placeholder="description" required><br>
             <br>
-            <label for="age">Age Restrictions:</label><br>
-            <input class="textInput" type="text" id="age" name="age" placeholder="age" required><br>
+            <label for="age">Minimum Age:</label><br>
+            <select id="age" name="age" required>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+            </select><br>
             <br>
             <label for="supervisor">Supervisor:</label><br>
             <input class="textInput" type="text" id="supervisor" name="supervisor" placeholder="supervisor" required><br>
@@ -33,12 +44,15 @@
             <label for="contactInfo">Contact Info:</label><br>
             <input class="textInput" type="text" id="contactInfo" name="contactInfo" placeholder="contact info" required><br>
             <br>
-            <label for="webLink">Website Link:</label><br>
-            <input class="textInput" type="text" id="webLink" name="webLink" placeholder="webLink"><br>
+            <label for="oppType">Opportunity Type:</label><br>
+            <select id="oppType" name="oppType" required>
+                <option value="Volunteer">Volunteer</option>
+                <option value="Paid">Paid</option>
+            </select><br>
             <br>
-            <!-- <label for="keyWords">Key Words:</label><br>
+            <label for="keyWords">Key Words (seperate with commas):</label><br>
             <input class="textInput" type="text" id="keyWords" name="keyWords" placeholder="key words, seperate each word with a space" required><br>
-            <br> -->
+            <br>
             <input id="submitButton" type="submit" value="Submit">
           </form>
 

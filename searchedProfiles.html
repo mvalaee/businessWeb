@@ -6,9 +6,9 @@
     <body>
         <div class="container">
             <ul>
-             <li  class="active" ><a href="home_page.html">Home</a></li>
+             <li><a href="home_page.html">Home</a></li>
              <li><a href="create_post.html">Create a Post</a></li>
-             <li><a href="posts_page.html" class="dropbtn">Posts</a></li>
+             <li class="active"><a href="posts_page.html" class="dropbtn">Posts</a></li>
              <li><a href="profile_page.html" class="dropbtn">Profile</a></li>
              <li><a href="logOut_page.html">Log Out</a></li>
              <li><form action="/userSearch.html">
@@ -18,7 +18,15 @@
             </ul>
          </div>
 
-        <p>Welcome to the Home Page${message}</p>
+         <form action="/search.html">
+            <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+            <input id="submitButton" type="submit" value="Submit">
+        </form>
+        <form action="/posts_page.html">
+            <button id="seeAllButton" value="SeeAll">See all posts</button>
+        </form>
+
+        <p><table><tr><td>Name: Carlos De Vil</td><td>Username: cdevil</td><td><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='cdevil'><input type='submit' value='Submit'></form></td></tr></table></p>
 
         <style>
             ul {

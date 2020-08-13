@@ -41,19 +41,25 @@ app.get('/', function(req,res){
 	});
 });
 
-
 app.route('/login_page.html').get(function(req,res){
     var q = url.parse(req.url, true); 	
 	var cookie = req.cookies.sessionID; 
-	var userName = q.query.username;	
+	var userName = q.query.username;
+	
+	console.log(cookie);
+	console.log(cookieTable);
 
 	checkPassword(q, function(result) {
 		if (result) { // user found
 			addToCookieTable (result, cookie);
+			console.log(cookieTable);
 			var message = ' ' + result.firstname + ' ' + result.lastname;
 		   createPage('homePage_template.html', 'homePage.html', message, () => {
 			   fs.readFile('homePage.html', function(err, data) {
 					if (err) throw err;
+					var d = new Date();
+					var nowTime = d.getTime();
+					var cookie = nowTime;
 					sendPacketWithCookie (res, cookie, data);
 				});
 		   });
@@ -64,17 +70,14 @@ app.route('/login_page.html').get(function(req,res){
 				res.sendFile(__dir+'/loginPage.html');
 			});
 		}
-    });	
+	});	
 });	
-
 
 app.route('/register.html').get((req,res) => {
 	res.sendFile(__dir+'/registeringPage.html');
 });
 
-
 app.route('/registering_page.html').get(function(req,res){
-
     var q = url.parse(req.url, true);
     var firstName = q.query.firstname;
     var lastName  = q.query.lastname;
@@ -82,7 +85,8 @@ app.route('/registering_page.html').get(function(req,res){
     var passWord  = q.query.password;
     var eMail = q.query.email;
     var school = q.query.school;
-    var aCCountType = q.query.accountType;
+	var aCCountType = q.query.accountType;
+	var iMgName = q.query.username;
     
 	var myQuery = {username: userName};
 
@@ -104,7 +108,8 @@ app.route('/registering_page.html').get(function(req,res){
                         password: passWord,
                         email: eMail,
                         school: school,
-                        accountType: aCCountType
+						accountType: aCCountType,
+						imgName: iMgName
 					};
 
 			write2DB (myObj, ACCOUNT_COLLECTION);
@@ -116,8 +121,6 @@ app.route('/registering_page.html').get(function(req,res){
 	 	}
 	})
 });
-
-
 
 app.route('/home_page.html').get((req, res) => {
     var q = url.parse(req.url, true); 	
@@ -144,53 +147,54 @@ app.route('/create_post.html').get((req,res) => {
 
 app.route('/creatingPost_page.html').get(function(req,res){
     var q = url.parse(req.url, true);
-    var cookie = req.cookies.sessionID;
-
-    var title = q.query.title;
-    var location  = q.query.location;
-    var age = q.query.age;
-    var contactInfo = q.query.contactInfo;
-    var webLink = q.query.webLink;
-    var supervisor  = q.query.supervisor;
-    var description  = q.query.description;
-    // var keyWords = q.query.keyWords;
-
-    var myObj = { 
-        title: title,
-        // user: cookie,
-        location: location,
-        supervisor: supervisor,
-        description: description,
-        date: getDate()
-    };
-
-    write2DB (myObj, POST_COLLECTION);
-
-
-
-    //  showFullDB(POST_DB_URL, POST_DB_NAME, POST_COLLECTION);
-
-    // var message = "You have successfully registered to deskPlan";
-
-    findCookie(cookie, res, (row) => {
+	var cookie = req.cookies.sessionID;
+	
+	findCookie(cookie, res, (row) => {
 		if (row) {
-            extendExpiry(cookie);
-            displayPosts(POST_COLLECTION, res);
-            // res.send("Post has been created...");
-			// createProfilePage('profile_template.html', 'profile_page.html', row, () =>{
-			// 	res.sendFile(__dir + '/profile_page.html');
-			// })
+			extendExpiry(cookie);
+			cookieToDB(cookie, (result) => {
+				if (result) { //user found
+					var name = result.firstname + " " + result.lastname;
+					var username = result.username;
+					var title = q.query.title;
+					var location  = q.query.location;
+					var age = q.query.age;
+					var contactInfo = q.query.contactInfo;
+					var oppType = q.query.oppType;
+					var supervisor  = q.query.supervisor;
+					var description  = q.query.description;
+					var keyWordsQuery = q.query.keyWords;
+					var keyWordsArr = keyWordsQuery.split(", ");
+
+					var myObj = { 
+						name: name,
+						username: username,
+						title: title,
+						location: location,
+						age: age,
+						supervisor: supervisor,
+						contactInfo: contactInfo,
+						oppType: oppType,
+						description: description,
+						date: getDate(),
+						keyWords: keyWordsArr
+					};
+
+					write2DB (myObj, POST_COLLECTION);
+
+					displayPosts(POST_COLLECTION, res);
+				} else { // user not found
+					var message = "No such user! You may register a new account.";
+					createPage('loginPage_template.html', 'loginPage.html', message, () => {
+						res.sendFile(__dir+'/loginPage.html');
+					});
+				}
+			})
 		} else {
 			console.log("Inprofile page: cookie was expired")
 			sendReloginPage(res);
 		}
 	});
-
-    
-    // res.send("Post has been created...")
-    // createPage('loginPage_template.html', 'loginPage.html', message, () => {
-    //     res.sendFile(__dir+'/loginPage.html');
-    // });
 });
 
 app.route('/posts_page.html').get((req,res) => {
@@ -199,24 +203,44 @@ app.route('/posts_page.html').get((req,res) => {
     findCookie(cookie, res, (row) => {
 		if (row) {
             extendExpiry(cookie);
-            // var x = displayPosts(POST_COLLECTION);
            displayPosts(POST_COLLECTION, res);
-
-            // res.send("Posts");
-            // res.sendFile(__dir+'/postPage.html');
-			// createPage('postPage_template.html', 'postPage.html', displayPosts(POST_COLLECTION), () =>{
-			// 	res.sendFile(__dir + '/postPage.html');
-			// })
 		} else {
 			console.log("Inprofile page: cookie was expired")
 			sendReloginPage(res);
 		}
     });
+});
 
-    
-//    console.log(displayPosts(POST_COLLECTION));
+app.route('/search.html').get((req,res) => {
+	var q = url.parse(req.url, true);
+	var cookie = req.cookies.sessionID;
+	var myQuery = q.query.search;
 
-    // displayPosts(POST_COLLECTION);
+    findCookie(cookie, res, (row) => {
+		if (row) {
+            extendExpiry(cookie);
+           	searchPost(myQuery, res);
+		} else {
+			console.log("Inprofile page: cookie was expired")
+			sendReloginPage(res);
+		}
+    });
+});
+
+app.route('/userSearch.html').get((req,res) => {
+	var q = url.parse(req.url, true);
+	var cookie = req.cookies.sessionID;
+	var myQuery = q.query.search;
+
+    findCookie(cookie, res, (row) => {
+		if (row) {
+            extendExpiry(cookie);
+           	searchProfile(myQuery, res);
+		} else {
+			console.log("Inprofile page: cookie was expired")
+			sendReloginPage(res);
+		}
+    });
 });
 
 app.route('/profile_page.html').get(function(req, res){
@@ -225,8 +249,29 @@ app.route('/profile_page.html').get(function(req, res){
 	findCookie(cookie, res, (row) => {
 		if (row) {
 			extendExpiry(cookie);
-			createProfilePage('profilePage_template.html', 'profilePage.html', row, () =>{
-				res.sendFile(__dir + '/profilePage.html');
+			cookieToDB(cookie, (result) => {
+				if (result) { //user found
+					let newRow = [];
+					for(let i = 0; i < row.length; i++){
+						newRow[i] = row[i];
+					}
+					newRow.push(result.email, result.school, result.accountType, result.imgName);
+					if(result.accountType === "student"){
+						createProfilePage('studentProfilePage_template.html', 'profilePage.html', newRow, () =>{
+							res.sendFile(__dir + '/profilePage.html');		
+						});
+					} else if(result.accountType === "employer"){
+						createProfilePage('employerProfilePage_template.html', 'profilePage.html', newRow, () =>{
+							res.sendFile(__dir + '/profilePage.html');		
+						});
+					}
+					
+				} else { // user not found
+					var message = "No such user! You may register a new account.";
+					createPage('loginPage_template.html', 'loginPage.html', message, () => {
+						res.sendFile(__dir+'/loginPage.html');
+					});
+				}
 			})
 		} else {
 			console.log("Inprofile page: cookie was expired")
@@ -281,28 +326,30 @@ app.route('/profile_update.html').get(function(req, res){
 						newFirstName,
 						newLastName,
 						newUserName,
-                        newPassWord,
-                        newEmail,
-                        newSchool,
-                        newAccountType ];
+                        newPassWord ];
 
 			updateCookie(row, (newRow) => {
-				createProfilePage('profilePage_template.html', 'profilePage.html', row, () =>{
-					res.sendFile(__dir + '/profilePage.html');		
-				});
+				cookieToDB(cookie, (result) => {
+					if (result) { //user found
+						newRow.push(result.email, result.school, result.accountType, result.imgName);
+						// var oldUserName  = result.username;
+						// var myQuery = {username: oldUserName};
+						createProfilePage('profilePage_template.html', 'profilePage.html', newRow, () =>{
+							res.sendFile(__dir + '/profilePage.html');		
+						});
+					} else { // user not found
+						var message = "No such user! You may register a new account.";
+						createPage('loginPage_template.html', 'loginPage.html', message, () => {
+							res.sendFile(__dir+'/loginPage.html');
+						});
+					}
+				})
 			});	
 
 		} else {
 			sendReloginPage(res);
 		}
 	});
-
-	// console.log(" req.url =")
-	// console.log(q.query.filetoupload)
-
-	// var fileToUpload = q.query.filetoupload;
-	// console.log("filetoupload = ")
-	// console.log(fileToUpload)
 });
 
 
@@ -314,30 +361,88 @@ app.route('/upload').post(function(req, res){
 	var cookie = req.cookies.sessionID;
 
 	findCookie(cookie, res, (row) => {
-		var userName = row[5];
+		extendExpiry(cookie);
+		cookieToDB(cookie, (result) => {
+			if (result) { //user found
+				let newRow = row;
+				newRow.push(result.email, result.school, result.accountType, result.imgName);
 
-		var form = new formidable.IncomingForm();
-	   form.parse(req, function (err, fields, files) {
-	     var oldpath = files.photo.path;
-	     var newpath = __dir + "/images/" + userName;
+				var imgName = row[10];
 
-	     fs.rename(oldpath, newpath, function (err) {
-	       if (err) throw err;
-	       extendExpiry(cookie);
-			createProfilePage('profilePage_template.html', 'profilePage.html', row, () =>{
-				res.sendFile(__dir + '/profilePage.html');
-			})
-	     });
+				var form = new formidable.IncomingForm();
+				form.parse(req, function (err, fields, files) {
+					var oldpath = files.photo.path;
+					var newpath = __dir + "/images/" + imgName;
 
-	 	});
+					fs.rename(oldpath, newpath, function (err) {
+						if (err) throw err;
+						createProfilePage('profilePage_template.html', 'profilePage.html', newRow, () =>{
+							res.sendFile(__dir + '/profilePage.html');
+						});
+					}) 
+				}) 
+			} else { // user not found
+				var message = "No such user! You may register a new account.";
+				createPage('loginPage_template.html', 'loginPage.html', message, () => {
+					res.sendFile(__dir+'/loginPage.html');
+				});
+			}
+		});
 	});
-	
+});
+
+app.route('/searchedProfile_page.html').get(function(req, res){
+	// var cookie = req.cookies.sessionID;
+	// extendExpiry(cookie);
+
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		var q = url.parse(req.url, true);
+		var username = q.query.searchedProfile;
+
+		if (err) return console.log(err);
+		var str = "";
+
+		var dbc = client.db(DB_NAME).collection(ACCOUNT_COLLECTION);		  
+		dbc.findOne({username: username}, function(err, result) {
+			if (err) throw err;
+
+			if (result) { //user found
+				let newRow = [];
+				newRow.push(result.firstname, result.lastname, result.username, result.school, result.accountType, result.imgName);
+				if(result.accountType === "student"){
+					createSearchedProfilePage('searchedStudentProfilePage_template.html', 'searchedProfilePage.html', newRow, () =>{
+						res.sendFile(__dir + '/searchedProfilePage.html');		
+					});
+				} else if(result.accountType === "employer"){
+					createSearchedProfilePage('searchedEmployerProfilePage_template.html', 'searchedProfilePage.html', newRow, () =>{
+						res.sendFile(__dir + '/searchedProfilePage.html');		
+					});
+				}
+				
+			} else { // user not found
+				var message = "No such user! You may register a new account.";
+				createPage('loginPage_template.html', 'loginPage.html', message, () => {
+					res.sendFile(__dir+'/loginPage.html');
+				});
+			}
+
+		   createPage('postPage_template.html', 'postPage.html', str, () =>{
+				   res.sendFile(__dir + '/postPage.html');
+			   });
+		   });
+   });
 });
 
 app.route('/logOut_page.html').get(function(req, res){
 	var message = "You have succesfully logged out";
-	createPage('loginPage_template.html', 'loginPage.html', message, () => {
-		res.sendFile(__dir+'/loginPage.html');
+	var cookie = req.cookies.sessionID;
+	
+	findCookie(cookie, res, (row) => {
+		row[1] = 0;
+		expireCookies();
+		createPage('loginPage_template.html', 'loginPage.html', message, () => {
+			res.sendFile(__dir+'/loginPage.html');
+		});
 	});
 });
 
@@ -362,7 +467,6 @@ function checkPassword(q, callback) {
 	})
 }
 
-
 function write2DB (myobj, collection){
 	MongoClient.connect(DB_URL, 
 		{ useUnifiedTopology: true }, 
@@ -375,11 +479,6 @@ function write2DB (myobj, collection){
 		  if (err) throw err;
 		  console.log("Inserted document =", myobj);
 		 })
-
-		//  dbc.find({}).toArray(function(err, result) {
-		// 	 if (err) throw err;
-		// 	 console.log(result);
-		// 	});
 
 	})
 }
@@ -409,7 +508,6 @@ function showFullDB (collection){
 	});
 }
 
-
 function fetchUserFromDB (myQuery, collection, callback) {
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if (err) return console.log(err);
@@ -430,38 +528,141 @@ function displayPosts (collection, res) {
          if (err) return console.log(err);
          var str = "";
 
-		 // Storing a reference to the database so you can use it later
-         
          var dbc = client.db(DB_NAME).collection(collection);		  
 		 dbc.find({}).toArray(function(err, result) {
              if (err) throw err;
              str += "<table>";
-             
              for (var i = 0; i < result.length; i++) {
-                 str += "<tr>";
-                 for(var j = 0; j < 5; j++) {
-                    str += "<td>";
-                     if(j === 0){
-                        str += ("Title: " + result[i].title);
-                    } else if(j === 1){
-                        str += ("Location: " + result[i].location);
-                    } else if(j === 2){
-                        str += ("Supervisor: " + result[i].supervisor);
-                    } else if(j === 3){
-                        str += ("Description: " + result[i].description);
-                    } else {
-                        str += ("Date: " + result[i].date);
-                    }
-                    str += "</td>";
-                }
-                str += "</tr>";
-            }
+				str += "<tr>";
+				for(var j = 0; j < 10; j++) {
+				   str += "<td>";
+					if(j === 0){
+					   str += ("Name: " + result[i].name);
+				   } else if(j === 1){
+					   str += ("Username: " + result[i].username);
+				   } else if(j === 2){
+					   str += ("Title: " + result[i].title);
+				   } else if(j === 3){
+					   str += ("Location: " + result[i].location);
+				   } else if(j === 4){
+						str += ("Minimum Age: " + result[i].age);
+					} else if(j === 5){
+						str += ("Supervisor: " + result[i].supervisor);
+					} else if(j === 6){
+						str += ("Contact Information: " + result[i].contactInfo);
+					} else if(j === 7){
+						str += ("Opportunity Type: " + result[i].oppType);
+					} else if(j === 8){
+						str += ("Description: " + result[i].description);
+					} else {
+					   str += ("Date: " + result[i].date);
+				   }
+				   str += "</td>";
+			   }
+			   str += "</tr>";
+		   }
             str += "</table>";
             createPage('postPage_template.html', 'postPage.html', str, () =>{
                 	res.sendFile(__dir + '/postPage.html');
                 });
             });
 	})
+}
+
+function searchPost (myQuery, res){
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		let arr = [];
+		var str = "";
+		var dbc = client.db(DB_NAME).collection(POST_COLLECTION);
+		dbc.find({}).toArray(function(err, result) {
+			if (err) throw err;
+			for(var i = 0; i < result.length; i++){
+				if (result[i].keyWords != null){
+					for(var j = 0; j < result[i].keyWords.length; j++){
+						let x = result[i].keyWords[j];
+						if(x.toLowerCase() === myQuery.toLowerCase()){
+							arr.push(result[i]);
+						}
+					}
+				}
+			}
+			str += "<table>";
+			for (var i = 0; i < arr.length; i++) {
+				str += "<tr>";
+				for(var j = 0; j < 10; j++) {
+					str += "<td>";
+					 if(j === 0){
+						str += ("Name: " + arr[i].name);
+					} else if(j === 1){
+						str += ("Username: " + arr[i].username);
+					} else if(j === 2){
+						str += ("Title: " + arr[i].title);
+					} else if(j === 3){
+						str += ("Location: " + arr[i].location);
+					} else if(j === 4){
+						 str += ("Minimum Age: " + arr[i].age);
+					 } else if(j === 5){
+						 str += ("Supervisor: " + arr[i].supervisor);
+					 } else if(j === 6){
+						 str += ("Contact Information: " + arr[i].contactInfo);
+					 } else if(j === 7){
+						 str += ("Opportunity Type: " + arr[i].oppType);
+					 } else if(j === 8){
+						 str += ("Description: " + arr[i].description);
+					 } else {
+						str += ("Date: " + arr[i].date);
+					}
+				str += "</td>";
+			}
+			str += "</tr>";
+		}
+			str += "</table>";
+			createPage('postPage_template.html', 'postPage.html', str, () =>{
+				res.sendFile(__dir + '/postPage.html');
+			});
+		});
+	});
+}
+
+function searchProfile (myQuery, res){
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		let arr = [];
+		var str = "";
+		var dbc = client.db(DB_NAME).collection(ACCOUNT_COLLECTION);
+		dbc.find({}).toArray(function(err, result) {
+			if (err) throw err;
+			for(var i = 0; i < result.length; i++){
+				if (result[i].firstname.toLowerCase() === myQuery.toLowerCase()){
+					arr.push(result[i]);
+				} else if (result[i].lastname.toLowerCase() === myQuery.toLowerCase()){
+					arr.push(result[i]);
+				} else if (result[i].username.toLowerCase() === myQuery.toLowerCase()){
+					arr.push(result[i]);
+				}
+			}
+			str += "<table>";
+			for (var i = 0; i < arr.length; i++) {
+				str += "<tr>";
+				for(var j = 0; j < 3; j++) {
+					str += "<td>";
+					 if(j === 0){
+						str += ("Name: " + arr[i].firstname + " " + arr[i].lastname);
+					} else if(j === 1){
+						str += ("Username: " + arr[i].username);
+					} else {
+						str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + arr[i].username + "'><input type='submit' value='Submit'></form>");
+							// "<button action='/viewSearchedProfile.html' name='searchedProfile' value='" + arr[i].username + "'>View Profile</button>");
+					}
+				str += "</td>";
+			}
+			str += "</tr>";
+		}
+			str += "</table>";
+			createPage('searchedProfiles_template.html', 'searchedProfiles.html', str, () =>{
+				res.sendFile(__dir + '/searchedProfiles.html');
+			});
+		});
+	});
 }
 
 function getDate() {
@@ -496,7 +697,6 @@ function sendPacketWithCookie(res, cookie, data){
 	res.end();
 }
 
-
 function createPage(inputFile, outputFile, message, callback){
 	var data = fs.readFile(inputFile, function(err, data) {
 		if (err) throw err;
@@ -515,12 +715,12 @@ function createProfilePage(inputFile, outputFile, myObj, callback){
         console.log(myObj);
 
     	var str = data.toString();
-    	var imagePath = __dir + "/images/" + myObj[5];
+    	var imagePath = __dir + "/images/" + myObj[10];
     	var imageFileName;
 
     	if (fs.existsSync(imagePath)) {
     		console.log("file exists")
-    		imageFileName = myObj[5];
+    		imageFileName = myObj[10];
     	} else {
     		console.log("file does not exsit")
     		imageFileName = "avatar.jpg";
@@ -543,10 +743,41 @@ function createProfilePage(inputFile, outputFile, myObj, callback){
   	}); 
 }
 
+function createSearchedProfilePage(inputFile, outputFile, myObj, callback){
+	var data = fs.readFile(inputFile, function(err, data) {
+        
+        console.log(myObj);
+
+    	var str = data.toString();
+    	var imagePath = __dir + "/images/" + myObj[5];
+    	var imageFileName;
+
+    	if (fs.existsSync(imagePath)) {
+    		console.log("file exists")
+    		imageFileName = myObj[5];
+    	} else {
+    		console.log("file does not exsit")
+    		imageFileName = "avatar.jpg";
+    	}
+    	
+	   var str0 =  str.replace('${imagename}', imageFileName);  		
+	   var str1 = str0.replace('${firstname}', myObj[0]);
+	   var str2 = str1.replace('${lastname}' , myObj[1]);
+	   var str3 = str2.replace('${username}' , myObj[2]);
+       var str4 = str3.replace('${school}', myObj[3]);
+       var str5 = str4.replace('${accountType}', myObj[4]);
+    	
+    	fs.writeFile(outputFile, str5,  function (err) {
+		 	if (err) throw err;
+			callback();
+		});
+  	}); 
+}
+
 function sendReloginPage (res) {
 	var message = "Your session has expired";
-	createPage('loginpage_template.html', 'loginpage.html', message, () => {
-		res.sendFile(__dir+'/loginpage.html');
+	createPage('loginPage_template.html', 'loginPage.html', message, () => {
+		res.sendFile(__dir+'/loginPage.html');
 	});
 }
 
@@ -567,10 +798,7 @@ function addToCookieTable (myobj, cookieValue){
 					myobj.firstname, 
 					myobj.lastname, 
 					myobj.username, 
-                    myobj.password,
-                    myobj.email,
-                    myobj.school,
-                    myobj.accountType ];
+                    myobj.password ];
 	
 	cookieTable.push(cookieLine);
 
@@ -626,8 +854,10 @@ function updateCookie(row, callback) {
 			cookieTable[i][4] = row[4];
 			cookieTable[i][5] = row[5];
             cookieTable[i][6] = row[6];
-            cookieTable[i][7] = row[7];
-            cookieTable[i][8] = row[8];
+            // cookieTable[i][7] = row[7];
+			// cookieTable[i][8] = row[8];
+			// cookieTable[i][9] = row[9];
+			// cookieTable[i][10] = row[10];
 			var newRow = cookieTable[i];
 		}
 	}
