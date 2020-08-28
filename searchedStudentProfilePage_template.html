@@ -7,26 +7,29 @@
 
 <body>
 
-<div class="container">
-  <ul>
-    <li><a href="home_page.html">Home</a></li>
-    <li><a href="create_post.html">Create a Post</a></li>
-    <li><a href="posts_page.html" class="dropbtn">Posts</a></li>
-    <li class="active"><a href="profile_page.html" class="dropbtn">Profile</a></li>
-    <li><a href="logOut_page.html">Log Out</a></li>
-    <li><form action="/userSearch.html">
-      <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-      <input id="submitButton" type="submit" value="Submit">
-  </form></li>
-  </ul>
-</div>
+    <div class="container">
+        <ul>
+         <li><a href="home_page.html">Home</a></li>
+         <li><a href="myFeed_page.html">My Feed</a></li>
+         <li><a href="posts_page.html">Posts</a></li>
+         <li><a href="professional_page.html">Meet Professionals</a></li>
+         <li><a href="profile_page.html">Profile</a></li>
+         <li><a href="tips_page.html">Tips & Templates</a></li>
+         <li><a href="survey.html">Feedback</a></li>
+         <li><a href="logOut_page.html">Log Out</a></li>
+         <li><form action="/userSearch.html">
+            <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+            <input id="submitButton" type="submit" value="Submit">
+        </form></li>
+        </ul>
+     </div>
 
-<div class="container">
+<!-- <div class="container">
   <ul>
     <li><a href="profile_page.html">My Profile</a></li>
     <li><a href="savedPosts_page.html">Saved Posts</a></li>
   </ul>
-</div>
+</div> -->
 
 <div id="content">
   <div id="picture">
@@ -38,6 +41,7 @@
   <p>Username: ${username}</p>
   <p>School/Place of Work: ${school}</p>
   <p>Account Type: ${accountType}</p>
+  <p>${following}</p>
 </div>
 </div>
 
@@ -45,8 +49,7 @@
               
 
 
-<style type="text/css">
-    /*Nav Bar*/
+<style>
     ul {
         list-style-type: none;
         margin-left: -10px;
@@ -60,14 +63,14 @@
     
     li {
         float: left;
-        margin-left: 90px;
+        margin-left: 32.5px;
     }
     
     li a {
         display: inline-block;
         color: white;
         text-align: center;
-        padding: 14px 16px;
+        padding: 14px 11px;
         text-decoration: none;
     }
     

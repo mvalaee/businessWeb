@@ -6,70 +6,107 @@
     <body>
         <div class="container">
             <ul>
-             <li><a href="home_page.html">Home</a></li>
-             <li><a href="create_post.html">Create a Post</a></li>
-             <li class="active"><a href="posts_page.html" class="dropbtn">Posts</a></li>
-             <li><a href="profile_page.html" class="dropbtn">Profile</a></li>
-             <li><a href="logOut_page.html">Log Out</a></li>
-             <li><form action="/userSearch.html">
-                <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-                <input id="submitButton" type="submit" value="Submit">
-            </form></li>
+                <li><a href="home_page.html">Home</a></li>
+                <li><a href="myFeed_page.html">My Feed</a></li>
+                <li class="active"><a href="posts_page.html">Posts</a></li>
+                <li><a href="professional_page.html">Meet Professionals</a></li>
+                <li><a href="profile_page.html">Profile</a></li>
+                <li><a href="tips_page.html">Tips & Templates</a></li>
+                <li><a href="survey.html">Feedback</a></li>
+                <li><a href="logOut_page.html">Log Out</a></li>
+                <li><form action="/userSearch.html">
+                   <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+                   <input id="submitButton" type="submit" value="Submit">
+               </form></li>
             </ul>
          </div>
 
          <form action="/search.html">
             <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+            <label for="age">Select Your Age: </label>
+            <select id="age" name="age">
+                <option value="null">-----</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+            </select>
+            <label>Position: </label>
+            <select id="position" name="position">
+                <option value="null">-----</option>
+                <option value="paid">Paid</option>
+                <option value="volunteer">Volunteer</option>
+            </select>
+            <label for="discipline">Discipline: </label>
+            <select id="discipline" name="discipline" required>
+                <option value="null">-----</option>
+                <option value="math">Math</option>
+                <option value="science">Science</option>
+                <option value="medicine">Medicine</option>
+                <option value="art">Art</option>
+                <option value="business">Business</option>
+                <option value="humanities">Humanities</option>
+                <option value="law">Law</option>
+                <option value="education">Education</option>
+            </select>
+            <label for="city">City: </label>
+            <input class="textInput" type="text" id="city" name="city" placeholder="City">
+            <label for="country">Country: </label>
+            <input class="textInput" type="text" id="country" name="country" placeholder="Country">
             <input id="submitButton" type="submit" value="Submit">
         </form>
+        <br>
         <form action="/posts_page.html">
             <button id="seeAllButton" value="SeeAll">See all posts</button>
         </form>
 
         <p>${message}</p>
 
-        <style>
-            ul {
-                list-style-type: none;
-                margin-left: -10px;
-                padding: 0px;
-                overflow: hidden;
-                background-color: #212121;
-                display: inline-block;
-                font-size: 20px;
-                width: 1370px;
-            }
-            
-            li {
-                float: left;
-                margin-left: 90px;
-            }
-            
-            li a {
-                display: inline-block;
-                color: white;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-            }
-            
-            li a:hover {
-                background-color: #0088A8;
-            }
-            
-            .active {
-                        background: #0088A8;
-            }
-            
-            .container {
-                        margin-top: -30px;
-                        display: inline-block;
-                        position: relative;
-            }
-            
-            .container a:hover {
-                        text-decoration: underline;
-            }
-        </style>
+        
     </body>
+    <style>
+        ul {
+            list-style-type: none;
+            margin-left: -10px;
+            padding: 0px;
+            overflow: hidden;
+            background-color: #212121;
+            display: inline-block;
+            font-size: 20px;
+            width: 1370px;
+        }
+        
+        li {
+            float: left;
+            margin-left: 32.5px;
+        }
+        
+        li a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 11px;
+            text-decoration: none;
+        }
+        
+        li a:hover {
+            background-color: #0088A8;
+        }
+        
+        .active {
+                    background: #0088A8;
+        }
+        
+        .container {
+                    margin-top: -30px;
+                    display: inline-block;
+                    position: relative;
+        }
+        
+        .container a:hover {
+                    text-decoration: underline;
+        }
+    </style>
 </html>

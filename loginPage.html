@@ -16,7 +16,7 @@ function setCookie() {
 <body onload="setCookie()">
 <!-- <body> -->
   <div id="info">
-    <h2 class="centre">Welcome to the app</h2>
+    <h2 class="centre">You have succesfully logged out</h2>
 
     <p class="centre"> Please enter your Username and Password to login. </p>
 
@@ -30,11 +30,71 @@ function setCookie() {
       <input id="loginButton" type="submit" value="Submit">
     </form> 
 
+    <h3><a href="forgot_password.html">Forgot your password?</a></h3>
+
 
     <br>
-    <h3 class="centre"> Don't have an account? Create one <a href="register.html">here</a></h3>
-    </form> 
+    <!-- <h3 class="centre"> Don't have an account? Create one <a href="register.html">here</a></h3> -->
+    <!-- </form>  -->
   </div>
+
+  <div id="register">
+
+    <h2 class="centre">Register Here</h2>
+
+    <p class="centre"> Please enter the following information to create an account</p>
+ 
+    <form action="/registering_page.html">
+      <label for="firstname">First Name:</label><br>
+      <input class="textInput" type="text" id="firstname" name="firstname" placeholder="first name" required><br>
+      <br>
+      <label for="lastname">Last Name:</label><br>
+      <input class="textInput" type="text" id="lastname" name="lastname" placeholder="last name" required><br>
+      <br>
+      <label for="username">Username:</label><br>
+      <input class="textInput" type="text" id="username" name="username" placeholder="username" required><br>
+      <br>
+      <label for="password">Password:</label><br>
+      <input class="textInput" type="text" id="password" name="password" placeholder="password" required><br>
+      <br>
+      <label for="email">Email: </label><br>
+      <input class="textInput" type="text" id="email" name="email" placeholder="email" required><br>
+      <br>
+      <label for="school">School/Place of Work: </label><br>
+      <input class="textInput" type="text" id="school" name="school" placeholder="school" required><br>
+      <br>
+      <label for="accountType">Account Type: </label><br>
+      <select id="accountType" name="accountType" required>
+          <option value="student">Student</option>
+          <option value="employer">Employer</option>
+          <option value="parent"> Parent</option>
+      </select>
+      <br><br>
+      <label for="discipline">Discipline: </label><br>
+      <select id="discipline" name="discipline" required>
+          <option value="math">Math</option>
+          <option value="science">Science</option>
+          <option value="medicine">Medicine</option>
+          <option value="art">Art</option>
+          <option value="business">Business</option>
+          <option value="humanities">Humanities</option>
+          <option value="law">Law</option>
+          <option value="education">Education</option>
+      </select><br><br>
+      <input type="checkbox" id="terms" name="terms" value="terms" onchange="document.getElementById('submitButton').disabled = !this.checked;">
+      <label for="terms"> By checking this box, I acknowledge that I have read the <a href="terms.html">Terms & Conditions</a>, and I accept them</label><br><br>
+      <input id="submitButton" type="submit" value="Submit" disabled>
+    </form> 
+    
+  </div>
+
+  <style type="text/css">
+    #register {
+      float: right;
+      margin-right: 80px;
+      margin-top: -320px;
+    }
+  </style>
 
 
 </body>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Professionals</title>
+    </head>
+    <body>
+        <div class="container">
+            <ul>
+                <li><a href="home_page.html">Home</a></li>
+                <li><a href="myFeed_page.html">My Feed</a></li>
+                <li><a href="posts_page.html">Posts</a></li>
+                <li class="active"><a href="professional_page.html">Meet Professionals</a></li>
+                <li><a href="profile_page.html">Profile</a></li>
+                <li><a href="tips_page.html">Tips & Templates</a></li>
+                <li><a href="survey.html">Feedback</a></li>
+                <li><a href="logOut_page.html">Log Out</a></li>
+                <li><form action="/userSearch.html">
+                   <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+                   <input id="submitButton" type="submit" value="Submit">
+               </form></li>
+            </ul>
+         </div>
+
+         <form action="/searchProfessional.html">
+            <label for="discipline">Discipline: </label>
+            <select id="discipline" name="discipline" required>
+                <option value="null">-----</option>
+                <option value="math">Math</option>
+                <option value="science">Science</option>
+                <option value="medicine">Medicine</option>
+                <option value="art">Art</option>
+                <option value="business">Business</option>
+                <option value="humanities">Humanities</option>
+                <option value="law">Law</option>
+                <option value="education">Education</option>
+            </select>
+            <input id="submitButton" type="submit" value="Submit">
+        </form>
+        <br>
+        <form action="/professional_page.html">
+            <button id="seeAllButton" value="SeeAll">See All Professionals</button>
+        </form>
+
+        <p>${message}</p>
+
+        <style>
+            ul {
+                list-style-type: none;
+                margin-left: -10px;
+                padding: 0px;
+                overflow: hidden;
+                background-color: #212121;
+                display: inline-block;
+                font-size: 20px;
+                width: 1370px;
+            }
+            
+            li {
+                float: left;
+                margin-left: 32.5px;
+            }
+            
+            li a {
+                display: inline-block;
+                color: white;
+                text-align: center;
+                padding: 14px 11px;
+                text-decoration: none;
+            }
+            
+            li a:hover {
+                background-color: #0088A8;
+            }
+            
+            .active {
+                        background: #0088A8;
+            }
+            
+            .container {
+                        margin-top: -30px;
+                        display: inline-block;
+                        position: relative;
+            }
+            
+            .container a:hover {
+                        text-decoration: underline;
+            }
+        </style>
+    </body>
+</html>
