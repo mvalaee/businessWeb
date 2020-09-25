@@ -4,67 +4,323 @@
         <title>Home</title>
     </head>
     <body>
-        <div class="container">
-            <ul>
-             <li  class="active" ><a href="home_page.html">Home</a></li>
-             <li><a href="myFeed_page.html">My Feed</a></li>
-             <li><a href="posts_page.html">Posts</a></li>
-             <li><a href="professional_page.html">Meet Professionals</a></li>
-             <li><a href="profile_page.html">Profile</a></li>
-             <li><a href="tips_page.html">Tips & Templates</a></li>
-             <li><a href="survey.html">Feedback</a></li>
-             <li><a href="logOut_page.html">Log Out</a></li>
-             <li><form action="/userSearch.html">
-                <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-                <input id="submitButton" type="submit" value="Submit">
-            </form></li>
-            </ul>
-         </div>
+        <div id="logoBanner">
+            <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <div class="container">
+                <ul>
+                 <li class="active"><a href="home_page.html">Home</a></li>
+                 <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+                 <li class="none"><a href="posts_page.html">Posts</a></li>
+                 <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
+                 <li class="none"><a href="profile_page.html">Profile</a></li>
+                 <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+                 <li class="none"><a href="survey.html">Feedback</a></li>
+                 <li class="none"><a href="logOut_page.html">Log Out</a></li>
+                 <li id="fix" class="none"><form action="/userSearch.html">
+                    <input type="text" id="search" name="search" placeholder="Search...">
+                    <input id="submitButton" type="submit" value="Submit">
+                </form></li>
+                </ul>
+            </div>
+          </div>
 
-        <p>Welcome to the Home Page Cruella De Vil</p>
+        <h3 id="welcome">Welcome to the Home Page Cruella De Vil</h3>
+        <!-- <h2>Automatic Slideshow</h2>
+<p>Change image every 2 seconds:</p> -->
+
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+  <div class="numbertext">1 / 3</div>
+  <img src="http://localhost:8000/student-849822_1280.jpg">
+  <div class="text">FIND THE PERFECT JOB OR VOLUNTEERING PLACEMENT</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">2 / 3</div>
+  <img src="http://localhost:8000/graduation-995042_1280.jpg">
+  <div class="text">GET REAL JOB EXPERIENCE BEFORE GRADUATING HIGHSCHOOL</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">3 / 3</div>
+  <img src="http://localhost:8000/women-2679748_1280.jpg">
+  <div class="text">MEET PEOPLE WHO HAVE SIMILAR INTERESTS AS YOU</div>
+</div>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+</div>
+<div id="area">
+    <a id="oppA" href="posts_page.html"><div id="opportunities">
+            <h3>Find Placement Opportunities</h3>
+            <p>Browse placement opportunities in a variety of disciplines and locations. Find the one the placement that's write for you. Whether you're volunteering or working, we've got you covered.</p>
+        </div></a>
+        <a id="profA" href="professional_page.html"><div id="professionals">
+            <h3>Meet Professionals</h3>
+            <p>Meet professionals who work in your field of field of interest. Ask them questions and browse placement opportunities with them. Learning from experts through hands on experience is just that much better.</p>
+        </div></a>
+        <a id="tipsA" href="tips_page.html"><div id="tips">
+            <h3>Browse Tips & Templates</h3>
+            <p>Not sure how to reach out to an expert in an appropriate manner? Don't worry, we've got you covered. Just have a look through our many tips and communication templates.</p>
+        </div></a>
+        </div>
 
         <style>
-            ul {
-                list-style-type: none;
-                margin-left: -10px;
-                padding: 0px;
-                overflow: hidden;
-                background-color: #212121;
-                display: inline-block;
-                font-size: 20px;
-                width: 1370px;
-            }
-            
-            li {
-                float: left;
-                margin-left: 32.5px;
-            }
-            
-            li a {
-                display: inline-block;
-                color: white;
-                text-align: center;
-                padding: 14px 11px;
-                text-decoration: none;
-            }
-            
-            li a:hover {
-                background-color: #0088A8;
-            }
-            
-            .active {
-                        background: #0088A8;
-            }
-            
-            .container {
-                        margin-top: -30px;
-                        display: inline-block;
-                        position: relative;
-            }
-            
-            .container a:hover {
-                        text-decoration: underline;
-            }
+            * {box-sizing: border-box;}
+body {font-family: Verdana, sans-serif;}
+.mySlides {display: none;}
+img {vertical-align: middle;}
+
+.mySlides img{
+    width: 1000px;
+    height: 350px;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Caption text */
+.text {
+  color: #443183;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  background-color: #bbbbbb;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1s;
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+
+#opportunities {
+    background-color: #FAF7F7;
+    width: 400px;
+    height: 220px;
+    /* margin-left: 50px; */
+    border-radius: 5px;
+      border: 7px solid #8DAABD;
+      box-shadow: 3px 4px 15px;
+      color: black;
+      text-align: center;
+}
+#oppA{
+    text-decoration: none;
+}
+#opportunities p{
+    margin: 20px;
+}
+#opportunities h3{
+    text-align: center;
+    padding-top: 15px;
+}
+#professionals{
+    background-color: #FAF7F7;
+    /* float: right; */
+    width: 400px;
+    margin-top: -220px;
+    margin-left: 450px;
+    /* margin-right: 482px; */
+    height: 220px;
+    border-radius: 5px;
+      border: 7px solid #8DAABD;
+      box-shadow: 3px 4px 15px;
+}
+
+#professionals p{
+    margin: 20px;
+    text-align: center;
+}
+#professionals h3{
+    text-align: center;
+    padding-top: 15px;
+}
+#profA{
+    color: black;
+    text-decoration: none;
+}
+#tipsA{
+    color: black;
+    text-decoration: none;
+}
+#tips p{
+    margin: 20px;
+    text-align: center;
+}
+#tips h3{
+    text-align: center;
+    padding-top: 15px;
+}
+#oppA:hover, #profA:hover, #tipsA:hover{
+    text-decoration: underline;
+}
+#tips{
+    background-color: #FAF7F7;
+    /* float: right; */
+    width: 400px;
+    margin-top: -220px;
+    /* margin-right: 60px; */
+    margin-left: 900px;
+    height: 220px;
+    border-radius: 5px;
+      border: 7px solid #8DAABD;
+      box-shadow: 3px 4px 15px;
+}
+#area{
+    margin-left: 27px;
+    margin-top: 8px;
+}
+    .container ul {
+        list-style-type: none;
+        margin-left: 265px;
+        padding: 0px;
+        margin-bottom: -4px;
+        overflow: hidden;
+        background-color: #FAF7F7;
+        /* background-color: black; */
+        display: inline-block;
+        font-size: 18px;
+        width: 1105px;
+        margin-top: -27px;
+        /* font-size: 18px; */
+    }
+    .container li {
+        float: left;
+        margin-left: -5px;
+    }
+    .container li a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 11px;
+        text-decoration: none;
+    }
+    .container #submitButton{ 
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    /* .container .form{
+        margin-bottom: 100px;
+    } */
+    .none a{
+      color: #000000;
+    }
+    .container li a:hover {
+        background-color: #0088A8;
+    }
+    .active a{
+      background-color: #443183;
+      color: #ffffff;
+    }    
+    .container a:hover {
+                text-decoration: underline;
+    }
+    html{
+      overflow-x: hidden;
+      background-image: url("http://localhost:8000/loginBackground.png"); 
+      font-family: 'Roboto', sans-serif;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -10px;
+      box-shadow: 5px 6px 5px #888888;
+      height: 113px;
+    }
+    #logo {
+      margin-top: -60px;
+      margin-bottom: -70px;
+      margin-left: -10px;
+    }
+    #search{
+      margin-top: 15px;
+      margin-left: 6px;
+    }
+    #welcome{
+        text-align: center;
+        color: white;
+        font-size: 18px;
+    }
         </style>
+        <script>
+            var slideIndex = 0;
+            showSlides();
+            
+            function showSlides() {
+              var i;
+              var slides = document.getElementsByClassName("mySlides");
+              var dots = document.getElementsByClassName("dot");
+              for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+              }
+              slideIndex++;
+              if (slideIndex > slides.length) {slideIndex = 1}    
+              for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+              }
+              slides[slideIndex-1].style.display = "block";  
+              dots[slideIndex-1].className += " active";
+              setTimeout(showSlides, 4000); // Change image every 2 seconds
+            }
+            </script>
     </body>
 </html>

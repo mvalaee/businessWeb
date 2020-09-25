@@ -7,86 +7,348 @@
 
 <body>
 
-    <div class="container">
-        <ul>
-         <li><a href="home_page.html">Home</a></li>
-         <li><a href="myFeed_page.html">My Feed</a></li>
-         <li><a href="posts_page.html">Posts</a></li>
-         <li><a href="professional_page.html">Meet Professionals</a></li>
-         <li class="active"><a href="profile_page.html">Profile</a></li>
-         <li><a href="tips_page.html">Tips & Templates</a></li>
-         <li><a href="survey.html">Feedback</a></li>
-         <li><a href="logOut_page.html">Log Out</a></li>
-         <li><form action="/userSearch.html">
-            <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-            <input id="submitButton" type="submit" value="Submit">
-        </form></li>
-        </ul>
-     </div>
-
-     <div class="container">
-        <ul>
-          <li><a href="profile_page.html">My Profile</a></li>
-          <li><a href="savedPosts_page.html">Saved Posts</a></li>
-          <li class="active"><form action="/myPosts_page.html">
-            <input type="hidden" name="name" value="furLover">
-            <input type="submit" value="Opportunities Posted"></form>
-            </li>
-          <!-- <li><a href="myPosts_page.html">Opportunities Posted</a></li> -->
-          <li class="active"><form action="/wall_page.html">
-            <input type="hidden" name="name" value="furLover">
-            <input type="submit" value="Q&A Wall"></form>
-            </li>
-        </ul>
+    <div id="logoBanner">
+        <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+        <div class="container">
+            <ul>
+             <li class="none"><a href="home_page.html">Home</a></li>
+             <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+             <li class="none"><a href="posts_page.html">Posts</a></li>
+             <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
+             <li class="active"><a href="profile_page.html">Profile</a></li>
+             <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+             <li class="none"><a href="survey.html">Feedback</a></li>
+             <li class="none"><a href="logOut_page.html">Log Out</a></li>
+             <li class="none"><form action="/userSearch.html">
+                <input type="text" id="search" name="search" placeholder="Search...">
+                <input id="submitButton" type="submit" value="Submit">
+            </form></li>
+            </ul>
+        </div>
       </div>
+    
+         <div class="bottom">
+            <ul>
+              <li><a href="profile_page.html">My Profile</a></li>
+              <li><a href="savedPosts_page.html">Saved Posts</a></li>
+              <li class="active"><form action="/myPosts_page.html">
+                <input type="hidden" name="name" value="cruella">
+                <input type="submit" value="Opportunities Posted"></form>
+                </li>
+              <li><form action="/wall_page.html">
+                <input type="hidden" name="name" value="cruella">
+                <input type="submit" value="Q&A Wall"></form>
+                </li>
+            </ul>
+          </div>
 
-<p><form action='/create_post.html'><button id='newPostButton' value='newPost'>Create a New Post</button></form><p>Name: Cruella De Vil</p><p> Username: furLover</p><p> Title: First Post</p><p> Address: 271 Empress avenue, Toronto, Canada, M2N3V2</p><p> Minimum Age: 16</p><p> Supervisor: EMERSON</p><p> Contact Information: Emial</p><p> Opportunity Type: Paid</p><p> Description: Brief description</p><p> Discipline: law</p><p> Date: Fri Aug 28 2020 16:17 </p><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='furLover'><input type='submit' value='View Profile'></form><form action='/deletePost.html'><input type='hidden' name='profile' value='[object Object]'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='PO1598645820558'><input type='submit' value='Delete Post'></form><form action='/savePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='PO1598645820558'><input type='submit' value='Save Post'></form></p>
+          <div id="filterBar">
+      <form action="/oppSearch.html">
+        <!-- <input class="textInput" type="text" id="search" name="search" placeholder="Search..."> -->
+        <label for="age">Select Your Age: </label>
+        <select id="age" name="age">
+            <option value="null">-----</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+        </select>
+        <label>Position: </label>
+        <select id="position" name="position">
+            <option value="null">-----</option>
+            <option value="paid">Paid</option>
+            <option value="volunteer">Volunteer</option>
+        </select>
+        <label for="discipline">Discipline: </label>
+        <select id="discipline" name="discipline" required>
+            <option value="null">-----</option>
+            <option value="math">Math</option>
+            <option value="science">Science</option>
+            <option value="medicine">Medicine</option>
+            <option value="art">Art</option>
+            <option value="business">Business</option>
+            <option value="humanities">Humanities</option>
+            <option value="law">Law</option>
+            <option value="education">Education</option>
+        </select>
+        <label>Virtual/In Person: </label>
+        <select id="virt" name="virt">
+            <option value="null">-----</option>
+            <option value="Virtual">Virtual</option>
+            <option value="In Person">In Person</option>
+        </select>
+        <label for="city">City: </label>
+        <input class="textInput" type="text" id="city" name="city" placeholder="City">
+        <label for="country">Country: </label>
+        <input class="textInput" type="text" id="country" name="country" placeholder="Country">
+        <input type="hidden" name="profile" value="cruella">
+        <input id="submitButton" type="submit" value="Submit">
+    </form>
+    <br>
+    <form action="/myPosts_seeAll.html">
+        <button id="seeAllButton" name="profile" value="cruella">See all posts</button>
+    </form>
+</div>
+<p><form action='/create_post.html'><button id='newPostButton' value='newPost'>Create a New Post</button></form><table><tr><td><div class='post'><p class='name'>Cruella De Vil</p><p class='username'>cruella</p><p class='title'> First Post</p><p class='description'>ertghj</p><p class='address'><span class='color'>Address:</span> 271 Empress avenue, Toronto, Canada, M2N3V2</p><p class='age'><span class='color'>Minimum Age:</span> 13</p><p class='supervisor'><span class='color'>Supervisor:</span> EMERSON</p><p class='contactInfo'><span class='color'>Contact Information:</span> fasgfhg</p><p class='oppType'>Volunteer</p><p class='discipline'><span class='color'>Discipline:</span> math</p><p class='virt'><span class='color'>Virtual/In Person:</span> Virtual</p><p class='date'>Fri Sep 25 2020 10:24 </p><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='cruella'><input class='viewProfile' type='submit' value='View Profile'></form><form action='/deletePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='PO1601043884549'><input class='deletePost' type='submit' value='Delete Post'></form><form action='/savePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='PO1601043884549'><input class='savePost' type='submit' value='Save Post'></form></div></td></tr></table></p>
 
 </body>
-              
-
 
 <style>
-    ul {
+    
+     .bottom .active input{
+      background-color: #443183;
+      color: #ffffff;
+    } 
+ .container ul {
         list-style-type: none;
-        margin-left: -10px;
+        margin-left: 260px;
         padding: 0px;
+        margin-bottom: -4px;
         overflow: hidden;
-        background-color: #212121;
+        background-color: #FAF7F7;
         display: inline-block;
         font-size: 20px;
-        width: 1370px;
+        width: 1100px;
+        margin-top: -100px;
     }
-    
-    li {
+    .container li {
         float: left;
-        margin-left: 32.5px;
+        margin-left: -5px;
     }
-    
-    li a {
+    .container li a {
         display: inline-block;
-        color: white;
         text-align: center;
         padding: 14px 11px;
         text-decoration: none;
     }
-    
-    li a:hover {
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    .none a{
+      color: #000000;
+    }
+    .container li a:hover {
         background-color: #0088A8;
     }
-    
-    .active {
-                background: #0088A8;
-    }
-    
-    .container {
-                margin-top: -30px;
-                display: inline-block;
-                position: relative;
-    }
-    
+    .active a{
+      background-color: #443183;
+      color: #ffffff;
+    }    
     .container a:hover {
                 text-decoration: underline;
+    }
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    html{
+        overflow-x: hidden;
+      background-image: url("http://localhost:8000/loginBackground.png"); 
+      font-family: 'Roboto', sans-serif;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -10px;
+      box-shadow: 5px 6px 5px #888888;
+    }
+    #logo {
+      margin-top: -60px;
+      margin-bottom: -70px;
+      margin-left: -10px;
+    }
+    .bottom input{
+      background-color: #8DAABD;
+      border: 1.5px solid #8DAABD;
+      font-size: 20px;
+      margin-top: -2px;
+      color: #443183;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    .bottom input:hover{
+      background-color: #0088A8;
+      text-decoration: underline;
+    }
+    .bottom ul{
+      list-style-type: none;
+      margin-left: 489.5px;
+      padding: 0px;
+      margin-bottom: -6px;
+      overflow: hidden;
+      background-color: #8DAABD;
+      display: inline-block;
+      font-size: 20px;
+      width: 700px;
+      margin-top: 60px;
+      border-radius: 5px;
+      height: 50px;
+      border: 3px solid #8DAABD;
+    }
+    .bottom li {
+        float: left;
+        margin-left: 3px;
+        margin-top: 5px;
+        height: 45px;
+    }
+    .bottom li a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 11px;
+        text-decoration: none;
+    }
+    .bottom li a:hover {
+        background-color: #0088A8;
+    }  
+    .bottom a:hover {
+      text-decoration: underline;
+    }
+    .post{
+        background-color: #FAF7F7;
+        border: 7px solid #8DAABD;
+        box-shadow: 2px 4px 5px;
+        border-radius: 10px;
+        width: 600px;
+    }
+    table{
+        margin-left: 30px;
+        margin-top: 0px;
+        font-family: "Roboto", sans-serif;
+    }
+    td {
+        width: 600px;
+        margin-right: 20px;
+    }
+    tr{
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    .name{
+        font-size: 18px;
+        margin-left: 10px;
+    }
+    .username{
+        font-size: 16px;
+        color: #443183;
+        margin-left: 10px;
+        margin-top: -15px;
+    }
+    .title{
+        font-weight: bold;
+        font-size: 21px;
+        text-align: center;
+        margin-top: -10px;
+    }
+    .date{
+        float: right;
+        margin-top: -231.5px;
+        margin-right: 20px;
+        /* margin-right: 400px; */
+    }
+    .oppType{
+        float: right;
+        font-weight: bold;
+        margin-right: -125px;
+        margin-top: -185px;
+        /* margin-right: 480px; */
+    }
+    .description{
+        text-align: center;
+        margin-top: -10px;
+    }
+    .viewProfile{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        margin-left: 50px;
+        margin-bottom: 15px;
+    }
+    .savePost{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        float: right;
+        margin-right: 260px;
+        margin-top: -42.5px;
+    }
+    .deletePost{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        float: right;
+        margin-right: 50px;
+        margin-top: -42.5px;
+    }
+    .color {
+        color: #443183;
+        font-weight:700;
+    }  
+    .age{
+        float: right;
+        margin-top: 35px;
+        margin-right: 10px;
+    }
+    .supervisor{
+        float: right;
+        margin-right: -130px;
+        margin-top: 0px;
+    }
+    #filterBar{
+        background-color: #8DAABD;
+        border-radius: 10px;
+        width: 1350px;
+        height: 40px;
+        margin-left: -2px;
+        margin-top: 10px;
+    }
+    #filterBar form{
+        margin-left: 10px;
+        /* padding-bottom: 8px; */
+        padding-top: 8px;
+    }
+    #filterBar #submitButton{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 15px;
+    }
+    #seeAllButton{
+        float: right;
+        margin-top: -48.5px;
+        margin-right: 20px;
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 15px;
+    }
+    #newPostButton{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        margin-left: 590px;
+    }
+    .centre{
+        text-align: center;
     }
 </style>
 </html>

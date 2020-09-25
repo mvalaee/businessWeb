@@ -4,125 +4,230 @@
         <title>Home</title>
     </head>
     <body>
-        <div class="container">
-            <ul>
-                <li><a href="home_page.html">Home</a></li>
-                <li><a href="myFeed_page.html">My Feed</a></li>
-                <li class="active"><a href="posts_page.html">Posts</a></li>
-                <li><a href="professional_page.html">Meet Professionals</a></li>
-                <li><a href="profile_page.html">Profile</a></li>
-                <li><a href="tips_page.html">Tips & Templates</a></li>
-                <li><a href="survey.html">Feedback</a></li>
-                <li><a href="logOut_page.html">Log Out</a></li>
-                <li><form action="/userSearch.html">
-                   <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-                   <input id="submitButton" type="submit" value="Submit">
-               </form></li>
-            </ul>
-         </div>
+        <div id="logoBanner">
+            <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <div class="container">
+                <ul>
+                 <li class="none"><a href="home_page.html">Home</a></li>
+                 <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+                 <li class="none"><a href="posts_page.html">Posts</a></li>
+                 <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
+                 <li class="active"><a href="profile_page.html">Profile</a></li>
+                 <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+                 <li class="none"><a href="survey.html">Feedback</a></li>
+                 <li class="none"><a href="logOut_page.html">Log Out</a></li>
+                 <li class="none"><form action="/userSearch.html">
+                    <input type="text" id="search" name="search" placeholder="Search...">
+                    <input id="submitButton" type="submit" value="Submit">
+                </form></li>
+                </ul>
+            </div>
+          </div>
 
+         <div id="content">
+             <h3 class="centre">Create A Post</h3>
          <form action="/creatingPost_page.html">
-            <label for="title">Title:</label><br>
-            <input class="textInput" type="text" id="title" name="title" placeholder="Title" required><br>
-            <br>
-            <!-- <label for="location">Location:</label><br>
-            <input class="textInput" type="text" id="location" name="location" placeholder="Location" required><br>
-            <br> -->
-            <label for="address">Address:</label><br>
-            <input class="textInput" type="text" id="address" name="address" placeholder="e.g. 76 Example Rd" required><br>
-            <br>
-            <label for="city">City:</label><br>
-            <input class="textInput" type="text" id="city" name="city" placeholder="City" required><br>
-            <br>
-            <label for="country">Country:</label><br>
-            <input class="textInput" type="text" id="country" name="country" placeholder="Country" required><br>
-            <br>
-            <label for="postalCode">Postal Code:</label><br>
-            <input class="textInput" type="text" id="postalCode" name="postalCode" placeholder="Postal Code" required><br>
-            <br>
-            <label for="description">Description:</label><br>
-            <textarea id="description" name="description" rows="4" cols="50" placeholder="Brief Description" required></textarea><br>
-            <br>
-            <label for="age">Minimum Age:</label><br>
-            <select id="age" name="age" required>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-            </select><br>
-            <br>
-            <label for="supervisor">Supervisor:</label><br>
-            <input class="textInput" type="text" id="supervisor" name="supervisor" placeholder="supervisor" required><br>
-            <br>
-            <label for="contactInfo">Contact Info:</label><br>
-            <textarea id="contactInfo" name="contactInfo" rows="4" cols="50" placeholder="Email/Phone/etc." required></textarea><br>
-            <br>
-            <label for="oppType">Opportunity Type:</label><br>
-            <select id="oppType" name="oppType" required>
-                <option value="Volunteer">Volunteer</option>
-                <option value="Paid">Paid</option>
-            </select><br>
-            <br>
-            <label for="discipline">Discipline: </label><br>
-            <select id="discipline" name="discipline" required>
-                <option value="math">Math</option>
-                <option value="science">Science</option>
-                <option value="medicine">Medicine</option>
-                <option value="art">Art</option>
-                <option value="business">Business</option>
-                <option value="humanities">Humanities</option>
-                <option value="law">Law</option>
-                <option value="education">Education</option>
-            </select><br><br>
-            <label for="keyWords">Key Words (seperate with commas):</label><br>
-            <input class="textInput" type="text" id="keyWords" name="keyWords" placeholder="key words, seperate each word with a space" required><br>
-            <br>
-            <input id="submitButton" type="submit" value="Submit">
+            <div id="colOne">
+                <label for="title">Title:</label><br>
+                <input class="textInput" type="text" id="title" name="title" placeholder="Title" required><br>
+                <br>
+                <!-- <label for="location">Location:</label><br>
+                <input class="textInput" type="text" id="location" name="location" placeholder="Location" required><br>
+                <br> -->
+                <label for="address">Address:</label><br>
+                <input class="textInput" type="text" id="address" name="address" placeholder="e.g. 76 Example Rd" required><br>
+                <br>
+                <label for="city">City:</label><br>
+                <input class="textInput" type="text" id="city" name="city" placeholder="City" required><br>
+                <br>
+                <label for="country">Country:</label><br>
+                <input class="textInput" type="text" id="country" name="country" placeholder="Country" required><br>
+                <br>
+                <label for="postalCode">Postal Code:</label><br>
+                <input class="textInput" type="text" id="postalCode" name="postalCode" placeholder="Postal Code" required><br>
+                <br>
+                <label for="description">Description:</label><br>
+                <textarea class="textInput" id="description" name="description" rows="4" cols="50" placeholder="Brief Description" required></textarea><br>
+                <br>
+            </div>
+            <div id="colTwo">
+                <label for="age">Minimum Age:</label><br>
+                <select class="textInput" id="age" name="age" required>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                </select><br>
+                <br>
+                <label for="supervisor">Supervisor:</label><br>
+                <input class="textInput" type="text" id="supervisor" name="supervisor" placeholder="supervisor" required><br>
+                <br>
+                <label for="contactInfo">Contact Info:</label><br>
+                <textarea class="textInput" id="contactInfo" name="contactInfo" rows="4" cols="50" placeholder="Email/Phone/etc." required></textarea><br>
+                <br>
+                <label for="oppType">Opportunity Type:</label><br>
+                <select class="textInput" id="oppType" name="oppType" required>
+                    <option value="Volunteer">Volunteer</option>
+                    <option value="Paid">Paid</option>
+                </select><br>
+                <br>
+                <label for="virt">Virtual/In Person:</label><br>
+                <select class="textInput" id="virt" name="virt" required>
+                    <option value="Virtual">Virtual</option>
+                    <option value="In Person">In Person</option>
+                </select><br>
+                <br>
+                <label for="discipline">Discipline: </label><br>
+                <select class="textInput" id="discipline" name="discipline" required>
+                    <option value="math">Math</option>
+                    <option value="science">Science</option>
+                    <option value="medicine">Medicine</option>
+                    <option value="art">Art</option>
+                    <option value="business">Business</option>
+                    <option value="humanities">Humanities</option>
+                    <option value="law">Law</option>
+                    <option value="education">Education</option>
+                </select><br><br>
+                <!-- <label id="forKey" for="keyWords">Key Words (seperate with commas):</label><br>
+                <input class="textInput" type="text" id="keyWords" name="keyWords" placeholder="Key words..." required><br>
+                <br> -->
+            </div>
+            <input id="createButton" type="submit" value="Submit">
           </form>
+          </div>
+
 
           <style>
-            ul {
+            #search{
+            margin-top: 15px;
+            margin-left: 6px;
+            }
+            #content{
+            background-color: #FAF7F7;
+            margin-left: 230px;
+            margin-top: 45px;
+            margin-right: 230px;
+            border-radius: 5px;
+            border: 7px solid #8DAABD;
+            box-shadow: 3px 4px 15px;
+            }
+            .container ul {
                 list-style-type: none;
-                margin-left: -10px;
+                margin-left: 260px;
                 padding: 0px;
+                margin-bottom: -4px;
                 overflow: hidden;
-                background-color: #212121;
+                background-color: #FAF7F7;
                 display: inline-block;
                 font-size: 20px;
-                width: 1370px;
+                width: 1100px;
+                margin-top: -100px;
             }
-            
-            li {
+            .container li {
                 float: left;
-                margin-left: 32.5px;
+                margin-left: -5px;
             }
-            
-            li a {
+            .container li a {
                 display: inline-block;
-                color: white;
                 text-align: center;
                 padding: 14px 11px;
                 text-decoration: none;
             }
-            
-            li a:hover {
+            .container #submitButton{
+            color: #443183;
+            background-color: #c7c1e0;
+            border: 1px solid #443183; 
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 15px;
+            }
+            .none a{
+            color: #000000;
+            }
+            .container li a:hover {
                 background-color: #0088A8;
             }
-            
-            .active {
-                        background: #0088A8;
-            }
-            
-            .container {
-                        margin-top: -30px;
-                        display: inline-block;
-                        position: relative;
-            }
-            
+            .active a{
+            background-color: #443183;
+            color: #ffffff;
+            }    
             .container a:hover {
                         text-decoration: underline;
+            }
+            html{
+                overflow-x: hidden;
+            background-image: url("http://localhost:8000/loginBackground.png"); 
+            font-family: 'Roboto', sans-serif;
+            }
+            #logoBanner{
+            background-color: #FAF7F7;
+            width: 1370px;
+            margin-left: -10px;
+            margin-top: -10px;
+            box-shadow: 5px 6px 5px #888888;
+            }
+            #logo {
+            margin-top: -60px;
+            margin-bottom: -70px;
+            margin-left: -10px;
+            }
+            #createButton {
+                color: #443183;
+                background-color: #c7c1e0;
+                border: 1px solid #443183; 
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20px;
+                margin-left: 405px;
+                margin-bottom: 8px;
+            }
+            .centre{
+            text-align: center;
+            }
+            #colOne{
+            margin-left: -70px;
+            }
+            #colTwo{
+            float: right;
+            margin-top: -483.5px;
+            /* margin-left: -10000px; */
+            margin-right: 100px;
+            /* margin-right: 800px; */
+            }
+            #discipline, #age, #oppType, #virt{
+                /* border: 1.5px solid #929292;
+                background-color: #e2e2e2;
+                margin-left: 200px;
+                font-size: 20px; */
+                width: 258px;
+                /* font-family: 'Times New Roman', 'Times', serif; */
+            }
+            .textInput:not(#keyWords){
+                border: 1.5px solid #929292;
+                background-color: #e2e2e2;
+                margin-left: 200px;
+                font-size: 20px;
+                width: 250px;
+                font-family: 'Times New Roman', 'Times', serif;
+            }
+
+            #keyWords{
+                border: 1.5px solid #929292;
+                background-color: #e2e2e2;
+                margin-left: -130px;
+                font-size: 20px;
+                width: 550px;
+                font-family: 'Times New Roman', 'Times', serif;
+            }
+
+            #forKey{
+                /* margin-left: 200px; */
+                font-size: 18px;
+            }
+
+            label:not(#forKey){
+                margin-left: 200px;
+                font-size: 18px;
             }
         </style>
     </body>

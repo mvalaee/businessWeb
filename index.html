@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welcome To Osstia</title>
+        <link rel="manifest" href="manifest.json">
+    </head>
+    <body>
+        <div id="logoBanner">
+            <a href="/"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <form action="/login.html"><input id="submitButton" type="submit" value="Login"></form>
+            <form action="/register.html"><input id="registerButton" type="submit" value="Sign Up"></form>
+        </div>
+
+        <p id="redBanner">Start connecting, building, and learning in high school</p>
+
+        <div id="content">
+            <span id="left" class="dot"></span>
+            <img id="img" src="http://localhost:8000/networkingWelcome.png">
+            <span id="right" class="dot"></span>    
+        </div>
+        
+
+        <p id="opp">Find Opportunities</p>
+        <br><br>
+        <p id="prof">Meet Professionals</p>
+        <br><br>
+        <p id="tips">Browse Tips & Templates</p>
+
+        <style>
+            html{
+                overflow-x: hidden;
+            }
+            #logoBanner{
+                background-color: #FAF7F7;
+                width: 1370px;
+                margin-left: -10px;
+                margin-top: -10px;
+                box-shadow: 5px 6px 5px #888888;
+            }
+            #logo {
+                margin-top: -40px;
+                margin-bottom: -40px;
+                /* padding-top: 15px; */
+            }
+            #img{
+                width: 400px;
+                height: 400px;
+                margin-left: -270px;
+                z-index: 3;
+            }
+            #submitButton {
+                background-color: #FAF7F7;
+                font-size: 30px;
+                color: #435059;
+                border-color: #435059;
+                height: 43px;
+                width: 110px;
+                float: right;
+                margin-top: -90px;
+                margin-right: 40px;
+            }
+            #registerButton {
+                background-color: #8DAABD;
+                font-size: 30px;
+                color: #435059;
+                border-color: #435059;
+                /* color: #0d0a57;
+                border-color: #0d0a57; */
+                height: 43px;
+                width: 140px;
+                margin-top: -90px;
+                margin-right: 170px;
+                float: right;
+            }
+            #redBanner {
+                padding: 15px 20px 15px 20px;
+                /* padding-left: 20px; */
+                width: 882px;
+                float: left;
+                margin-left: -10px;
+                /* margin-right: 450px; */
+                /* margin-left: -500px; */
+                color: white;
+                font-size: 30px;
+                background-color: #8579B5;
+            }
+            p {
+                float: right;
+                background-color: #bab9b8;
+                border: 1.5px solid gray;
+                font-size: 40px;
+                padding: 10px;
+                font-family: 'Roboto', sans-serif;
+                /* font-family: 'Cambria','Cochin', Georgia, Times, 'Times New Roman', serif; */
+                /* margin-bottom: 10px; */
+                width: 450px;
+                box-shadow: -3px 4px 5px #9c9c9c;
+                margin-right: 50px;
+            }
+            #opp {
+                margin-top: -340px;
+            }
+            #prof{
+                margin-top: -290px;
+                /* margin-right: -522px; */
+            }
+            #tips {
+                margin-top: -235px;
+                /* margin-right: -522px; */
+            }
+            .dot {
+                height: 400px;
+                width: 400px;
+                border-radius: 50%;
+                display: inline-block;
+                z-index: -1;
+            }
+            #left {
+                background-color: #443183;
+                opacity: 0.25;
+                margin-left: 30px;
+            }
+            #right {
+                background-color: #29648A;
+                opacity: 0.25;
+                margin-left: -280px;
+            }
+            #content {
+                margin-left: 30px;
+                margin-top: 150px;
+            }
+            body {
+                /* background-color: #f0f0f0; */
+                font-family: 'Times New Roman', Times, serif;
+            }
+        </style>
+
+    </body>
+</html>

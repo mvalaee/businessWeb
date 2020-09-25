@@ -15,6 +15,12 @@ function setCookie() {
 
 <body onload="setCookie()">
 <!-- <body> -->
+  <div id="logoBanner">
+    <a href="/"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+    <form action="/register.html"><input id="registerButton" type="submit" value="Sign Up"></form>
+    <!-- <form action="/login.html"><input id="submitButton" type="submit" value="Login"></form> -->
+</div>
+
   <div id="info">
     <h2 class="centre">${message}</h2>
 
@@ -22,15 +28,15 @@ function setCookie() {
 
 
     <form action="/login_page.html">
-      <label for="username">Username:</label><br>
-      <input class="textInput" type="text" id="username" name="username" placeholder="username" required><br>
+      <!-- <label for="username">Username:</label><br> -->
+      <input class="textInput" type="text" id="username" name="username" placeholder="Username" required><br>
       <br>
-      <label for="password">Password:</label><br>
-      <input class="textInput" type="password" id="password" name="password" placeholder="password" required><br><br>
+      <!-- <label for="password">Password:</label><br> -->
+      <input class="textInput" type="password" id="password" name="password" placeholder="Password" required><br><br>
       <input id="loginButton" type="submit" value="Submit">
     </form> 
 
-    <h3><a href="forgot_password.html">Forgot your password?</a></h3>
+    <p class="centre"><a href="forgot_password.html">Forgot your password?</a></p>
 
 
     <br>
@@ -38,101 +44,90 @@ function setCookie() {
     <!-- </form>  -->
   </div>
 
-  <div id="register">
-
-    <h2 class="centre">Register Here</h2>
-
-    <p class="centre"> Please enter the following information to create an account</p>
- 
-    <form action="/registering_page.html">
-      <label for="firstname">First Name:</label><br>
-      <input class="textInput" type="text" id="firstname" name="firstname" placeholder="first name" required><br>
-      <br>
-      <label for="lastname">Last Name:</label><br>
-      <input class="textInput" type="text" id="lastname" name="lastname" placeholder="last name" required><br>
-      <br>
-      <label for="username">Username:</label><br>
-      <input class="textInput" type="text" id="username" name="username" placeholder="username" required><br>
-      <br>
-      <label for="password">Password:</label><br>
-      <input class="textInput" type="text" id="password" name="password" placeholder="password" required><br>
-      <br>
-      <label for="email">Email: </label><br>
-      <input class="textInput" type="text" id="email" name="email" placeholder="email" required><br>
-      <br>
-      <label for="school">School/Place of Work: </label><br>
-      <input class="textInput" type="text" id="school" name="school" placeholder="school" required><br>
-      <br>
-      <label for="accountType">Account Type: </label><br>
-      <select id="accountType" name="accountType" required>
-          <option value="student">Student</option>
-          <option value="employer">Employer</option>
-          <option value="parent"> Parent</option>
-      </select>
-      <br><br>
-      <label for="discipline">Discipline: </label><br>
-      <select id="discipline" name="discipline" required>
-          <option value="math">Math</option>
-          <option value="science">Science</option>
-          <option value="medicine">Medicine</option>
-          <option value="art">Art</option>
-          <option value="business">Business</option>
-          <option value="humanities">Humanities</option>
-          <option value="law">Law</option>
-          <option value="education">Education</option>
-      </select><br><br>
-      <input type="checkbox" id="terms" name="terms" value="terms" onchange="document.getElementById('submitButton').disabled = !this.checked;">
-      <label for="terms"> By checking this box, I acknowledge that I have read the <a href="terms.html">Terms & Conditions</a>, and I accept them</label><br><br>
-      <input id="submitButton" type="submit" value="Submit" disabled>
-    </form> 
-    
-  </div>
-
-  <style type="text/css">
-    #register {
-      float: right;
-      margin-right: 80px;
-      margin-top: -320px;
+  <style>
+    html{
+      overflow-x: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-image: url("http://localhost:8000/loginBackground.png");
+      background-size: 1370px 905px;
+      /* background-repeat: repeat;  */
+      /* background-color: #c7c1e0; */
     }
+    #registerButton {
+      float: right;
+      background-color: #8DAABD;
+      font-size: 30px;
+      color: #435059;
+      border-color: #435059;
+      height: 43px;
+      width: 140px;
+      margin-top: -90px;
+      margin-right: 40px;
+    }
+    .textInput{
+      /* border: 1.5px solid #29648A;
+      background-color: #dfebf2; */
+      border: 1.5px solid #929292;
+      background-color: #e2e2e2;
+      margin-left: 200px;
+      font-size: 25px;
+      /* font-family: 'Roboto', sans-serif; */
+      font-family: 'Times New Roman', 'Times', serif;
+    }
+    
+    #smaller .textInput{
+      width: 250px;
+    }
+    label:not(#thisThing){
+      margin-left: 200px;
+    }
+    #loginButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      /* font-family: 'Roboto', sans-serif; */
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      margin-left: 230px;
+    }
+    #info{
+      border: 3px solid #FAF7F7;
+      margin-left: 400px;
+      margin-right: 400px;
+      margin-top: 170px;
+      /* border-radius: 15px; */
+      /* background-color: #c1edf5; */
+      background-color: #FAF7F7;
+      color: #09174f;
+      box-shadow: 3px 4px 15px;
+    }
+    #info a {
+      color: #09174f;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -10px;
+      box-shadow: 5px 6px 5px #888888;
+      /* border-bottom: 2px solid #d79922; */
+    }
+    #logo {
+      margin-top: -40px;
+      margin-bottom: -40px;
+      /* padding-top: 15px; */
+    }
+    #username, #password{
+      width: 350px;
+      margin-left: 90px;
+      
+    }
+    .centre{
+      text-align: center;
+    }
+
   </style>
 
 
 </body>
-<!-- <style type="text/css">
-  body {
-    background-image: url(http://wallpapercrafter.com/uploads/posts/100625-typewriter_book_notebook_paper_writing_write.jpg);
-    background-repeat: no-repeat;
-    background-size: 1400px 800px;
-    font-family: "Footlight MT Light", serif;
-  }
-
-  #info {
-    background-color: white;
-    padding: 40px 0px 10px 10px;
-    margin: 200px 450px 0px 490px;
-    height: 390px;
-    width: 380px;
-  }
-
-  #loginButton{
-    background-color: #1fa9db;
-    width: 80px;
-    height: 40px;
-    margin-left: 150px;
-  }
-
-  label {
-    font-size: 20px;
-  }
-
-  .textInput {
-    font-size: 20px;
-    font-family: "Footlight MT Light", serif;
-    width: 93%
-  }
-
-  .centre{
-    text-align: center;
-  }
-</style> -->
 </html>

@@ -4,87 +4,185 @@
         <title>Professionals</title>
     </head>
     <body>
-        <div class="container">
-            <ul>
-                <li><a href="home_page.html">Home</a></li>
-                <li><a href="myFeed_page.html">My Feed</a></li>
-                <li><a href="posts_page.html">Posts</a></li>
-                <li class="active"><a href="professional_page.html">Meet Professionals</a></li>
-                <li><a href="profile_page.html">Profile</a></li>
-                <li><a href="tips_page.html">Tips & Templates</a></li>
-                <li><a href="survey.html">Feedback</a></li>
-                <li><a href="logOut_page.html">Log Out</a></li>
-                <li><form action="/userSearch.html">
-                   <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-                   <input id="submitButton" type="submit" value="Submit">
-               </form></li>
-            </ul>
-         </div>
+        <div id="logoBanner">
+            <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <div class="container">
+                <ul>
+                 <li class="none"><a href="home_page.html">Home</a></li>
+                 <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+                 <li class="none"><a href="posts_page.html">Posts</a></li>
+                 <li class="active"><a href="professional_page.html">Meet Professionals</a></li>
+                 <li class="none"><a href="profile_page.html">Profile</a></li>
+                 <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+                 <li class="none"><a href="survey.html">Feedback</a></li>
+                 <li class="none"><a href="logOut_page.html">Log Out</a></li>
+                 <li class="none"><form action="/userSearch.html">
+                    <input type="text" id="search" name="search" placeholder="Search...">
+                    <input id="submitButton" type="submit" value="Submit">
+                </form></li>
+                </ul>
+            </div>
+          </div>
 
-         <form action="/searchProfessional.html">
-            <label for="discipline">Discipline: </label>
-            <select id="discipline" name="discipline" required>
-                <option value="null">-----</option>
-                <option value="math">Math</option>
-                <option value="science">Science</option>
-                <option value="medicine">Medicine</option>
-                <option value="art">Art</option>
-                <option value="business">Business</option>
-                <option value="humanities">Humanities</option>
-                <option value="law">Law</option>
-                <option value="education">Education</option>
-            </select>
-            <input id="submitButton" type="submit" value="Submit">
-        </form>
-        <br>
-        <form action="/professional_page.html">
-            <button id="seeAllButton" value="SeeAll">See All Professionals</button>
-        </form>
+          <div id="div">
+            <form id="seeAll" action="/professional_page.html">
+                <button value="SeeAll">See All Professionals</button>
+            </form>
+             <form id="filter" action="/searchProfessional.html">
+                <label for="discipline">Discipline: </label>
+                <select name="discipline" required>
+                    <option value="null">-----</option>
+                    <option value="math">Math</option>
+                    <option value="science">Science</option>
+                    <option value="medicine">Medicine</option>
+                    <option value="art">Art</option>
+                    <option value="business">Business</option>
+                    <option value="humanities">Humanities</option>
+                    <option value="law">Law</option>
+                    <option value="education">Education</option>
+                </select>
+                <input id="submit" type="submit" value="Submit">
+            </form>
+            <br>    
+          </div>
+        
 
         <p>${message}</p>
 
         <style>
-            ul {
+            html{
+                overflow-x: hidden;
+                background-image: url("http://localhost:8000/loginBackground.png"); 
+                font-family: 'Roboto', sans-serif;
+            }
+            #search{
+              margin-top: 15px;
+              margin-left: 6px;
+            }
+            .container #submitButton{
+                color: #443183;
+                background-color: #c7c1e0;
+                border: 1px solid #443183; 
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 15px;
+            }
+            .container ul {
                 list-style-type: none;
-                margin-left: -10px;
+                margin-left: 260px;
                 padding: 0px;
+                margin-bottom: -4px;
                 overflow: hidden;
-                background-color: #212121;
+                background-color: #FAF7F7;
                 display: inline-block;
                 font-size: 20px;
-                width: 1370px;
+                width: 1100px;
+                margin-top: -100px;
             }
-            
-            li {
+            .container li {
                 float: left;
-                margin-left: 32.5px;
+                margin-left: -5px;
             }
-            
-            li a {
+            .container li a {
                 display: inline-block;
-                color: white;
                 text-align: center;
                 padding: 14px 11px;
                 text-decoration: none;
             }
-            
-            li a:hover {
+            .none a{
+                color: #000000;
+            }
+            .container li a:hover {
                 background-color: #0088A8;
             }
-            
-            .active {
-                        background: #0088A8;
-            }
-            
-            .container {
-                        margin-top: -30px;
-                        display: inline-block;
-                        position: relative;
-            }
-            
+            .active a{
+                background-color: #443183;
+                color: #ffffff;
+            }    
             .container a:hover {
                         text-decoration: underline;
             }
+            #logoBanner{
+                background-color: #FAF7F7;
+                width: 1370px;
+                margin-left: -10px;
+                margin-top: -10px;
+                box-shadow: 5px 6px 5px #888888;
+            }
+            #logo {
+                margin-top: -60px;
+                margin-bottom: -70px;
+                margin-left: -10px;
+            }
+            .profile{
+                background-color: #FAF7F7;
+                width: 300px;
+                margin-right: 15px;
+                border: 7px solid #8DAABD;
+                box-shadow: 3px 4px 15px;
+            }
+            #pic{
+                margin-top: 20px;
+                width: 100px;
+                height: 100px;
+                margin-left: 100px;
+            }
+            .centre{
+                text-align: center;
+            }
+            #name{
+                font-size: 25px;
+            }
+            #username, #discipline{
+                margin-top: -5px;
+                font-size: 20px;
+            }
+            .profile input{
+                color: #443183;
+                background-color: #c7c1e0;
+                border: 1px solid #443183; 
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20px;
+                margin-left: 90px;
+                margin-bottom: 5px;
+            }
+            table{
+                margin-left: 30px;
+            }
+            #div{
+                background-color: #8DAABD;
+                box-shadow: 2px 4px 5px;
+                margin-left: 435px;
+                margin-top: 20px;
+                border-radius: 10px;
+                width: 500px;
+            }
+            #filter{
+                margin-left: 225px;
+                margin-top: -27.5px;
+                color: #443183;
+                font-size: 20px;
+            }
+            #submit{
+                color: #443183;
+                background-color: #c7c1e0;
+                border: 1px solid #443183; 
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20px;
+            }
+            #seeAll button{
+                /* padding-top: 30px; */
+                margin-top: 15px;
+                margin-left: 10px;
+                color: #443183;
+                background-color: #c7c1e0;
+                border: 1px solid #443183; 
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20px;
+            }
+            tr{
+                display: inline-block;
+            }
+            
         </style>
     </body>
 </html>

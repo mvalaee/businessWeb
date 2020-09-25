@@ -11,7 +11,7 @@ var nodemailer = require('nodemailer');
 const { brotliDecompress } = require('zlib');
 
 const PORT = 8000;
-const __dir = "/Users/mvalaee/ICS workspaces/newBusinessPlan";
+const __dir = "/Users/mvalaee/ICS workspaces/newBusinessPlanPWA";
 const upload = multer({dest: __dir + '/images'});
 app.use(express.static(__dir + '/images'));
 app.use(cookieParser());
@@ -36,7 +36,7 @@ var server = app.listen(PORT, () => {
 
 
 app.get('/', function(req,res){
-	res.sendFile(__dir + '/welcomePage.html');
+	res.sendFile(__dir + '/index.html');
 });
 
 app.route('/login.html').get(function(req, res){
@@ -77,6 +77,12 @@ app.route('/login_page.html').get(function(req,res){
 		}
 	});	
 });	
+
+app.route('/register.html').get(function(req, res){
+	createPage('registerPage_template.html', 'registerPage.html', "", () => {
+		res.sendFile(__dir+'/registerPage.html');
+	});
+});
 
 app.route('/forgot_password.html').get(function(req, res){
 	createPage('forgotPassword_template.html', 'forgotPassword.html', "", () =>{
@@ -119,14 +125,14 @@ app.route('/email_check.html').get(function(req, res){
 					console.log(error);
 					} else {
 					console.log('Email sent: ' + info.response);
-					let str = "<p>Check your inbox for a verification code</p><form action='/resetting.html'><input type='hidden' name='key' value='" + key + "'><input type='hidden' name='email' value='" + email + "'><label for='password'>Please enter the verification code:</label><br><input type='text' name='myKey' required><br><label for='password'>Please enter a new password:</label><br><input type='text' id='password' name='password' required><br><br><input id='loginButton' type='submit' value='Submit'></form>";
+					let str = "<p id='line' class='centre'>Check your inbox for a verification code</p><form action='/resetting.html'><input type='hidden' name='key' value='" + key + "'><input type='hidden' name='email' value='" + email + "'><p class='centre'>Please enter the verification code:</p><br><input class='textInput' type='text' name='myKey' placeholder='Key' required><br><p class='centre' >Please enter a new password:</p><br><input type='text' placeholder='New Password' class='textInput' id='password' name='password' required><br><br><input id='setPass' type='submit' value='Set Password'></form>";
 					createPage('forgotPassword_template.html', 'forgotPassword.html', str, () =>{
 						res.sendFile(__dir + '/forgotPassword.html')
 					});
 					}
 				});
 			} else {
-				createPage('forgotPassword_template.html', 'forgotPassword.html', "The email you entered has no account linked to it", () =>{
+				createPage('forgotPassword_template.html', 'forgotPassword.html', "<p id='bold' class='centre'>The email you entered has no account linked to it</p>", () =>{
 					res.sendFile(__dir + '/forgotPassword.html')
 				});
 			}
@@ -164,7 +170,7 @@ app.route('/resetting.html').get(function(req, res){
 				}
 			});
 		} else {
-			let str = "<p>Check your inbox for a verification code</p><form action='/resetting.html'><input type='hidden' name='key' value='" + key + "'><input type='hidden' name='email' value='" + email + "'><label for='password'>Please enter the verification code:</label><br><input type='text' name='myKey' required><br><label for='password'>Please enter a new password:</label><br><input type='text' id='password' name='password' required><br><br><input id='loginButton' type='submit' value='Submit'></form><p>The verification key is incorrect</p>";
+			let str = "<p id='line' class='centre'>Check your inbox for a verification code</p><form action='/resetting.html'><input type='hidden' name='key' value='" + key + "'><input type='hidden' name='email' value='" + email + "'><p class='centre'>Please enter the verification code:</p><br><input class='textInput' type='text' name='myKey' placeholder='Key' required><br><p class='centre' >Please enter a new password:</p><br><input type='text' placeholder='New Password' class='textInput' id='password' name='password' required><br><br><input id='setPass' type='submit' value='Set Password'></form><p id='bold' class='centre'>The verification key is incorrect</p>";
 			createPage('forgotPassword_template.html', 'forgotPassword.html', str, () =>{
 				res.sendFile(__dir + '/forgotPassword.html')
 			});
@@ -185,7 +191,6 @@ app.route('/registering_page.html').get(function(req,res){
 	var discipline = q.query.discipline;
 	var followingList = [];
 	var savedPosts = [];
-	var children =[];
     
 	var myQuery = {username: userName};
 	var secondCheck = {email: eMail};
@@ -193,42 +198,29 @@ app.route('/registering_page.html').get(function(req,res){
 
 	fetchUserFromDB ( myQuery, ACCOUNT_COLLECTION, (result) => {
 	 	if (result) { // user name already exists
-			res.writeHead(200, {'Content-Type': 'text/html'});
+			//res.writeHead(200, {'Content-Type': 'text/html'});
 			var message = "That username is already in use. Please choose another one";
-			createPage('loginpage_template.html', 'loginpage.html', message, () => {
-				res.sendFile(__dir+'/loginpage.html');
+			console.log(message);
+			createPage('registerPage_template.html', 'registerPage.html', message, () => {
+				res.sendFile(__dir+'/registerPage.html');
+				console.log(message);
 			});
   			// res.write('The username "'+ result.username + '" already exists in the database. <br>');
   			// res.write('Please use another "username"')
-  			res.end();
+  			//res.end();
 	 	} else {
 			fetchUserFromDB ( secondCheck, ACCOUNT_COLLECTION, (second) => {
 				if (second) { // user name already exists
-				   res.writeHead(200, {'Content-Type': 'text/html'});
+				  // res.writeHead(200, {'Content-Type': 'text/html'});
 				   var message = "That email address is already in use. Please choose another one";
-				   createPage('loginpage_template.html', 'loginpage.html', message, () => {
-					   res.sendFile(__dir+'/loginpage.html');
-				   });
+				   console.log(message);
+				   createPage('registerPage_template.html', 'registerPage.html', message, () => {
+						res.sendFile(__dir+'/registerPage.html');
+					});
 					 // res.write('The username "'+ result.username + '" already exists in the database. <br>');
 					 // res.write('Please use another "username"')
-					 res.end();
+					 //res.end();
 				} else {
-					if (aCCountType === "parent"){
-						myObj = { 
-							firstname: firstName, 
-							lastname: lastName, 
-							username: userName, 
-							password: passWord,
-							email: eMail,
-							school: school,
-							accountType: aCCountType,
-							imgName: iMgName,
-							discipline: discipline,
-							followingList: followingList,
-							savedPosts: savedPosts,
-							children: children
-						};
-					} else {
 						myObj = { 
 							firstname: firstName, 
 							lastname: lastName, 
@@ -242,11 +234,11 @@ app.route('/registering_page.html').get(function(req,res){
 							followingList: followingList,
 							savedPosts: savedPosts
 						};
-					}
 
 					write2DB (myObj, ACCOUNT_COLLECTION);
 
 					var message = (" " + myObj.firstname + " " + myObj.lastname);
+					console.log(message);
 					createPage('homePage_template.html', 'homePage.html', message, () => {
 						fs.readFile('homePage.html', function(err, data) {
 							if (err) throw err;
@@ -310,67 +302,72 @@ app.route('/create_post.html').get((req,res) => {
 });
 
 app.route('/creatingPost_page.html').get(function(req,res){
-    var q = url.parse(req.url, true);
-	var cookie = req.cookies.sessionID;
-	
-	findCookie(cookie, res, (row) => {
-		if (row) {
-			extendExpiry(cookie);
-			cookieToDB(cookie, (result) => {
-				if (result) { //user found
-					// var name = result.firstname + " " + result.lastname;
-					// var username = result.username;
-					var title = q.query.title;
-					var address = q.query.address;
-					var city = q.query.city;
-					var country = q.query.country;
-					var postalCode = q.query.postalCode;
-					var age = q.query.age;
-					var contactInfo = q.query.contactInfo;
-					var oppType = q.query.oppType;
-					var supervisor  = q.query.supervisor;
-					var description  = q.query.description;
-					var keyWordsQuery = q.query.keyWords;
-					var discipline = q.query.discipline;
-					var keyWordsArr = keyWordsQuery.split(", ");
-					var tempDate = new Date();
-					var postId = "PO" + tempDate.getTime();
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		if (err) return console.log(err);
+		var q = url.parse(req.url, true);
+		var cookie = req.cookies.sessionID;
+		
+		findCookie(cookie, res, (row) => {
+			if (row) {
+				extendExpiry(cookie);
+				cookieToDB(cookie, (result) => {
+					if (result) { //user found
+						// var name = result.firstname + " " + result.lastname;
+						// var username = result.username;
+						var title = q.query.title;
+						var address = q.query.address;
+						var city = q.query.city;
+						var country = q.query.country;
+						var postalCode = q.query.postalCode;
+						var age = q.query.age;
+						var contactInfo = q.query.contactInfo;
+						var oppType = q.query.oppType;
+						var supervisor  = q.query.supervisor;
+						var description  = q.query.description;
+						// var keyWordsQuery = q.query.keyWords;
+						var discipline = q.query.discipline;
+						var virt = q.query.virt;
+						// var keyWordsArr = keyWordsQuery.split(", ");
+						var tempDate = new Date();
+						var postId = "PO" + tempDate.getTime();
 
-					var myObj = { 
-						postID: postId,
-						// name: name,
-						// username: username,
-						// imgName: result.imgName,
-						userID: result.imgName,
-						title: title,
-						address: address,
-						city: city,
-						country: country,
-						postalCode: postalCode,
-						age: age,
-						supervisor: supervisor,
-						contactInfo: contactInfo,
-						oppType: oppType,
-						description: description,
-						discipline: discipline,
-						date: getDate(),
-						keyWords: keyWordsArr
-					};
+						var myObj = { 
+							postID: postId,
+							// name: name,
+							// username: username,
+							// imgName: result.imgName,
+							userID: result.imgName,
+							title: title,
+							address: address,
+							city: city,
+							country: country,
+							postalCode: postalCode,
+							age: age,
+							supervisor: supervisor,
+							contactInfo: contactInfo,
+							oppType: oppType,
+							description: description,
+							discipline: discipline,
+							virt: virt,
+							date: getDate(),
+							// keyWords: keyWordsArr
+						}
 
-					write2DB (myObj, POST_COLLECTION);
-
-					displayPosts(result, res);
-				} else { // user not found
-					var message = "No such user! You may register a new account.";
-					createPage('loginPage_template.html', 'loginPage.html', message, () => {
-						res.sendFile(__dir+'/loginPage.html');
-					});
-				}
-			})
-		} else {
-			console.log("Inprofile page: cookie was expired")
-			sendReloginPage(res);
-		}
+						add2DB(myObj, POST_COLLECTION, () => {
+							res.redirect("http://localhost:8000/posts_page.html");
+						});
+					} else { // user not found
+						var message = "No such user! You may register a new account.";
+						createPage('loginPage_template.html', 'loginPage.html', message, () => {
+							res.sendFile(__dir+'/loginPage.html');
+						});
+					}
+				})
+			} else {
+				console.log("Inprofile page: cookie was expired")
+				sendReloginPage(res);
+			}
+		});
 	});
 });
 
@@ -586,20 +583,21 @@ app.route('/savedPosts_page.html').get(function(req, res){
 app.route('/search.html').get((req,res) => {
 	var q = url.parse(req.url, true);
 	var cookie = req.cookies.sessionID;
-	var search = q.query.search;
+	var virt = q.query.virt;
 	var age = q.query.age;
 	var position = q.query.position;
 	var discipline = q.query.discipline;
 	var city = q.query.city;
 	var country = q.query.country;
+	var page = "display";
 
     findCookie(cookie, res, (row) => {
 		if (row) {
 			extendExpiry(cookie);
 			cookieToDB(cookie, (result) => {
 				if (result) { //user found
-					filter('postPage_template.html', 'postPage.html', result, search, age, position, discipline, city, country, res, (inputFile, outputFile, result, sortedArray, res) => {
-						searchPost (inputFile, outputFile, result, sortedArray, res);
+					filter('postPage_template.html', 'postPage.html', page, result, age, position, discipline, virt, city, country, res, (inputFile, outputFile, page, result, sortedArray, res) => {
+						searchPost (inputFile, outputFile, page, result, sortedArray, res);
 					});
 					// console.log("X: " + x);
 				} else { // user not found
@@ -619,20 +617,64 @@ app.route('/search.html').get((req,res) => {
 app.route('/feedSearch.html').get((req,res) => {
 	var q = url.parse(req.url, true);
 	var cookie = req.cookies.sessionID;
-	var search = q.query.search;
+	var virt = q.query.virt;
 	var age = q.query.age;
 	var position = q.query.position;
 	var discipline = q.query.discipline;
 	var city = q.query.city;
 	var country = q.query.country;
+	var page = "feed";
 
     findCookie(cookie, res, (row) => {
 		if (row) {
 			extendExpiry(cookie);
 			cookieToDB(cookie, (result) => {
 				if (result) { //user found
-					filter('myFeed_template.html', 'myFeed.html', result, search, age, position, discipline, city, country, res, (inputFile, outputFile, result, sortedArray, res) => {
-						searchPost (inputFile, outputFile, result, sortedArray, res);
+					filter('myFeed_template.html', 'myFeed.html', "feed", result, age, position, discipline, virt, city, country, res, (inputFile, outputFile, page, result, sortedArray, res) => {
+						searchPost (inputFile, outputFile, page, result, sortedArray, res);
+					});
+				} else { // user not found
+					var message = "No such user! You may register a new account.";
+					createPage('loginPage_template.html', 'loginPage.html', message, () => {
+						res.sendFile(__dir+'/loginPage.html');
+					});
+				}
+			});
+		} else {
+			console.log("Inprofile page: cookie was expired")
+			sendReloginPage(res);
+		}
+    });
+});
+
+app.route('/oppSearch.html').get((req,res) => {
+	var q = url.parse(req.url, true);
+	var cookie = req.cookies.sessionID;
+	var virt = q.query.virt;
+	var age = q.query.age;
+	var position = q.query.position;
+	var discipline = q.query.discipline;
+	var city = q.query.city;
+	var country = q.query.country;
+	var page = "opp";
+	var profile = q.query.profile;
+
+    findCookie(cookie, res, (row) => {
+		if (row) {
+			extendExpiry(cookie);
+			cookieToDB(cookie, (result) => {
+				if (result) { //user found
+					filter('myPosts_template.html', 'myPosts.html', page, result, age, position, discipline, virt, city, country, res, (inputFile, outputFile, page, result, sortedArray, res) => {
+						MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+							if (err) return console.log(err);
+							var dbc = client.db(DB_NAME).collection(ACCOUNT_COLLECTION);		  
+							dbc.findOne({imgName: profile}, function(err, person) {
+								if(err) return console.log(err);
+								if(person){
+									searchMyPost (inputFile, outputFile, page, result, sortedArray, person, res);
+								}
+							});
+						});
 					});
 				} else { // user not found
 					var message = "No such user! You may register a new account.";
@@ -722,52 +764,193 @@ app.route('/profile_update.html').get(function(req, res){
 					if (result) { //user found
 						var oldUserName  = result.username;
 						if (oldUserName !== newUserName){
-							dbc.findOne({username: newUserName}, function(err, profile) {
-								if(err) return console.log(err);
-								if(profile){
-									console.log("The username " + profile.username + " is taken");
-
+							console.log("first");
+							dbc.findOne({username: newUserName}, function(err, array) {
+								if(err) return console.log(error);
+								// console.log("Array: " + array.username);
+								if(array){
+									let string = '';
+									string += "The username " +  newUserName + " is taken\n";
+									let newRow = [];
 									var d = new Date();
 									var expiryTime = d.getTime()+ COOKIE_EXPIRY_TIME;
 									var expireGMT  = d.toGMTString();
-									var row = [	cookie,
-												expiryTime,
-												expireGMT,
-												newFirstName,
-												newLastName,
-												oldUserName,
-												newPassWord ];
-
-									updateCookie(row, (newRow) => {
-										cookieToDB(cookie, (newResult) => {
-											if (newResult) { //user found
-												let string = "That username is taken, please choose a different one";
-												newRow.push(newResult.email, newResult.school, newResult.accountType, newResult.imgName, string);
+									newRow.push(cookie,expiryTime,expireGMT,result.firstname,result.lastname,result.username,result.password,result.email, result.school, result.accountType, result.imgName, string)
+									console.log("newRow: " + newRow);
+									// newRow.push(result.email, result.school, result.accountType, result.imgName, string);
+									// var oldUserName  = result.username;
+									// var myQuery = {username: oldUserName};
+									if(result.accountType === "student"){
+										createProfilePage('studentProfilePage_template.html', 'profilePage.html', newRow, () =>{
+											res.sendFile(__dir + '/profilePage.html');		
+										});
+									} else if (result.accountType === "employer"){
+										createProfilePage('employerProfilePage_template.html', 'profilePage.html', newRow, () =>{
+											res.sendFile(__dir + '/profilePage.html');		
+										});
+									}
+								} else {
+									if (result.email !== newEmail){
+										dbc.findOne({email: newEmail}, function(err, array) {
+											if(err) return console.log(error);
+											// console.log("Array: " + array);
+											if(array){
+												let str = '';
+												str += " The email " + newEmail + " is taken";
+												let newerRow = [];
+												var d = new Date();
+												var expiryTime = d.getTime()+ COOKIE_EXPIRY_TIME;
+												var expireGMT  = d.toGMTString();
+												newerRow.push(cookie,expiryTime,expireGMT,result.firstname,result.lastname,result.username,result.password,result.email, result.school, result.accountType, result.imgName, str);
+												console.log("newerRow: " + newerRow);
+												console.log(" The email " + newEmail + " is taken");
+												// newRow.push(result.email, result.school, result.accountType, result.imgName, string);
 												// var oldUserName  = result.username;
 												// var myQuery = {username: oldUserName};
-												if(newResult.accountType === "student"){
-													createProfilePage('studentProfilePage_template.html', 'profilePage.html', newRow, () =>{
+												if(result.accountType === "student"){
+													createProfilePage('studentProfilePage_template.html', 'profilePage.html', newerRow, () =>{
 														res.sendFile(__dir + '/profilePage.html');		
 													});
-												} else if (newResult.accountType === "employer"){
-													createProfilePage('employerProfilePage_template.html', 'profilePage.html', newRow, () =>{
+												} else if (result.accountType === "employer"){
+													createProfilePage('employerProfilePage_template.html', 'profilePage.html', newerRow, () =>{
 														res.sendFile(__dir + '/profilePage.html');		
 													});
 												}
-											} else { // user not found
-												var message = "No such user! You may register a new account.";
-												createPage('loginPage_template.html', 'loginPage.html', message, () => {
-													res.sendFile(__dir+'/loginPage.html');
+											} else {
+												var myQuery = {username: oldUserName};
+												var myNewObj = { $set: {    firstname: newFirstName,
+																			lastname: newLastName,
+																			username: newUserName,
+																			password: newPassWord,
+																			email: newEmail,
+																			school: newSchool,
+																			accountType: newAccountType }
+																		};
+												updateDB(myQuery, myNewObj, ACCOUNT_COLLECTION, () => {});
+			
+												var d = new Date();
+												var expiryTime = d.getTime()+ COOKIE_EXPIRY_TIME;
+												var expireGMT  = d.toGMTString();
+												var row = [	cookie,
+															expiryTime,
+															expireGMT,
+															newFirstName,
+															newLastName,
+															newUserName,
+															newPassWord ];
+			
+												updateCookie(row, (newRow) => {
+													cookieToDB(cookie, (result) => {
+														if (result) { //user found
+															let string = " ";
+															newRow.push(result.email, result.school, result.accountType, result.imgName, string);
+																// var oldUserName  = result.username;
+																// var myQuery = {username: oldUserName};
+															if(result.accountType === "student"){
+																createProfilePage('studentProfilePage_template.html', 'profilePage.html', newRow, () =>{
+																	res.sendFile(__dir + '/profilePage.html');		
+																});
+															} else if (result.accountType === "employer"){
+																createProfilePage('employerProfilePage_template.html', 'profilePage.html', newRow, () =>{
+																	res.sendFile(__dir + '/profilePage.html');		
+																});
+															}
+														} else { // user not found
+															var message = "No such user! You may register a new account.";
+															createPage('loginPage_template.html', 'loginPage.html', message, () => {
+																res.sendFile(__dir+'/loginPage.html');
+															});
+														}
+													});
 												});
 											}
-										})
-									});										
+										});
+									} else {
+										var myQuery = {username: oldUserName};
+										var myNewObj = { $set: {    firstname: newFirstName,
+																	lastname: newLastName,
+																	username: newUserName,
+																	password: newPassWord,
+																	email: newEmail,
+																	school: newSchool,
+																	accountType: newAccountType }
+																};
+										updateDB(myQuery, myNewObj, ACCOUNT_COLLECTION, () => {});
+
+										var d = new Date();
+										var expiryTime = d.getTime()+ COOKIE_EXPIRY_TIME;
+										var expireGMT  = d.toGMTString();
+										var row = [	cookie,
+													expiryTime,
+													expireGMT,
+													newFirstName,
+													newLastName,
+													newUserName,
+													newPassWord ];
+
+										updateCookie(row, (newRow) => {
+											cookieToDB(cookie, (result) => {
+												if (result) { //user found
+													let string = " ";
+													newRow.push(result.email, result.school, result.accountType, result.imgName, string);
+														// var oldUserName  = result.username;
+														// var myQuery = {username: oldUserName};
+													if(result.accountType === "student"){
+														createProfilePage('studentProfilePage_template.html', 'profilePage.html', newRow, () =>{
+															res.sendFile(__dir + '/profilePage.html');		
+														});
+													} else if (result.accountType === "employer"){
+														createProfilePage('employerProfilePage_template.html', 'profilePage.html', newRow, () =>{
+															res.sendFile(__dir + '/profilePage.html');		
+														});
+													}
+												} else { // user not found
+													var message = "No such user! You may register a new account.";
+													createPage('loginPage_template.html', 'loginPage.html', message, () => {
+														res.sendFile(__dir+'/loginPage.html');
+													});
+												}
+											});
+										});
+									}
+								}
+							});
+						} else if (result.email !== newEmail){
+							console.log("second");
+							dbc.findOne({email: newEmail}, function(err, person) {
+								if(err) return console.log(error);
+								// console.log("Array: " + array);
+								if(person){
+									console.log("person")
+									console.log("Array: " + person.email);
+									console.log("Array: " + person.username);
+									let thisString = '';
+									thisString += " The email " + newEmail + " is taken";
+									let thisRow = [];
+									var d = new Date();
+									var expiryTime = d.getTime()+ COOKIE_EXPIRY_TIME;
+									var expireGMT  = d.toGMTString();
+									thisRow.push(cookie,expiryTime,expireGMT,result.firstname,result.lastname,result.username,result.password,result.email, result.school, result.accountType, result.imgName, thisString)
+									// console.log("newRow: " + newRow);
+									// newRow.push(result.email, result.school, result.accountType, result.imgName, string);
+									// var oldUserName  = result.username;
+									// var myQuery = {username: oldUserName};
+									if(result.accountType === "student"){
+										createProfilePage('studentProfilePage_template.html', 'profilePage.html', thisRow, () =>{
+											res.sendFile(__dir + '/profilePage.html');		
+										});
+									} else if (result.accountType === "employer"){
+										createProfilePage('employerProfilePage_template.html', 'profilePage.html', thisRow, () =>{
+											res.sendFile(__dir + '/profilePage.html');		
+										});
+									}
 								} else {
+									console.log("no find")
 									var myQuery = {username: oldUserName};
 									var myNewObj = { $set: {    firstname: newFirstName,
 																lastname: newLastName,
 																username: newUserName,
-													 			password: newPassWord,
+																password: newPassWord,
 																email: newEmail,
 																school: newSchool,
 																accountType: newAccountType }
@@ -790,8 +973,8 @@ app.route('/profile_update.html').get(function(req, res){
 											if (result) { //user found
 												let string = " ";
 												newRow.push(result.email, result.school, result.accountType, result.imgName, string);
-												// var oldUserName  = result.username;
-												// var myQuery = {username: oldUserName};
+													// var oldUserName  = result.username;
+													// var myQuery = {username: oldUserName};
 												if(result.accountType === "student"){
 													createProfilePage('studentProfilePage_template.html', 'profilePage.html', newRow, () =>{
 														res.sendFile(__dir + '/profilePage.html');		
@@ -807,8 +990,8 @@ app.route('/profile_update.html').get(function(req, res){
 													res.sendFile(__dir+'/loginPage.html');
 												});
 											}
-										})
-									});	
+										});
+									});
 								}
 							});
 						} else {
@@ -839,8 +1022,8 @@ app.route('/profile_update.html').get(function(req, res){
 									if (result) { //user found
 										let string = " ";
 										newRow.push(result.email, result.school, result.accountType, result.imgName, string);
-										// var oldUserName  = result.username;
-										// var myQuery = {username: oldUserName};
+											// var oldUserName  = result.username;
+											// var myQuery = {username: oldUserName};
 										if(result.accountType === "student"){
 											createProfilePage('studentProfilePage_template.html', 'profilePage.html', newRow, () =>{
 												res.sendFile(__dir + '/profilePage.html');		
@@ -856,8 +1039,8 @@ app.route('/profile_update.html').get(function(req, res){
 											res.sendFile(__dir+'/loginPage.html');
 										});
 									}
-								})
-							});	
+								});
+							});
 						}
 					} else { // user not found
 						var message = "No such user! You may register a new account.";
@@ -1162,6 +1345,38 @@ app.route('/myPosts_page.html').get(function(req, res){
 	});
 });
 
+app.route('/myPosts_seeAll.html').get(function(req, res){
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		if (err) return console.log(err);
+		var cookie = req.cookies.sessionID;
+		var q = url.parse(req.url, true);
+		var currProfile = q.query.profile;
+
+		findCookie(cookie, res, (row) => {
+			if (row) {
+				extendExpiry(cookie);
+				cookieToDB(cookie, (result) => {
+					if (result) { //user found
+						var dbc = client.db(DB_NAME).collection(ACCOUNT_COLLECTION);		  
+						dbc.findOne({imgName: currProfile}, function(err, profile) {
+							if(err) return console.log(err);
+							myPosts(result, profile, res);
+						});
+					} else { // user not found
+						var message = "No such user! You may register a new account.";
+						createPage('loginPage_template.html', 'loginPage.html', message, () => {
+							res.sendFile(__dir+'/loginPage.html');
+						});
+					}
+				});
+			} else {
+				console.log("Inprofile page: cookie was expired")
+				sendReloginPage(res);
+			}
+		});
+	});
+});
+
 app.route('/wall_page.html').get(function(req, res){
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		var q = url.parse(req.url, true);
@@ -1194,34 +1409,6 @@ app.route('/wall_page.html').get(function(req, res){
 	});
 });
 
-app.route('/askWall.html').get((req,res) => {
-	var cookie = req.cookies.sessionID;
-	var q = url.parse(req.url, true);
-	var to = q.query.newQ;
-
-	findCookie(cookie, res, (row) => {
-		if (row) {
-			extendExpiry(cookie);
-			cookieToDB(cookie, (result) => {
-				if (result) { //user found
-					let myObj = [to, result.imgName];
-					createQuestionPage('questionPage_template.html', 'questionPage.html', myObj, () =>{
-						res.sendFile(__dir + '/questionPage.html');		
-					});
-				} else { // user not found
-					var message = "No such user! You may register a new account.";
-					createPage('loginPage_template.html', 'loginPage.html', message, () => {
-						res.sendFile(__dir+'/loginPage.html');
-					});
-				}
-			})
-		} else {
-			console.log("Inprofile page: cookie was expired")
-			sendReloginPage(res);
-		}
-	});
-});
-
 app.route('/askingWall.html').get(function(req, res){
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if(err) return console.log(err);
@@ -1234,6 +1421,9 @@ app.route('/askingWall.html').get(function(req, res){
 		var question = q.query.question;
 		var tempDate = new Date();
 		var postId = "PO" + tempDate.getTime();
+
+		console.log("Wall Profile: " + wallProfile);
+		console.log("Curr User: " + currUser);
 			
 		findCookie(cookie, res, (row) => {
 			if (row) {
@@ -1281,9 +1471,7 @@ app.route('/askingWall.html').get(function(req, res){
 											console.log('Email sent: ' + info.response);
 											}
 										});
-		
-										displayWall(wallProfile, currUser, res);
-
+										displayWall(result, profile, res);
 									}
 								});
 							}				
@@ -1382,6 +1570,11 @@ app.route('/replyWall.html').get(function(req, res){
 		}
 	});
    });
+});
+
+app.route('/tips_page.html').get(function(req, res){
+	// createPage('tips_template.html', 'tips.html', )
+	res.sendFile(__dir + '/tips.html');
 });
 
 app.route('/survey.html').get(function(req, res){
@@ -1501,6 +1694,23 @@ function write2DB (myobj, collection){
 	})
 }
 
+function add2DB (myobj, collection, callback){
+	MongoClient.connect(DB_URL, 
+		{ useUnifiedTopology: true }, 
+		(err, client) => {
+		 if (err) return console.log(err);
+
+		 // Storing a reference to the database so you can use it later
+		 var dbc = client.db(DB_NAME).collection(collection);		  
+		 dbc.insertOne(myobj, function(err, res) {
+		  if (err) throw err;
+		  console.log("Inserted document =", myobj);
+		  callback();
+		 })
+
+	})
+}
+
 function updateDB (myQuery, myobj, collection, callback) {
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 	 if (err) return console.log(err);
@@ -1544,7 +1754,7 @@ function fetchUserFromDB (myQuery, collection, callback) {
 function displayPosts (currUser, res) {
     MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if (err) return console.log(err);
-
+		showFullDB(POST_COLLECTION);
 		var str = "";
 
 		if(currUser.accountType === "employer"){
@@ -1558,12 +1768,15 @@ function displayPosts (currUser, res) {
 			if(result){
 				var sortedArray = result.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
+				console.log(sortedArray.length);
+
 				if(sortedArray.length == 0){
-					str += "<p>There are no posts yet</p>";
+					str += "<p class='centre'>There are no posts yet</p>";
 					createPage('postPage_template.html', 'postPage.html', str, () =>{
 						res.sendFile(__dir + '/postPage.html');
 					});
 				} else {
+					str += "<table>";
 					for(let i = 0; i < sortedArray.length; i++){
 						let boolean = false;
 						let userID = sortedArray[i].userID
@@ -1572,36 +1785,51 @@ function displayPosts (currUser, res) {
 							if(err) console.log(err);
 							if(user){
 								let post = sortedArray[i];
-								str += ("<p>Name: " + user.firstname + " " + user.lastname+"</p>");
-								str += ("<p> Username: " + user.username+"</p>");
-								str += ("<p> Title: " + post.title+"</p>");
-								str += ("<p> Address: " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
-								str += ("<p> Minimum Age: " + post.age+"</p>");
-								str += ("<p> Supervisor: " + post.supervisor+"</p>");
-								str += ("<p> Contact Information: " + post.contactInfo+"</p>");
-								str += ("<p> Opportunity Type: " + post.oppType+"</p>");
-								str += ("<p> Description: " + post.description+"</p>");
-								str += ("<p> Discipline: " + post.discipline+"</p>");
-								str += ("<p> Date: " + post.date+"</p>");
-								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input type='submit' value='View Profile'></form>");
+								if(i % 2 === 0){
+									str += "<tr>"
+								}
+								str += "<td>"
+								str += "<div class='post'>";
+								str += ("<p class='name'>" + user.firstname + " " + user.lastname+"</p>");
+								str += ("<p class='username'>" + user.username+"</p>");
+								str += ("<p class='title'> " + post.title+"</p>");
+								str += ("<p class='description'>" + post.description+"</p>");
+								str += ("<p class='address'><span class='color'>Address:</span> " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
+								str += ("<p class='age'><span class='color'>Minimum Age:</span> " + post.age+"</p>");
+								str += ("<p class='supervisor'><span class='color'>Supervisor:</span> " + post.supervisor+"</p>");
+								str += ("<p class='contactInfo'><span class='color'>Contact Information:</span> " + post.contactInfo+"</p>");
+								str += ("<p class='oppType'>" + post.oppType+"</p>");
+								str += ("<p class='discipline'><span class='color'>Discipline:</span> " + post.discipline+"</p>");
+								str += ("<p class='virt'><span class='color'>Virtual/In Person:</span> " + post.virt+"</p>");
+								str += ("<p class='date'>" + post.date+"</p>");
+								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input class='viewProfile' type='submit' value='View Profile'></form>");
 								// console.log("Check: " + currUser.savedPosts.includes(curVal.postID));
 								if(user.imgName === currUser.imgName){
-									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Delete Post'></form>");
+									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input class='deletePost' type='submit' value='Delete Post'></form>");
 								}
 								if(currUser.savedPosts.includes(post.postID) === false){
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Save Post'></form>");
+									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Save Post'></form>");
 								} else {
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Unsave Post'></form>");
+									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Unsave Post'></form>");
+								}
+								str += "</div>";
+								str += "</td>";
+								if(i % 2 === 0){
+									str += "</tr>";
 								}
 								if(boolean === true && i === sortedArray.length-1){
+									str += "</table>";
 									createPage('postPage_template.html', 'postPage.html', str, () =>{
+										// history.replaceState(null, null, "/post_page.html"); 
+										
 										res.sendFile(__dir + '/postPage.html');
+										// res.end();
 									});
 								}
 							}
@@ -1642,7 +1870,7 @@ function savedPosts (currUser, res) {
 				}
 
 				if(sortedArray.length == 0){
-					str += "<p>You have no saved posts</p>";
+					str += "<p class='centre'>You have no saved posts</p>";
 					if(currUser.accountType === "student"){
 						createMyPostsPage('studentSavedPosts_template.html', 'savedPosts.html', str, currUser, () =>{
 							res.sendFile(__dir + '/savedPosts.html');
@@ -1653,6 +1881,7 @@ function savedPosts (currUser, res) {
 						});
 					}	
 				} else {
+					str += "<table>";
 					for(let i = 0; i < sortedArray.length; i++){
 						let boolean = false;
 						let userID = sortedArray[i].userID
@@ -1661,43 +1890,55 @@ function savedPosts (currUser, res) {
 							if(err) console.log(err);
 							if(user){
 								let post = sortedArray[i];
-								str += ("<p>Name: " + user.firstname + " " + user.lastname+"</p>");
-								str += ("<p> Username: " + user.username+"</p>");
-								str += ("<p> Title: " + post.title+"</p>");
-								str += ("<p> Address: " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
-								str += ("<p> Minimum Age: " + post.age+"</p>");
-								str += ("<p> Supervisor: " + post.supervisor+"</p>");
-								str += ("<p> Contact Information: " + post.contactInfo+"</p>");
-								str += ("<p> Opportunity Type: " + post.oppType+"</p>");
-								str += ("<p> Description: " + post.description+"</p>");
-								str += ("<p> Discipline: " + post.discipline+"</p>");
-								str += ("<p> Date: " + post.date+"</p>");
-								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input type='submit' value='View Profile'></form>");
+								if(i % 2 === 0){
+									str += "<tr>"
+								}
+								str += "<td>"
+								str += "<div class='post'>";
+								str += ("<p class='name'>" + user.firstname + " " + user.lastname+"</p>");
+								str += ("<p class='username'>" + user.username+"</p>");
+								str += ("<p class='title'> " + post.title+"</p>");
+								str += ("<p class='description'>" + post.description+"</p>");
+								str += ("<p class='address'><span class='color'>Address:</span> " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
+								str += ("<p class='age'><span class='color'>Minimum Age:</span> " + post.age+"</p>");
+								str += ("<p class='supervisor'><span class='color'>Supervisor:</span> " + post.supervisor+"</p>");
+								str += ("<p class='contactInfo'><span class='color'>Contact Information:</span> " + post.contactInfo+"</p>");
+								str += ("<p class='oppType'>" + post.oppType+"</p>");
+								str += ("<p class='discipline'><span class='color'>Discipline:</span> " + post.discipline+"</p>");
+								str += ("<p class='virt'><span class='color'>Virtual/In Person:</span> " + post.virt+"</p>");
+								str += ("<p class='date'>" + post.date+"</p>");
+								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input class='viewProfile' type='submit' value='View Profile'></form>");
 								// console.log("Check: " + currUser.savedPosts.includes(curVal.postID));
 								if(user.imgName === currUser.imgName){
-									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Delete Post'></form>");
+									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input class='deletePost' type='submit' value='Delete Post'></form>");
 								}
 								if(currUser.savedPosts.includes(post.postID) === false){
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Save Post'></form>");
+									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Save Post'></form>");
 								} else {
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Unsave Post'></form>");
+									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Unsave Post'></form>");
+								}
+								str += "</div>";
+								str += "</td>";
+								if(i % 2 === 0){
+									str += "</tr>";
 								}
 								if(boolean === true && i === sortedArray.length-1){
+									str += "</table>";
 									if(currUser.accountType === "student"){
-										createPage('studentSavedPosts_template.html', 'savedPosts.html', str, () =>{
+										createMyPostsPage('studentSavedPosts_template.html', 'savedPosts.html', str, currUser, () =>{
 											res.sendFile(__dir + '/savedPosts.html');
 										});
 									} else if (currUser.accountType === "employer"){
-										createPage('employerSavedPosts_template.html', 'savedPosts.html', str, () =>{
+										createMyPostsPage('employerSavedPosts_template.html', 'savedPosts.html', str, currUser, () =>{
 											res.sendFile(__dir + '/savedPosts.html');
 										});
-									}
+									}	
 								}
 							}
 						});
@@ -1719,32 +1960,30 @@ function displayProfessionals (res) {
 
 			str += "<table>";
 			for (var i = 0; i < result.length; i++) {
-				str += "<tr>";
-				for(var j = 0; j < 5; j++) {
-					str += "<td>";
+				if(i % 4 === 0){
+					str += "<tr>"
+				}
+					str += "<td>"
+					str += "<div class='profile'>"
 					var imagePath = __dir + "/images/" + result[i].imgName;
 					var imageFileName;
-					if (j === 0) {
-						if (fs.existsSync(imagePath)) {
-							console.log("file exists")
-							imageFileName = result[i].imgName;
-						} else {
-							console.log("file does not exsit")
-							imageFileName = "avatar.jpg";
-						}
-						str += ("<img src='" + imageFileName + "' width='50' height='50'>");						
-					} else if(j === 1){
-						str += ("Name: " + result[i].firstname + " " + result[i].lastname);
-					} else if(j === 2){
-						str += ("Username: " + result[i].username);
-					} else if (j === 3) {
-						str += ("Discipline: " + result[i].discipline);	
+					if (fs.existsSync(imagePath)) {
+						console.log("file exists")
+						imageFileName = result[i].imgName;
 					} else {
-						str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + result[i].imgName + "'><input type='submit' value='View Profile'></form>");
+						console.log("file does not exsit")
+						imageFileName = "avatar.jpg";
 					}
-				str += "</td>";
+					str += ("<img id='pic' src='" + imageFileName + "'>");
+					str += ("<p class='centre' id='name'>" + result[i].firstname + " " + result[i].lastname+"</p>");
+					str += ("<p class='centre' id='username'>" + result[i].username+"</p>");
+					str += ("<p class='centre' id='discipline'>Discipline: " + result[i].discipline+"</p>");	
+					str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + result[i].imgName + "'><input type='submit' value='View Profile'></form>");
+					str += "</div>";
+					str += "</td>";
+				if(i % 4 === 0){
+					str += "</tr>"
 				}
-			str += "</tr>";
 			}
 			str += "</table>";
 			createPage('professional_template.html', 'professional.html', str, () =>{
@@ -1786,19 +2025,20 @@ function myPosts (currUser, currProfile, res){
 				}
 
 				if(sortedArray.length == 0){
-					str += "<p>This account has no posts</p>";
+					str += "<p class='centre'>This account has no posts</p>";
 					if(currProfile.imgName === currUser.imgName){
+						console.log("Hello World");
 						createMyPostsPage('myPosts_template.html', 'myPosts.html', str, currProfile, () =>{
 							res.sendFile(__dir + '/myPosts.html');
 						});
 					} else {
-						createMyPostsPage('myPosts_template.html', 'myPosts.html', str, currProfile, () =>{
+						console.log("Goodbye World");
+						createMyPostsPage('searchedMyPosts_template.html', 'myPosts.html', str, currProfile, () =>{
 							res.sendFile(__dir + '/myPosts.html');
 						});
 					}
 				} else {
-					console.log(currProfile);
-					console.log(currUser);
+					str += "<table>";
 					for(let i = 0; i < sortedArray.length; i++){
 						let boolean = false;
 						let userID = sortedArray[i].userID
@@ -1807,36 +2047,48 @@ function myPosts (currUser, currProfile, res){
 							if(err) console.log(err);
 							if(user){
 								let post = sortedArray[i];
-								str += ("<p>Name: " + user.firstname + " " + user.lastname+"</p>");
-								str += ("<p> Username: " + user.username+"</p>");
-								str += ("<p> Title: " + post.title+"</p>");
-								str += ("<p> Address: " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
-								str += ("<p> Minimum Age: " + post.age+"</p>");
-								str += ("<p> Supervisor: " + post.supervisor+"</p>");
-								str += ("<p> Contact Information: " + post.contactInfo+"</p>");
-								str += ("<p> Opportunity Type: " + post.oppType+"</p>");
-								str += ("<p> Description: " + post.description+"</p>");
-								str += ("<p> Discipline: " + post.discipline+"</p>");
-								str += ("<p> Date: " + post.date+"</p>");
-								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input type='submit' value='View Profile'></form>");
+								if(i % 2 === 0){
+									str += "<tr>"
+								}
+								str += "<td>"
+								str += "<div class='post'>";
+								str += ("<p class='name'>" + user.firstname + " " + user.lastname+"</p>");
+								str += ("<p class='username'>" + user.username+"</p>");
+								str += ("<p class='title'> " + post.title+"</p>");
+								str += ("<p class='description'>" + post.description+"</p>");
+								str += ("<p class='address'><span class='color'>Address:</span> " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
+								str += ("<p class='age'><span class='color'>Minimum Age:</span> " + post.age+"</p>");
+								str += ("<p class='supervisor'><span class='color'>Supervisor:</span> " + post.supervisor+"</p>");
+								str += ("<p class='contactInfo'><span class='color'>Contact Information:</span> " + post.contactInfo+"</p>");
+								str += ("<p class='oppType'>" + post.oppType+"</p>");
+								str += ("<p class='discipline'><span class='color'>Discipline:</span> " + post.discipline+"</p>");
+								str += ("<p class='virt'><span class='color'>Virtual/In Person:</span> " + post.virt+"</p>");
+								str += ("<p class='date'>" + post.date+"</p>");
+								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input class='viewProfile' type='submit' value='View Profile'></form>");
 								// console.log("Check: " + currUser.savedPosts.includes(curVal.postID));
 								if(user.imgName === currUser.imgName){
-									str += ("<form action='/deletePost.html'><input type='hidden' name='profile' value='"+currProfile+"'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Delete Post'></form>");
+									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='" + post.postID + "'><input class='deletePost' type='submit' value='Delete Post'></form>");
 								}
 								if(currUser.savedPosts.includes(post.postID) === false){
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Save Post'></form>");
+									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Save Post'></form>");
 								} else {
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='saved'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Unsave Post'></form>");
+									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Unsave Post'></form>");
+								}
+								str += "</div>";
+								str += "</td>";
+								if(i % 2 === 0){
+									str += "</tr>";
 								}
 								if(boolean === true && i === sortedArray.length-1){
+									str += "</table>";
 									if(currProfile.imgName === currUser.imgName){
-										console.log("Hello World");
+										// console.log("Hello World");
 										createMyPostsPage('myPosts_template.html', 'myPosts.html', str, currProfile, () =>{
 											res.sendFile(__dir + '/myPosts.html');
 										});
@@ -1844,7 +2096,7 @@ function myPosts (currUser, currProfile, res){
 										createMyPostsPage('searchedMyPosts_template.html', 'myPosts.html', str, currProfile, () =>{
 											res.sendFile(__dir + '/myPosts.html');
 										});
-									}
+									}	
 								}
 							}
 						});
@@ -1860,7 +2112,7 @@ function displayWall (currProfile, currUser, res) {
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if (err) return console.log(err);
 
-		var str = "";
+		var str = "<div id='content'>";
 		// var sortedArray = [];
 		// let marker = false;
 		if(currProfile == null){
@@ -1868,8 +2120,9 @@ function displayWall (currProfile, currUser, res) {
 		}
 
 		// if(currUser.imgName != currProfile.imgName){
-		str += ("<form action='/askWall.html'><button name='newQ' value='" + currProfile.imgName + "'>Ask A New Question</button></form>");
+		str += ("<form id='newQ' action='/askingWall.html'><input type='hidden' id='to' name='to' value='"+currProfile.imgName+"' required><input type='hidden' id='from' name='from' value='"+currUser.imgName+"' required><input class='textInput' type='text' id='question' name='question' placeholder='Ask a question...' required><input class='this' type='submit' value='Ask A New Question'></form>");
 		// }
+		
 
 		var dbc = client.db(DB_NAME).collection(QUESTION_COLLECTION);
 		dbc.find({to: currProfile.imgName}).toArray(function(error, result){
@@ -1877,17 +2130,19 @@ function displayWall (currProfile, currUser, res) {
 
 			if(result){
 				var sortedArray = result.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
-
+				console.log(sortedArray.length);
 				if(sortedArray.length == 0){
-					str += "<p>There are no questions on this wall</p>";
+					str += "<p class='centre'>There are no questions on this wall</p>";
 					console.log(currUser.imgName);
 					console.log(currProfile.imgName);
 					if(currUser.imgName === currProfile.imgName){
 						// console.log("yay");
+						str += "</div>"
 						createMyPostsPage('wall_template.html', 'wall.html', str, currProfile, () =>{
 							res.sendFile(__dir + '/wall.html');
 						});
 					} else {
+						str += "</div>"
 						createMyPostsPage('searchedWall_template.html', 'wall.html', str, currProfile, () =>{
 							res.sendFile(__dir + '/wall.html');
 						});
@@ -1901,29 +2156,41 @@ function displayWall (currProfile, currUser, res) {
 							if(err) console.log(err);
 							if(user){
 								let post = sortedArray[i];
-								str += ("<p>Name: " + user.firstname + " " + user.lastname+"</p>");
-								str += ("<p> Username: " + user.username+"</p>");
-								str += ("<p> Date: " + post.date+"</p>");
-								str += ("<p> Question: " + post.question+"</p>");
+								str += "<div class='post'>"
+								str += "<div class='question'>"
+								str += ("<p class='title'>" + user.firstname + " " + user.lastname+" (" + user.username+") asked a question</p>");
+								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input type='submit' class='viewProfile' value='View Profile'></form>");
+								str += ("<p class='date'> Date: " + post.date+"</p>");
+								str += ("<p class='q'>" + post.question+"</p>");
+								str += "</div>"
+								str += "<div class='response'>"
+								str += "<p class='bold'>Reply: </p>"
 								if(post.reply != null){
-									str += ("<p> Reply: " + post.reply+"</p>");
+									str += ("<p class='reply'>"+post.reply+"</p>");
 								} else {
-									str += ("There is no reply yet");
+									str += ("<p class='reply'>There is no reply yet</p>");
 								}
-								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input type='submit' value='View Profile'></form>");
+								str += "</div>"
+								
 								if(post.reply == null && currProfile.imgName === currUser.imgName){
-									str += ("<form action='/replyWall.html'><input type='text' name='reply'><input type='hidden' name='question' value='" + post.postID + "'><input type='submit' value='Reply'></form>");
+									str += ("<form class='replyButton' action='/replyWall.html'><input type='text' name='reply'><input type='hidden' name='question' value='" + post.postID + "'><input type='submit' class='this' value='Reply'></form>");
+									str += "</div>"
 									boolean = true;
 								} else {
 									boolean = true;
+									str += "</div>"
 								}
 							
 								if(boolean === true && i === sortedArray.length-1){
 									if(currUser.imgName === currProfile.imgName){
+										str += "</div>";
+										console.log("if");
 										createMyPostsPage('wall_template.html', 'wall.html', str, currProfile, () =>{
 											res.sendFile(__dir + '/wall.html');
 										});
 									} else {
+										str += "</div>"
+										console.log("else");
 										createMyPostsPage('searchedWall_template.html', 'wall.html', str, currProfile, () =>{
 											res.sendFile(__dir + '/wall.html');
 										});
@@ -1938,13 +2205,13 @@ function displayWall (currProfile, currUser, res) {
 	});
 }
 
-function filter (inputFile, outputFile, currUser, search, age, position, discipline, city, country, res, callback){
+function filter (inputFile, outputFile, page, currUser, age, position, discipline, virt, city, country, res, callback){
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if(err) return console.log(err);
 		let flip = false;
 		let wait = false;
 		var tempArr = [];
-		var searchArr = [];
+		var virtArr = [];
 		var ageArr = [];
 		var positionArr = [];
 		var disciplineArr = [];
@@ -1956,18 +2223,15 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 		dbc.find({}).toArray(function(err, result) {
 			if(err) return console.log(err);
 			if(result){
-				if (search !== ""){
+				if (virt !== "null"){
 					for(let i = 0; i < result.length; i++){
-						if (result[i].keyWords != null){
-							for (var j = 0; j < result[i].keyWords.length; j++){
-								let x = result[i].keyWords[j];
-								if (x.toLowerCase() === search.toLowerCase()){
-									searchArr.push(result[i]);
-								}
-							}
+						console.log(result[i]);
+						if(result[i].virt.toLowerCase() === virt.toLowerCase()){
+							virtArr.push(result[i]);
 						}
 					}
 					num++;
+					console.log("added at virtual");
 					flip = true;
 				}
 				if (age !== "null"){
@@ -1977,6 +2241,7 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 						}
 					}
 					num++;
+					console.log("added at age");
 					flip = true;
 				} 
 				if (position !== "null"){
@@ -1986,6 +2251,7 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 						}
 					}
 					num++;
+					console.log("added at position");
 					flip = true;
 				} 
 				if (discipline !== "null"){
@@ -1996,6 +2262,7 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 						}
 					}
 					num++;
+					console.log("added at discipline");
 					flip = true;
 				}
 				if (city !== ""){
@@ -2006,6 +2273,7 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 						}
 					}
 					num++;
+					console.log("added at city");
 					flip = true;
 				}
 				if (country !== ""){
@@ -2016,11 +2284,12 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 						}
 					}
 					num++;
+					console.log("added at country");
 					flip = true;
 				} 
 
 				if (flip == true){
-					console.log("Search: " + searchArr);
+					console.log("Virt: " + virtArr);
 					console.log("Age: " + ageArr);
 					console.log("Position: " + positionArr);
 					console.log("Discipline: " + disciplineArr);
@@ -2033,97 +2302,97 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 						tempArr.push(result);
 						wait = true;
 					} else if (num === 1){
-						if(searchArr.length != 0){
-							for(let i = 0; i < searchArr.length; i++){
-								tempArr.push(searchArr[i]);
-								wait = true;
+						if(virtArr.length != 0){
+							for(let i = 0; i < virtArr.length; i++){
+								tempArr.push(virtArr[i]);
 							}
+							wait = true;
 						} else if (ageArr.length != 0){
 							for(let i = 0; i < ageArr.length; i++){
 								tempArr.push(ageArr[i]);
-								wait = true;
 							}
+							wait = true;
 						} else if (positionArr.length != 0){
 							for(let i = 0; i < positionArr.length; i++){
 								tempArr.push(positionArr[i]);
-								wait = true;
 							}
+							wait = true;
 						} else if (disciplineArr.length != 0){
 							for(let i = 0; i < disciplineArr.length; i++){
 								tempArr.push(disciplineArr[i]);
-								wait = true;
 							}
+							wait = true;
 						} else if (cityArr.length != 0){
 							for(let i = 0; i < cityArr.length; i++){
 								tempArr.push(cityArr[i]);
-								wait = true;
 							}
+							wait = true;
 						} else {
 							for(let i = 0; i < countryArr.length; i++){
 								tempArr.push(countryArr[i]);
-								wait = true;
 							}
+							wait = true;
 						}
 					} else if (num === 2){
-						if(searchArr.length != 0){
-							for(let i = 0; i < searchArr.length; i++){
-								if(ageArr.includes(searchArr[i])||positionArr.includes(searchArr[i])||disciplineArr.includes(searchArr[i])||cityArr.includes(searchArr[i])||countryArr.includes(searchArr[i])){
-									tempArr.push(searchArr[i]);
-									wait = true;
+						if(virtArr.length != 0){
+							for(let i = 0; i < virtArr.length; i++){
+								if(ageArr.includes(virtArr[i])||positionArr.includes(virtArr[i])||disciplineArr.includes(virtArr[i])||cityArr.includes(virtArr[i])||countryArr.includes(virtArr[i])){
+									tempArr.push(virtArr[i]);
 								}
 							}
+							wait = true;
 						} else if(ageArr.length != 0){
 							for(let i = 0; i < ageArr.length; i++){
 								if(positionArr.includes(ageArr[i])||disciplineArr.includes(ageArr[i])||cityArr.includes(ageArr[i])||countryArr.includes(ageArr[i])){
 									tempArr.push(ageArr[i]);
-									wait = true;
 								}
 							}
+							wait = true;
 						} else if(positionArr.length != 0){
 							for(let i = 0; i < positionArr.length; i++){
 								if(disciplineArr.includes(positionArr[i])||cityArr.includes(positionArr[i])||countryArr.includes(positionArr[i])){
 									tempArr.push(positionArr[i]);
-									wait = true;
 								}
 							}
+							wait = true;
 						} else if(disciplineArr.length != 0){
 							for(let i = 0; i < disciplineArr.length; i++){
 								if(cityArr.includes(disciplineArr[i])||countryArr.includes(disciplineArr[i])){
 									tempArr.push(disciplineArr[i]);
-									wait = true;
 								}
 							}
+							wait = true;
 						} else if(cityArr.length != 0){
 							for(let i = 0; i < cityArr.length; i++){
 								if(countryArr.includes(cityArr[i])){
 									tempArr.push(cityArr[i]);
-									wait = true;
 								}
 							}
+							wait = true;
 						}
 					} else if (num === 3){
 						if(search !== ""){
-							for(let i = 0; i < searchArr.length; i++){
-								if(ageArr.includes(searchArr[i])){
-									if(positionArr.includes(searchArr[i])||disciplineArr.includes(searchArr[i])||cityArr.includes(searchArr[i])||countryArr.includes(searchArr[i])){
-										tempArr.push(searchArr[i]);
-										wait = true;
+							for(let i = 0; i < virtArr.length; i++){
+								if(ageArr.includes(virtArr[i])){
+									if(positionArr.includes(virtArr[i])||disciplineArr.includes(virtArr[i])||cityArr.includes(virtArr[i])||countryArr.includes(virtArr[i])){
+										tempArr.push(virtArr[i]);
 									}
-								} else if(positionArr.includes(searchArr[i])){
-									if(disciplineArr.includes(searchArr[i])||cityArr.includes(searchArr[i])||countryArr.includes(searchArr[i])){
-										tempArr.push(searchArr[i]);
-										wait = true;
+									wait = true;
+								} else if(positionArr.includes(virtArr[i])){
+									if(disciplineArr.includes(virtArr[i])||cityArr.includes(virtArr[i])||countryArr.includes(virtArr[i])){
+										tempArr.push(virtArr[i]);
 									}
-								} else if(disciplineArr.includes(searchArr[i])){
-									if(cityArr.includes(searchArr[i])||countryArr.includes(searchArr[i])){
-										tempArr.push(searchArr[i]);
-										wait = true;
+									wait = true;
+								} else if(disciplineArr.includes(virtArr[i])){
+									if(cityArr.includes(virtArr[i])||countryArr.includes(virtArr[i])){
+										tempArr.push(virtArr[i]);
 									}
-								} else if(cityArr.includes(searchArr[i])){
-									if(countryArr.includes(searchArr[i])){
-										tempArr.push(searchArr[i]);
-										wait = true;
+									wait = true;
+								} else if(cityArr.includes(virtArr[i])){
+									if(countryArr.includes(virtArr[i])){
+										tempArr.push(virtArr[i]);
 									}
+									wait = true;
 								}
 							}
 						} else if (age !== "null"){
@@ -2131,18 +2400,18 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 								if(positionArr.includes(ageArr[i])){
 									if(disciplineArr.includes(ageArr[i])||cityArr.includes(ageArr[i])||countryArr.includes(ageArr[i])){
 										tempArr.push(ageArr[i]);
-										wait = true;
 									}
+									wait = true;
 								} else if(disciplineArr.includes(ageArr[i])){
 									if(cityArr.includes(ageArr[i])||countryArr.includes(ageArr[i])){
 										tempArr.push(ageArr[i]);
-										wait = true;
 									}
+									wait = true;
 								} else if(cityArr.includes(ageArr[i])){
 									if(countryArr.includes(ageArr[i])){
 										tempArr.push(ageArr[i]);
-										wait = true;
 									}
+									wait = true;
 								}
 							}
 						} else if (position !== "null"){
@@ -2150,13 +2419,13 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 								if(disciplineArr.includes(positionArr[i])){
 									if(cityArr.includes(positionArr[i])||countryArr.includes(positionArr[i])){
 										tempArr.push(positionArr[i]);
-										wait = true;
 									}
+									wait = true;
 								} else if(cityArr.includes(positionArr[i])){
 									if(countryArr.includes(positionArr[i])){
 										tempArr.push(positionArr[i]);
-										wait = true;
 									}
+									wait = true;
 								}
 							}
 						} else if (discipline !== "null"){
@@ -2164,136 +2433,139 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 								if(cityArr.includes(disciplineArr[i])){
 									if(countryArr.includes(disciplineArr[i])){
 										tempArr.push(disciplineArr[i]);
-										wait = true;
 									}
 								}
 							}
+							wait = true;
 						}
 					} else if (num === 4){
 						if(search !== ""){
-							for(let i = 0; i < searchArr.length; i++){
-								if(ageArr.includes(searchArr[i])){
-									if(positionArr.includes(searchArr[i])){
-										if(disciplineArr.includes(searchArr[i])||cityArr.includes(searchArr[i])||countryArr.includes(searchArr[i])){
-											tempArr.push(searchArr[i]);
-											wait = true;
+							for(let i = 0; i < virtArr.length; i++){
+								if(ageArr.includes(virtArr[i])){
+									if(positionArr.includes(virtArr[i])){
+										if(disciplineArr.includes(virtArr[i])||cityArr.includes(virtArr[i])||countryArr.includes(virtArr[i])){
+											tempArr.push(virtArr[i]);
 										}
-									} else if(disciplineArr.includes(searchArr[i])){
-										if(cityArr.includes(searchArr[i])||countryArr.includes(searchArr[i])){
-											tempArr.push(searchArr[i]);
-											wait = true;
+										wait = true;
+									} else if(disciplineArr.includes(virtArr[i])){
+										if(cityArr.includes(virtArr[i])||countryArr.includes(virtArr[i])){
+											tempArr.push(virtArr[i]);
 										}
-									} else if(cityArr.includes(searchArr[i])){
-										if(countryArr.includes(searchArr[i])){
-											tempArr.push(searchArr[i]);
-											wait = true;
+										wait = true;
+									} else if(cityArr.includes(virtArr[i])){
+										if(countryArr.includes(virtArr[i])){
+											tempArr.push(virtArr[i]);
 										}
-									}
-								} else if(positionArr.includes(searchArr[i])){
-									if(disciplineArr.includes(searchArr[i])){
-										if(cityArr.includes(searchArr[i])||countryArr.includes(searchArr[i])){
-											tempArr.push(searchArr[i]);
-											wait = true;
-										}
-									} else if (cityArr.includes(searchArr[i])){
-										if(countryArr.includes(searchArr[i])){
-											tempArr.push(searchArr[i]);
-											wait = true;
-										}
-									}
-								} else if(disciplineArr.includes(searchArr[i])){
-									if(cityArr.includes(searchArr[i]) && countryArr.includes(searchArr[i])){
-										tempArr.push(searchArr[i]);
 										wait = true;
 									}
+								} else if(positionArr.includes(virtArr[i])){
+									if(disciplineArr.includes(virtArr[i])){
+										if(cityArr.includes(virtArr[i])||countryArr.includes(virtArr[i])){
+											tempArr.push(virtArr[i]);
+										}
+										wait = true;
+									} else if (cityArr.includes(virtArr[i])){
+										if(countryArr.includes(virtArr[i])){
+											tempArr.push(virtArr[i]);
+										}
+										wait = true;
+									}
+								} else if(disciplineArr.includes(virtArr[i])){
+									if(cityArr.includes(virtArr[i]) && countryArr.includes(virtArr[i])){
+										tempArr.push(virtArr[i]);
+									}
+									wait = true;
 								}
 							}
+							wait = true;
 						} else if (age !== "null"){
 							for(let i = 0; i < ageArr.length; i++){
 								if(positionArr.includes(ageArr[i])){
 									if(disciplineArr.includes(ageArr[i])){
 										if(cityArr.includes(ageArr[i])||countryArr.includes(ageArr[i])){
 											tempArr.push(ageArr[i]);
-											wait = true;
 										}
+										wait = true;
 									} else if (cityArr.includes(ageArr[i]) && countryArr.includes(ageArr[i])){
 										tempArr.push(ageArr[i]);
-										wait = true;
 									}
+									wait = true;
 								} else if(disciplineArr.includes(ageArr[i])){
 									if(cityArr.includes(ageArr[i]) && countryArr.includes(ageArr[i])){
 										tempArr.push(ageArr[i]);
-										wait = true;
 									}
 								}
 							}
+							wait = true;
 						} else if (position != "null"){
 							for(let i = 0; i < positionArr.length; i++){
 								if(disciplineArr.includes(positionArr[i]) && cityArr.includes(positionArr[i]) && countryArr.includes(positionArr[i])){
 									tempArr.push(positionArr[i]);
-									wait = true;
 								}
 							}
+							wait = true;
 						}
 					} else if (num === 5){
 						if(search === ""){
 							for (let i = 0; i < ageArr.length; i++){
 								if(positionArr.includes(ageArr[i]) && disciplineArr.includes(ageArr[i]) && cityArr.includes(ageArr[i]) && countryArr.includes(ageArr[i])){
 									tempArr.push(ageArr[i]);
-									wait = true;
 								}
 							}
+							wait = true;
 						} else if (age === "null") {
-							for (let i = 0; i < searchArr.length; i++){
-								if(positionArr.includes(searchArr[i]) && disciplineArr.includes(searchArr[i]) && cityArr.includes(searchArr[i]) && countryArr.includes(searchArr[i])){
-									tempArr.push(searchArr[i]);
-									wait = true;
+							for (let i = 0; i < virtArr.length; i++){
+								if(positionArr.includes(virtArr[i]) && disciplineArr.includes(virtArr[i]) && cityArr.includes(virtArr[i]) && countryArr.includes(virtArr[i])){
+									tempArr.push(virtArr[i]);
 								}
 							}
+							wait = true;
 						} else if (position === "null") {
-							for (let i = 0; i < searchArr.length; i++){
-								if(ageArr.includes(searchArr[i]) && disciplineArr.includes(searchArr[i]) && cityArr.includes(searchArr[i]) && countryArr.includes(searchArr[i])){
-									tempArr.push(searchArr[i]);
-									wait = true;
+							for (let i = 0; i < virtArr.length; i++){
+								if(ageArr.includes(virtArr[i]) && disciplineArr.includes(virtArr[i]) && cityArr.includes(virtArr[i]) && countryArr.includes(virtArr[i])){
+									tempArr.push(virtArr[i]);
 								}
 							}
+							wait = true;
 						} else if (discipline === "null") {
-							for (let i = 0; i < searchArr.length; i++){
-								if(ageArr.includes(searchArr[i]) && positionArr.includes(searchArr[i]) && cityArr.includes(searchArr[i]) && countryArr.includes(searchArr[i])){
-									tempArr.push(searchArr[i]);
-									wait = true;
+							for (let i = 0; i < virtArr.length; i++){
+								if(ageArr.includes(virtArr[i]) && positionArr.includes(virtArr[i]) && cityArr.includes(virtArr[i]) && countryArr.includes(virtArr[i])){
+									tempArr.push(virtArr[i]);
 								}
 							}
+							wait = true;
 						} else if (city === "") {
-							for (let i = 0; i < searchArr.length; i++){
-								if(ageArr.includes(searchArr[i]) && positionArr.includes(searchArr[i]) && disciplineArr.includes(searchArr[i]) && countryArr.includes(searchArr[i])){
-									tempArr.push(searchArr[i]);
-									wait = true;
+							for (let i = 0; i < virtArr.length; i++){
+								if(ageArr.includes(virtArr[i]) && positionArr.includes(virtArr[i]) && disciplineArr.includes(virtArr[i]) && countryArr.includes(virtArr[i])){
+									tempArr.push(virtArr[i]);
 								}
 							}
+							wait = true;
 						} else if (country === "") {
-							for (let i = 0; i < searchArr.length; i++){
-								if(ageArr.includes(searchArr[i]) && positionArr.includes(searchArr[i]) && cityArr.includes(searchArr[i]) && disciplineArr.includes(searchArr[i])){
-									tempArr.push(searchArr[i]);
-									wait = true;
+							for (let i = 0; i < virtArr.length; i++){
+								if(ageArr.includes(virtArr[i]) && positionArr.includes(virtArr[i]) && cityArr.includes(virtArr[i]) && disciplineArr.includes(virtArr[i])){
+									tempArr.push(virtArr[i]);
 								}
 							}
+							wait = true;
 						}
 					} else {
-						for(let i = 0; i < searchArr.length; i++){
-							if(ageArr.includes(searchArr[i]) && positionArr.includes(searchArr[i]) && cityArr.includes(searchArr[i]) && disciplineArr.includes(searchArr[i]) && countryArr.includes(searchArr[i])){
-								tempArr.push(searchArr[i]);
-								wait = true;
+						for(let i = 0; i < virtArr.length; i++){
+							if(ageArr.includes(virtArr[i]) && positionArr.includes(virtArr[i]) && cityArr.includes(virtArr[i]) && disciplineArr.includes(virtArr[i]) && countryArr.includes(virtArr[i])){
+								tempArr.push(virtArr[i]);
 							}
 						}
+						wait = true;
 					}
 
-					if(wait == true && tempArr[0].postID !== undefined){
-						console.log("Temp: " + tempArr[0].postID);
+					if(wait == true){
+						// console.log("Temp: " + tempArr[0].postID);
 
 						var sortedArray = tempArr.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
-						callback(inputFile, outputFile, currUser, sortedArray, res);
+						console.log(sortedArray);
+
+						callback(inputFile, outputFile, page, currUser, sortedArray, res);
 					}	
 				}
 			}
@@ -2301,9 +2573,10 @@ function filter (inputFile, outputFile, currUser, search, age, position, discipl
 	});
 }
 
-function searchPost (inputFile, outputFile, currUser, sortedArray, res){
+function searchPost (inputFile, outputFile, page, currUser, sortedArray, res){
 	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
 		if(err) return console.log(err);
+		console.log("searchPost");
 		// let arr = [];
 		// let tempArr = [];
 		var str = "";
@@ -2312,69 +2585,167 @@ function searchPost (inputFile, outputFile, currUser, sortedArray, res){
 		
 		// for()
 
-		console.log("Sorted: " + sortedArray[0].postID);
+		// console.log("Sorted: " + sortedArray[0].length);
 
 		if(sortedArray.length == 0){
+			console.log("if");
 			str += "<p>There are no posts yet</p>";
 			createPage(inputFile, outputFile, str, () =>{
 				res.sendFile(__dir + '/'+outputFile);
 			});
 		} else {
-			console.log("else");
-			console.log("Sorted: " + sortedArray[0].postID);
-
-			for(let i = 0; i < sortedArray.length; i++){
-				console.log("for loop");
-				let boolean = false;
-				let userID = sortedArray[i].userID;
-				console.log("USER: " + userID);
-				let dbq = client.db(DB_NAME).collection(ACCOUNT_COLLECTION);
-				dbq.findOne({imgName: userID}, function(err, user){
-					console.log("find");
-					if(err) console.log(err);
-					console.log(user);
-					if(user){
+			console.log("else")
+			str += "<table>";
+			console.log(sortedArray);
+					for(let i = 0; i < sortedArray.length; i++){
+						let boolean = false;
+						let userID = sortedArray[i].userID
 						let post = sortedArray[i];
-						console.log("printing");
-						str += ("<p>Name: " + user.firstname + " " + user.lastname+"</p>");
-						str += ("<p> Username: " + user.username+"</p>");
-						str += ("<p> Title: " + post.title+"</p>");
-						str += ("<p> Address: " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
-						str += ("<p> Minimum Age: " + post.age+"</p>");
-						str += ("<p> Supervisor: " + post.supervisor+"</p>");
-						str += ("<p> Contact Information: " + post.contactInfo+"</p>");
-						str += ("<p> Opportunity Type: " + post.oppType+"</p>");
-						str += ("<p> Description: " + post.description+"</p>");
-						str += ("<p> Discipline: " + post.discipline+"</p>");
-						str += ("<p> Date: " + post.date+"</p>");
-						str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input type='submit' value='View Profile'></form>");
-						if(user.imgName === currUser.imgName){
-							str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Delete Post'></form>");
-						}		
-						if(currUser.savedPosts.includes(post.postID) === false){
-							console.log("saving true");
-							if(i === sortedArray.length-1){
-								console.log("tagging true");
-								boolean = true;
+						console.log("before");
+						let dbq = client.db(DB_NAME).collection(ACCOUNT_COLLECTION);
+						dbq.findOne({imgName: userID}, function(err, user){
+							if(err) console.log(err);
+							if(user){
+								console.log("user");
+								
+								if(i % 2 === 0){
+									str += "<tr>"
+								}
+								str += "<td>"
+								str += "<div class='post'>";
+								str += ("<p class='name'>" + user.firstname + " " + user.lastname+"</p>");
+								str += ("<p class='username'>" + user.username+"</p>");
+								str += ("<p class='title'> " + post.title+"</p>");
+								str += ("<p class='description'>" + post.description+"</p>");
+								str += ("<p class='address'><span class='color'>Address:</span> " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
+								str += ("<p class='age'><span class='color'>Minimum Age:</span> " + post.age+"</p>");
+								str += ("<p class='supervisor'><span class='color'>Supervisor:</span> " + post.supervisor+"</p>");
+								str += ("<p class='contactInfo'><span class='color'>Contact Information:</span> " + post.contactInfo+"</p>");
+								str += ("<p class='oppType'>" + post.oppType+"</p>");
+								str += ("<p class='discipline'><span class='color'>Discipline:</span> " + post.discipline+"</p>");
+								str += ("<p class='virt'><span class='color'>Virtual/In Person:</span> " + post.virt+"</p>");
+								str += ("<p class='date'>" + post.date+"</p>");
+								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input class='viewProfile' type='submit' value='View Profile'></form>");
+								// console.log("Check: " + currUser.savedPosts.includes(curVal.postID));
+								if(user.imgName === currUser.imgName){
+									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='"+page+"'><input type='hidden' name='post' value='" + post.postID + "'><input class='deletePost' type='submit' value='Delete Post'></form>");
+								}
+								if(currUser.savedPosts.includes(post.postID) === false){
+									if(i === sortedArray.length-1){
+										boolean = true;
+									}
+									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='"+page+"'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Save Post'></form>");
+								} else {
+									if(i === sortedArray.length-1){
+										boolean = true;
+									}
+									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='"+page+"'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Unsave Post'></form>");
+								}
+								str += "</div>";
+								str += "</td>";
+								if(i % 2 === 0){
+									str += "</tr>";
+								}
+								if(boolean === true && i === sortedArray.length-1){
+									str += "</table>";
+									console.log(page);
+									createPage(inputFile, outputFile, str, () =>{
+										res.sendFile(__dir + '/'+outputFile);
+									});								
+								}
 							}
-							str += ("<form action='/savePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Save Post'></form>");
-						} else {
-							console.log("saving false");
-							if(i === sortedArray.length-1){
-								console.log("tagging false");
-								boolean = true;
-							}
-							str += ("<form action='/removePost.html'><input type='hidden' name='page' value='display'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Unsave Post'></form>");
-						}
-						if(boolean === true && i === sortedArray.length-1){
-							console.log("creating");
-							createPage(inputFile, outputFile, str, () =>{
-								res.sendFile(__dir + '/'+outputFile);
-							});
-						}
+						});
 					}
-				});
-			}
+		}
+	});
+}
+
+function searchMyPost (inputFile, outputFile, page, currUser, sortedArray, profile, res){
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		if(err) return console.log(err);
+		console.log("searchPost");
+		// let arr = [];
+		// let tempArr = [];
+		var str = "";
+		// console.log("TempArr: " + tempArr);
+
+		
+		// for()
+
+		// console.log("Sorted: " + sortedArray[0].length);
+
+		if(sortedArray.length == 0){
+			console.log("if");
+			str += "<p>There are no posts yet</p>";
+			createPage(inputFile, outputFile, str, () =>{
+				res.sendFile(__dir + '/'+outputFile);
+			});
+		} else {
+			console.log("else")
+			str += "<table>";
+			console.log(sortedArray);
+					for(let i = 0; i < sortedArray.length; i++){
+						let boolean = false;
+						let userID = sortedArray[i].userID
+						let post = sortedArray[i];
+						console.log("before");
+						let dbq = client.db(DB_NAME).collection(ACCOUNT_COLLECTION);
+						dbq.findOne({imgName: userID}, function(err, user){
+							if(err) console.log(err);
+							if(user){
+								console.log("user");
+								
+								if(i % 2 === 0){
+									str += "<tr>"
+								}
+								str += "<td>"
+								str += "<div class='post'>";
+								str += ("<p class='name'>" + user.firstname + " " + user.lastname+"</p>");
+								str += ("<p class='username'>" + user.username+"</p>");
+								str += ("<p class='title'> " + post.title+"</p>");
+								str += ("<p class='description'>" + post.description+"</p>");
+								str += ("<p class='address'><span class='color'>Address:</span> " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
+								str += ("<p class='age'><span class='color'>Minimum Age:</span> " + post.age+"</p>");
+								str += ("<p class='supervisor'><span class='color'>Supervisor:</span> " + post.supervisor+"</p>");
+								str += ("<p class='contactInfo'><span class='color'>Contact Information:</span> " + post.contactInfo+"</p>");
+								str += ("<p class='oppType'>" + post.oppType+"</p>");
+								str += ("<p class='discipline'><span class='color'>Discipline:</span> " + post.discipline+"</p>");
+								str += ("<p class='virt'><span class='color'>Virtual/In Person:</span> " + post.virt+"</p>");
+								str += ("<p class='date'>" + post.date+"</p>");
+								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input class='viewProfile' type='submit' value='View Profile'></form>");
+								// console.log("Check: " + currUser.savedPosts.includes(curVal.postID));
+								if(user.imgName === currUser.imgName){
+									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='"+page+"'><input type='hidden' name='post' value='" + post.postID + "'><input class='deletePost' type='submit' value='Delete Post'></form>");
+								}
+								if(currUser.savedPosts.includes(post.postID) === false){
+									if(i === sortedArray.length-1){
+										boolean = true;
+									}
+									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='"+page+"'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Save Post'></form>");
+								} else {
+									if(i === sortedArray.length-1){
+										boolean = true;
+									}
+									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='"+page+"'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Unsave Post'></form>");
+								}
+								str += "</div>";
+								str += "</td>";
+								if(i % 2 === 0){
+									str += "</tr>";
+								}
+								if(boolean === true && i === sortedArray.length-1){
+									str += "</table>";
+									console.log(page);
+									createMyPostsPage(inputFile, outputFile, str, profile, () => {
+										res.sendFile(__dir + '/'+outputFile);
+									});
+									// createPage(inputFile, outputFile, str, () =>{
+									// 	res.sendFile(__dir + '/'+outputFile);
+									// });								
+								}
+							}
+						});
+					}
 		}
 	});
 }
@@ -2396,24 +2767,34 @@ function searchProfile (myQuery, res){
 				}
 			}
 			str += "<table>";
-			for (var i = 0; i < arr.length; i++) {
-				str += "<tr>";
-				for(var j = 0; j < 3; j++) {
-					str += "<td>";
-					 if(j === 0){
-						str += ("Name: " + arr[i].firstname + " " + arr[i].lastname);
-					} else if(j === 1){
-						str += ("Username: " + arr[i].username);
-					} else {
-						str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + arr[i].imgName + "'><input type='submit' value='View Profile'></form>");
-							// "<button action='/viewSearchedProfile.html' name='searchedProfile' value='" + arr[i].username + "'>View Profile</button>");
-					}
-				str += "</td>";
-			}
-			str += "</tr>";
-		}
-			str += "</table>";
-			if(str === "<table></table>"){
+			 for (var i = 0; i < arr.length; i++) {
+				 if(i % 4 === 0){
+					 str += "<tr>"
+				 }
+					 str += "<td>"
+					 str += "<div class='profile'>"
+					 var imagePath = __dir + "/images/" + arr[i].imgName;
+					 var imageFileName;
+					 if (fs.existsSync(imagePath)) {
+						 console.log("file exists")
+						 imageFileName = arr[i].imgName;
+					 } else {
+						 console.log("file does not exsit")
+						 imageFileName = "avatar.jpg";
+					 }
+					 str += ("<img id='pic' src='" + imageFileName + "'>");
+					 str += ("<p class='centre' id='name'>" + arr[i].firstname + " " + arr[i].lastname+"</p>");
+					 str += ("<p class='centre' id='username'>" + arr[i].username+"</p>");
+					 str += ("<p class='centre' id='discipline'>Discipline: " + arr[i].discipline+"</p>");	
+					 str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + result[i].imgName + "'><input type='submit' value='View Profile'></form>");
+					 str += "</div>";
+					 str += "</td>";
+				 if(i % 4 === 0){
+					 str += "</tr>"
+				 }
+			 }
+			 str += "</table>";
+			if(arr.length === 0){
 				str = "We found no results for your search";
 			}
 			createPage('searchedProfiles_template.html', 'searchedProfiles.html', str, () =>{
@@ -2432,38 +2813,35 @@ function searchProfessionals (discipline, res) {
 		 dbc.find({discipline: discipline}).toArray(function(err, result) {
 			 if (err) throw err;
 
-			str += "<table>";
-			for (var i = 0; i < result.length; i++) {
-				str += "<tr>";
-				for(var j = 0; j < 5; j++) {
-					str += "<td>";
-					var imagePath = __dir + "/images/" + result[i].imgName;
-					var imageFileName;
-					if (j === 0) {
-						if (fs.existsSync(imagePath)) {
-							console.log("file exists")
-							imageFileName = result[i].imgName;
-						} else {
-							console.log("file does not exsit")
-							imageFileName = "avatar.jpg";
-						}
-						str += ("<img src='" + imageFileName + "' width='50' height='50'>");						
-					} else if(j === 1){
-						str += ("Name: " + result[i].firstname + " " + result[i].lastname);
-					} else if(j === 2){
-						str += ("Username: " + result[i].username);
-					} else if (j === 3) {
-						str += ("Discipline: " + result[i].discipline);	
-					} else {
-						str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + result[i].imgName + "'><input type='submit' value='View Profile'></form>");
-							// "<button action='/viewSearchedProfile.html' name='searchedProfile' value='" + arr[i].username + "'>View Profile</button>");
-					}
-				str += "</td>";
-				}
-			str += "</tr>";
-			}
-			str += "</table>";
-			createPage('professional_template.html', 'professional.html', str, () =>{
+			 str += "<table>";
+			 for (var i = 0; i < result.length; i++) {
+				 if(i % 4 === 0){
+					 str += "<tr>"
+				 }
+					 str += "<td>"
+					 str += "<div class='profile'>"
+					 var imagePath = __dir + "/images/" + result[i].imgName;
+					 var imageFileName;
+					 if (fs.existsSync(imagePath)) {
+						 console.log("file exists")
+						 imageFileName = result[i].imgName;
+					 } else {
+						 console.log("file does not exsit")
+						 imageFileName = "avatar.jpg";
+					 }
+					 str += ("<img id='pic' src='" + imageFileName + "'>");
+					 str += ("<p class='centre' id='name'>" + result[i].firstname + " " + result[i].lastname+"</p>");
+					 str += ("<p class='centre' id='username'>" + result[i].username+"</p>");
+					 str += ("<p class='centre' id='discipline'>Discipline: " + result[i].discipline+"</p>");	
+					 str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + result[i].imgName + "'><input type='submit' value='View Profile'></form>");
+					 str += "</div>";
+					 str += "</td>";
+				 if(i % 4 === 0){
+					 str += "</tr>"
+				 }
+			 }
+			 str += "</table>";
+			 createPage('professional_template.html', 'professional.html', str, () =>{
 				res.sendFile(__dir + '/professional.html');
 			});
 		});
@@ -2502,11 +2880,12 @@ function myFeed (currUser, res) {
 				}
 
 				if(sortedArray.length == 0){
-					str += "<p>There are no posts yet</p>";
+					str += "<p class='centre'>There are no posts yet</p>";
 					createPage('myFeed_template.html', 'myFeed.html', str, () =>{
 						res.sendFile(__dir + '/myFeed.html');
 					});
 				} else {
+					str += "<table>";
 					for(let i = 0; i < sortedArray.length; i++){
 						let boolean = false;
 						let userID = sortedArray[i].userID
@@ -2515,36 +2894,51 @@ function myFeed (currUser, res) {
 							if(err) console.log(err);
 							if(user){
 								let post = sortedArray[i];
-								str += ("<p>Name: " + user.firstname + " " + user.lastname+"</p>");
-								str += ("<p> Username: " + user.username+"</p>");
-								str += ("<p> Title: " + post.title+"</p>");
-								str += ("<p> Address: " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
-								str += ("<p> Minimum Age: " + post.age+"</p>");
-								str += ("<p> Supervisor: " + post.supervisor+"</p>");
-								str += ("<p> Contact Information: " + post.contactInfo+"</p>");
-								str += ("<p> Opportunity Type: " + post.oppType+"</p>");
-								str += ("<p> Description: " + post.description+"</p>");
-								str += ("<p> Discipline: " + post.discipline+"</p>");
-								str += ("<p> Date: " + post.date+"</p>");
-								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input type='submit' value='View Profile'></form>");
+								if(i % 2 === 0){
+									str += "<tr>"
+								}
+								str += "<td>"
+								str += "<div class='post'>";
+								str += ("<p class='name'>" + user.firstname + " " + user.lastname+"</p>");
+								str += ("<p class='username'>" + user.username+"</p>");
+								str += ("<p class='title'> " + post.title+"</p>");
+								str += ("<p class='description'>" + post.description+"</p>");
+								str += ("<p class='address'><span class='color'>Address:</span> " + post.address+", " + post.city+", " + post.country + ", "+post.postalCode+"</p>");
+								str += ("<p class='age'><span class='color'>Minimum Age:</span> " + post.age+"</p>");
+								str += ("<p class='supervisor'><span class='color'>Supervisor:</span> " + post.supervisor+"</p>");
+								str += ("<p class='contactInfo'><span class='color'>Contact Information:</span> " + post.contactInfo+"</p>");
+								str += ("<p class='oppType'>" + post.oppType+"</p>");
+								str += ("<p class='discipline'><span class='color'>Discipline:</span> " + post.discipline+"</p>");
+								str += ("<p class='virt'><span class='color'>Virtual/In Person:</span> " + post.virt+"</p>");
+								str += ("<p class='date'>" + post.date+"</p>");
+								str += ("<form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='" + user.imgName + "'><input class='viewProfile' type='submit' value='View Profile'></form>");
 								// console.log("Check: " + currUser.savedPosts.includes(curVal.postID));
 								if(user.imgName === currUser.imgName){
-									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Delete Post'></form>");
+									str += ("<form action='/deletePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='" + post.postID + "'><input class='deletePost' type='submit' value='Delete Post'></form>");
 								}
 								if(currUser.savedPosts.includes(post.postID) === false){
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Save Post'></form>");
+									str += ("<form action='/savePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Save Post'></form>");
 								} else {
 									if(i === sortedArray.length-1){
 										boolean = true;
 									}
-									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='" + post.postID + "'><input type='submit' value='Unsave Post'></form>");
+									str += ("<form action='/removePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='" + post.postID + "'><input class='savePost' type='submit' value='Unsave Post'></form>");
+								}
+								str += "</div>";
+								str += "</td>";
+								if(i % 2 === 0){
+									str += "</tr>";
 								}
 								if(boolean === true && i === sortedArray.length-1){
+									str += "</table>";
 									createPage('myFeed_template.html', 'myFeed.html', str, () =>{
+										// history.replaceState(null, null, "/post_page.html"); 
+										
 										res.sendFile(__dir + '/myFeed.html');
+										// res.end();
 									});
 								}
 							}
@@ -2687,9 +3081,12 @@ function createMyPostsPage(inputFile, outputFile, str, profile, callback){
 	   var str1 = str0.replace('${myPosts}', profile.imgName);
 	   var str2 = str1.replace('${profile}', profile.imgName);
 	   var str3 = str2.replace('${message}', str);
+	   var str4 = str3.replace('${thisUser}', profile.imgName);
+	   var str5 = str4.replace('${currUser}', profile.imgName);
+	   
 	  
     	
-    	fs.writeFile(outputFile, str3,  function (err) {
+    	fs.writeFile(outputFile, str5,  function (err) {
 		 	if (err) throw err;
 			callback();
 		});
@@ -2712,7 +3109,9 @@ function createQuestionPage(inputFile, outputFile, myObj, callback){
     	// } else {
     	// 	console.log("file does not exsit")
     	// 	imageFileName = "avatar.jpg";
-    	// }
+		// }
+		
+		console.log(myObj);
     	
 	   var str0 =  str.replace('${to}', myObj[0]);  		
 	   var str1 = str0.replace('${from}', myObj[1]);
@@ -2838,5 +3237,4 @@ function extendExpiry(cookie) {
 			console.log('Cookie Not Found');
 		}
 	});
-
 }

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+function setCookie() {
+  var d = new Date();
+  var nowTime = d.getTime();
+  document.cookie = "sessionID=" + nowTime + ";" + "type=" +'temporary' +";" +
+  " path=/";
+}
+
+</script>
+</head>
+
+<body onload="setCookie()">
+<!-- <body> -->
+  <div id="logoBanner">
+    <a href="/"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+    <form action="/login.html"><input id="loginButton" type="submit" value="Login"></form>
+</div>
+  <div id="register">
+    <div id="smaller">
+      <h2 class="centre">Register Here</h2>
+
+      <p class="centre"> Please enter the following information to create an account</p>
+  
+      <form action="/registering_page.html">
+        <div id="colOne">
+          <label for="firstname">First Name:</label><br>
+          <input class="textInput" type="text" id="firstname" name="firstname" required><br>
+          <br>
+          <label for="lastname">Last Name:</label><br>
+          <input class="textInput" type="text" id="lastname" name="lastname" required><br>
+          <br>
+          <label for="username">Username:</label><br>
+          <input class="textInput" type="text" id="usernameCreate" name="username" required><br>
+          <br>
+          <label for="password">Password:</label><br>
+          <input class="textInput" type="password" id="passwordCreate" name="password" required>
+          <img id="eye" style="width: 30px; height: 30px" src="http://localhost:8000/eye-2387853_1280.png" alt="View password" onclick="myFunction();"><br>
+        <br>
+        </div>
+        <div id="colTwo">
+          <label for="email">Email: </label><br>
+          <input class="textInput" type="text" id="email" name="email" required><br>
+          <br>
+          <label for="school">School/Place of Work: </label><br>
+          <input class="textInput" type="text" id="school" name="school" required><br>
+          <br>
+          <label for="accountType">Account Type: </label><br>
+          <select class="textInput" name="accountType" id="accountType" required>
+              <option value="student">Student</option>
+              <option value="employer">Employer</option>
+          </select>
+          <br><br>
+          <label for="discipline">Discipline: </label><br>
+          <select class="textInput" name="discipline" id="discipline" required>
+              <option value="math">Math</option>
+              <option value="science">Science</option>
+              <option value="medicine">Medicine</option>
+              <option value="art">Art</option>
+              <option value="business">Business</option>
+              <option value="humanities">Humanities</option>
+              <option value="law">Law</option>
+              <option value="education">Education</option>
+          </select><br><br>
+        </div>
+        
+        
+        <input type="checkbox" id="terms" name="terms" value="terms" onchange="document.getElementById('submitButton').disabled = !this.checked;">
+        <label id="thisThing" for="terms"> By checking this box, I acknowledge that I have read the <a href="terms.html">Terms & Conditions</a>, and I accept them</label><br><br>
+        <input id="submitButton" type="submit" value="Submit" disabled>
+        <p id="bold" class="centre"></p>
+      </form> 
+    </div>    
+  </div>
+
+  <script>
+      function myFunction() {
+        var x = document.getElementById("passwordCreate");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+       }
+  </script>
+
+  <style>
+      
+    html{
+        font-family: 'Roboto', sans-serif;
+      /* font-family: 'Times New Roman', Times, serif; */
+      background-image: url("http://localhost:8000/loginBackground.png");
+      background-size: 1370px 905px;
+      /* background-repeat: repeat;  */
+      /* background-color: #c7c1e0; */
+    }
+    .textInput{
+      border: 1.5px solid #929292;
+      background-color: #e2e2e2;
+      margin-left: 200px;
+      font-size: 25px;
+      width: 250px;
+      font-family: 'Times New Roman', 'Times', serif;
+    }
+    #discipline, #accountType{
+        width: 258px;
+        font-family: 'Times New Roman', 'Times', serif;
+    }
+    label:not(#thisThing){
+      margin-left: 200px;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -10px;
+      box-shadow: 5px 6px 5px #888888;
+      /* border-bottom: 2px solid #d79922; */
+    }
+    #eye{
+        margin-left: -40px;
+        margin-bottom: -5px;
+        /* padding-top: 3px; */
+    }
+    #logo {
+      margin-top: -40px;
+      margin-bottom: -40px;
+      /* padding-top: 15px; */
+    }
+    #register {
+      border: 3px solid #FAF7F7;
+      margin-left: 350px;
+      margin-right: 285px;
+      margin-top: 80px;
+      background-color: #FAF7F7;
+      color: #09174f;
+      box-shadow: 3px 4px 15px;
+      float: right;
+      /* padding-left: 8px; */
+    }
+    #loginButton {
+        background-color: #FAF7F7;
+        font-size: 30px;
+        color: #435059;
+        border-color: #435059;
+        height: 43px;
+        width: 110px;
+        float: right;
+        margin-top: -90px;
+        margin-right: 40px;
+    }
+    .centre{
+      text-align: center;
+    }
+    #colOne{
+      margin-left: -130px;
+    }
+    #colTwo{
+      float: right;
+      margin-top: -284px;
+      /* margin-left: -500px; */
+      margin-right: 80px;
+    }
+    #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      margin-left: 313px;  
+      margin-bottom: 40px;   
+    }
+    #submitButton:disabled{
+      color: #867aad;
+      background-color: #c7c1e0;
+      border: 1px solid #867aad; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      margin-left: 313px;   
+      margin-bottom: 40px;   
+    }
+    #bold{
+        font-weight: bold;
+    }
+  </style>
+
+
+</body>
+</html>

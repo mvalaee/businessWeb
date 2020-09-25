@@ -4,80 +4,150 @@
 </head>
 <body>
 
-	<div class="container">
-        <ul>
-            <li><a href="home_page.html">Home</a></li>
-            <li class="active"><a href="myFeed_page.html">My Feed</a></li>
-            <li><a href="posts_page.html">Posts</a></li>
-            <li><a href="professional_page.html">Meet Professionals</a></li>
-            <li><a href="profile_page.html">Profile</a></li>
-            <li><a href="tips_page.html">Tips & Templates</a></li>
-            <li><a href="survey.html">Feedback</a></li>
-            <li><a href="logOut_page.html">Log Out</a></li>
-            <li><form action="/userSearch.html">
-               <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-               <input id="submitButton" type="submit" value="Submit">
-           </form></li>
-        </ul>
-     </div>
+    <div id="logoBanner">
+        <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+        <div class="container">
+            <ul>
+             <li class="none"><a href="home_page.html">Home</a></li>
+             <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+             <li class="none"><a href="posts_page.html">Posts</a></li>
+             <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
+             <li class="none"><a href="profile_page.html">Profile</a></li>
+             <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+             <li class="active"><a href="survey.html">Feedback</a></li>
+             <li class="none"><a href="logOut_page.html">Log Out</a></li>
+             <li class="none"><form action="/userSearch.html">
+                <input type="text" id="search" name="search" placeholder="Search...">
+                <input id="submitButton" type="submit" value="Submit">
+            </form></li>
+            </ul>
+        </div>
+      </div>
 
+    <div id="content">
+        <form action="/surveying.html">
+            <h3 class="centre">If you have any feedback for the developer of this website, please leave it here. <br> Your feedback is 100% anonymous.</h3>
     
-     <form action="/surveying.html">
-        <h3>If you have any feedback for the developer of this website, please leave it here. <br> Your feedback is 100% anonymous.</h3>
-        <!-- <p>User:</p>
-        <input type="radio" id="anon" name="user" value="anon">
-        <label for="anon">Anonymous</label><br>
-        <input type="radio" id="user" name="user" value="user">
-        <label for="user">My Username</label><br> -->
-        <textarea id="feedback" name="message" rows="15" cols="90" placeholder="Enter your feedback here..."></textarea>
-        <br> <br> 
-          <!-- <span id="display1"></span> <br> -->
-        <input type="submit" value="Submit">
-     </form>
-     <p>${message}</p>
+            <textarea id="feedback" name="message" rows="15" cols="90" placeholder="Enter your feedback here..."></textarea>
+            <br> <br> 
+            <input id="submit" type="submit" value="Submit">
+         </form>
+         <p class="centre">${message}</p>
+    </div>
+     
 </body>
 
 <style>
-    ul {
+    #search{
+      margin-top: 15px;
+      margin-left: 6px;
+    }
+    .container{
+        padding-bottom: 4px;
+        margin-top: -10px;
+    }
+    .container ul {
         list-style-type: none;
-        margin-left: -10px;
+        margin-left: 260px;
         padding: 0px;
+        margin-bottom: -4px;
         overflow: hidden;
-        background-color: #212121;
+        background-color: #FAF7F7;
         display: inline-block;
         font-size: 20px;
-        width: 1370px;
+        width: 1100px;
+        margin-top: -18px;
+        /* padding-bottom: 5px; */
     }
-    
-    li {
+    .container li {
         float: left;
-        margin-left: 32.5px;
+        margin-left: -5px;
+        margin-bottom: -5px;
     }
-    
-    li a {
+    .container li a {
         display: inline-block;
-        color: white;
         text-align: center;
         padding: 14px 11px;
         text-decoration: none;
     }
-    
-    li a:hover {
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    .none a{
+      color: #000000;
+    }
+    .container li a:hover {
         background-color: #0088A8;
+        border: 1px solid #0088A8;
     }
-    
-    .active {
-                background: #0088A8;
-    }
-    
-    .container {
-                margin-top: -30px;
-                display: inline-block;
-                position: relative;
-    }
-    
+    .active a{
+      background-color: #443183;
+      color: #ffffff;
+      border: 1px solid #443183;
+    }    
     .container a:hover {
                 text-decoration: underline;
     }
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    html{
+      overflow-x: hidden;
+      background-image: url("http://localhost:8000/loginBackground.png"); 
+      font-family: 'Roboto', sans-serif;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -27px;
+      box-shadow: 5px 6px 5px #888888;
+    }
+    #logo {
+      margin-top: -61.5px;
+      margin-bottom: -70px;
+      margin-left: -10px;
+    }
+    #content{
+      background-color: #FAF7F7;
+      margin-right: 190px;
+      margin-left: 190px;
+      margin-top: 100px;
+      border-radius: 5px;
+      border: 7px solid #8DAABD;
+      box-shadow: 3px 4px 15px;
+    }
+    .centre{
+        text-align: center;
+    }
+    #feedback{
+        margin-left: 118px;
+        font-size: 15px;
+    }
+    #submit{
+        color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 25px;
+      margin-left: 450px;
+    }
+    #footer p {
+  position: absolute;
+	font-size: 10px;
+	text-align: center;
+	line-height: normal;
+  bottom: 10px;
+  width: 100%;
+	color: #787474;
+}
 </style>
 </html>

@@ -4,25 +4,31 @@
         <title>My Feed</title>
     </head>
     <body>
-        <div class="container">
-            <ul>
-                <li><a href="home_page.html">Home</a></li>
-                <li class="active"><a href="myFeed_page.html">My Feed</a></li>
-                <li><a href="posts_page.html">Posts</a></li>
-                <li><a href="professional_page.html">Meet Professionals</a></li>
-                <li><a href="profile_page.html">Profile</a></li>
-                <li><a href="tips_page.html">Tips & Templates</a></li>
-                <li><a href="survey.html">Feedback</a></li>
-                <li><a href="logOut_page.html">Log Out</a></li>
-                <li><form action="/userSearch.html">
-                   <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-                   <input id="submitButton" type="submit" value="Submit">
-               </form></li>
-            </ul>
-         </div>
+        <div id="logoBanner">
+            <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <div class="container">
+                <ul>
+                 <li class="none"><a href="home_page.html">Home</a></li>
+                 <li class="active"><a href="myFeed_page.html">My Feed</a></li>
+                 <li class="none"><a href="posts_page.html">Posts</a></li>
+                 <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
+                 <li class="none"><a href="profile_page.html">Profile</a></li>
+                 <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+                 <li class="none"><a href="survey.html">Feedback</a></li>
+                 <li class="none"><a href="logOut_page.html">Log Out</a></li>
+                 <li class="none"><form action="/userSearch.html">
+                    <input type="text" id="search" name="search" placeholder="Search...">
+                    <input id="submitButton" type="submit" value="Submit">
+                </form></li>
+                </ul>
+            </div>
+          </div>
 
+        <br>
+
+        <div id="filterBar">
          <form action="/search.html">
-            <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+            <!-- <input class="textInput" type="text" id="search" name="search" placeholder="Search..."> -->
             <label for="age">Select Your Age: </label>
             <select id="age" name="age">
                 <option value="null">-----</option>
@@ -51,58 +57,237 @@
                 <option value="law">Law</option>
                 <option value="education">Education</option>
             </select>
+            <label id="virtLabel">Virtual/In Person: </label>
+            <select id="virt" name="virt">
+            <option value="null">-----</option>
+            <option value="Virtual">Virtual</option>
+            <option value="In Person">In Person</option>
+            </select>
+            <label for="city">City: </label>
+            <input class="textInput" type="text" id="city" name="city" placeholder="City">
+            <label for="country">Country: </label>
+            <input class="textInput" type="text" id="country" name="country" placeholder="Country">
             <input id="submitButton" type="submit" value="Submit">
         </form>
-        <br>
         <form action="/posts_page.html">
             <button id="seeAllButton" value="SeeAll">See all posts</button>
         </form>
+    </div>
 
-        <p><form action='/create_post.html'><button id='newPostButton' value='newPost'>Create a New Post</button></form><p>There are no posts yet</p></p>
+        <p><form action='/create_post.html'><button id='newPostButton' value='newPost'>Create a New Post</button></form><table><tr><td><div class='post'><p class='name'>Cruella De Vil</p><p class='username'>cruella</p><p class='title'> First Post</p><p class='description'>ertghj</p><p class='address'><span class='color'>Address:</span> 271 Empress avenue, Toronto, Canada, M2N3V2</p><p class='age'><span class='color'>Minimum Age:</span> 13</p><p class='supervisor'><span class='color'>Supervisor:</span> EMERSON</p><p class='contactInfo'><span class='color'>Contact Information:</span> fasgfhg</p><p class='oppType'>Volunteer</p><p class='discipline'><span class='color'>Discipline:</span> math</p><p class='virt'><span class='color'>Virtual/In Person:</span> Virtual</p><p class='date'>Fri Sep 25 2020 10:24 </p><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='cruella'><input class='viewProfile' type='submit' value='View Profile'></form><form action='/deletePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='PO1601043884549'><input class='deletePost' type='submit' value='Delete Post'></form><form action='/savePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='PO1601043884549'><input class='savePost' type='submit' value='Save Post'></form></div></td></tr></table></p>
 
         
     </body>
     <style>
-        ul {
-            list-style-type: none;
-            margin-left: -10px;
-            padding: 0px;
-            overflow: hidden;
-            background-color: #212121;
-            display: inline-block;
-            font-size: 20px;
-            width: 1370px;
-        }
         
-        li {
-            float: left;
-            margin-left: 32.5px;
-        }
-        
-        li a {
-            display: inline-block;
-            color: white;
-            text-align: center;
-            padding: 14px 11px;
-            text-decoration: none;
-        }
-        
-        li a:hover {
-            background-color: #0088A8;
-        }
-        
-        .active {
-                    background: #0088A8;
-        }
-        
-        .container {
-                    margin-top: -30px;
-                    display: inline-block;
-                    position: relative;
-        }
-        
-        .container a:hover {
-                    text-decoration: underline;
-        }
+          .container ul {
+        list-style-type: none;
+        margin-left: 260px;
+        padding: 0px;
+        margin-bottom: -4px;
+        overflow: hidden;
+        background-color: #FAF7F7;
+        display: inline-block;
+        font-size: 20px;
+        width: 1100px;
+        margin-top: -100px;
+    }
+    .container li {
+        float: left;
+        margin-left: -5px;
+    }
+    .container li a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 11px;
+        text-decoration: none;
+    }
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    .none a{
+      color: #000000;
+    }
+    .container li a:hover {
+        background-color: #0088A8;
+    }
+    .active a{
+      background-color: #443183;
+      color: #ffffff;
+    }    
+    .container a:hover {
+                text-decoration: underline;
+    }
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    html{
+        overflow-x: hidden;
+      background-image: url("http://localhost:8000/loginBackground.png"); 
+      font-family: 'Roboto', sans-serif;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -10px;
+      box-shadow: 5px 6px 5px #888888;
+    }
+    #logo {
+      margin-top: -60px;
+      margin-bottom: -70px;
+      margin-left: -10px;
+    }
+    #search{
+      margin-top: 15px;
+      margin-left: 6px;
+    }
+    #age{
+      margin-top: 15px;
+      margin-left: 6px;
+    }
+    #filterBar{
+        background-color: #8DAABD;
+        border-radius: 10px;
+        width: 1350px;
+        margin-left: -2px;
+    }
+    #filterBar form{
+        margin-left: 10px;
+        margin-right: -5px;
+        padding-bottom: 4px;
+    }
+    #filterBar #submitButton{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 15px;
+    }
+    #seeAllButton{
+        float: right;
+        margin-top: -26px;
+        margin-right: 20px;
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 15px;
+    }
+    #newPostButton{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        margin-left: 590px;
+    }
+    .post{
+        background-color: #FAF7F7;
+        border: 7px solid #8DAABD;
+        box-shadow: 2px 4px 5px;
+        border-radius: 10px;
+        width: 600px;
+    }
+    table{
+        margin-left: 30px;
+        margin-top: 10px;
+        font-family: "Roboto", sans-serif;
+    }
+    td {
+        width: 600px;
+        margin-right: 20px;
+    }
+    tr{
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    .name{
+        font-size: 18px;
+        margin-left: 10px;
+    }
+    .username{
+        font-size: 16px;
+        color: #443183;
+        margin-left: 10px;
+        margin-top: -15px;
+    }
+    .title{
+        font-weight: bold;
+        font-size: 21px;
+        text-align: center;
+        margin-top: -10px;
+    }
+    .date{
+        float: right;
+        margin-top: -231.5px;
+        margin-right: 20px;
+        /* margin-right: 400px; */
+    }
+    .oppType{
+        float: right;
+        font-weight: bold;
+        margin-right: -125px;
+        margin-top: -185px;
+        /* margin-right: 480px; */
+    }
+    .description{
+        text-align: center;
+        margin-top: -10px;
+    }
+    .viewProfile{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        margin-left: 50px;
+        margin-bottom: 15px;
+    }
+    .savePost{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        float: right;
+        margin-right: 260px;
+        margin-top: -42.5px;
+    }
+    .deletePost{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        float: right;
+        margin-right: 50px;
+        margin-top: -42.5px;
+    }
+    .color {
+        color: #443183;
+        font-weight:700;
+    }  
+    .age{
+        float: right;
+        margin-top: 35px;
+        margin-right: 10px;
+    }
+    .supervisor{
+        float: right;
+        margin-right: -130px;
+        margin-top: 0px;
+    }
+    .centre{
+        text-align: center;
+    }
     </style>
 </html>

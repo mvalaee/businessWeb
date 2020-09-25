@@ -4,24 +4,27 @@
         <title>My Feed</title>
     </head>
     <body>
-        <div class="container">
-            <ul>
-                <li><a href="home_page.html">Home</a></li>
-                <li><a href="myFeed_page.html">My Feed</a></li>
-                <li><a href="posts_page.html">Posts</a></li>
-                <li class="active"><a href="professional_page.html">Meet Professionals</a></li>
-                <li><a href="profile_page.html">Profile</a></li>
-                <li><a href="tips_page.html">Tips & Templates</a></li>
-                <li><a href="survey.html">Feedback</a></li>
-                <li><a href="logOut_page.html">Log Out</a></li>
-                <li><form action="/userSearch.html">
-                   <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
-                   <input id="submitButton" type="submit" value="Submit">
-               </form></li>
-            </ul>
-         </div>
+        <div id="logoBanner">
+            <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <div class="container">
+                <ul>
+                 <li class="none"><a href="home_page.html">Home</a></li>
+                 <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+                 <li class="none"><a href="posts_page.html">Posts</a></li>
+                 <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
+                 <li class="active"><a href="profile_page.html">Profile</a></li>
+                 <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+                 <li class="none"><a href="survey.html">Feedback</a></li>
+                 <li class="none"><a href="logOut_page.html">Log Out</a></li>
+                 <li class="none"><form action="/userSearch.html">
+                    <input type="text" id="search" name="search" placeholder="Search...">
+                    <input id="submitButton" type="submit" value="Submit">
+                </form></li>
+                </ul>
+            </div>
+          </div>
 
-         <div class="container">
+         <div class="bottom">
             <ul>
               <li><form action="/searchedProfile_page.html">
                 <input type="hidden" name="searchedProfile" value="${profile}">
@@ -82,46 +85,208 @@
         
     </body>
     <style>
-        ul {
-            list-style-type: none;
-            margin-left: -10px;
-            padding: 0px;
-            overflow: hidden;
-            background-color: #212121;
-            display: inline-block;
-            font-size: 20px;
-            width: 1370px;
-        }
-        
-        li {
-            float: left;
-            margin-left: 32.5px;
-        }
-        
-        li a {
-            display: inline-block;
-            color: white;
-            text-align: center;
-            padding: 14px 11px;
-            text-decoration: none;
-        }
-        
-        li a:hover {
-            background-color: #0088A8;
-        }
-        
-        .active {
-                    background: #0088A8;
-        }
-        
-        .container {
-                    margin-top: -30px;
-                    display: inline-block;
-                    position: relative;
-        }
-        
-        .container a:hover {
-                    text-decoration: underline;
-        }
+    .container ul {
+        list-style-type: none;
+        margin-left: 260px;
+        padding: 0px;
+        margin-bottom: -4px;
+        overflow: hidden;
+        background-color: #FAF7F7;
+        display: inline-block;
+        font-size: 20px;
+        width: 1100px;
+        margin-top: -100px;
+    }
+    .bottom input{
+      background-color: #8DAABD;
+      border: 1.5px solid #8DAABD;
+      font-size: 20px;
+      margin-top: -2px;
+      color: #443183;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    .bottom input:hover{
+      background-color: #0088A8;
+      text-decoration: underline;
+    }
+    .bottom ul{
+      list-style-type: none;
+      margin-left: 489.5px;
+      padding: 0px;
+      margin-bottom: -6px;
+      overflow: hidden;
+      background-color: #8DAABD;
+      display: inline-block;
+      font-size: 20px;
+      width: 700px;
+      margin-top: 60px;
+      border-radius: 5px;
+      height: 50px;
+    }
+    .bottom li {
+        float: left;
+        margin-left: 3px;
+        margin-top: 5px;
+        height: 45px;
+    }
+    .bottom li a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 11px;
+        text-decoration: none;
+    }
+    .bottom li a:hover {
+        background-color: #0088A8;
+    }  
+    .bottom a:hover {
+      text-decoration: underline;
+    }
+    .bottom .active input{
+      color: white;
+      background-color: #443183;
+    }
+    #search{
+      margin-top: 15px;
+      margin-left: 6px;
+    }
+    .container li {
+        float: left;
+        margin-left: -5px;
+    }
+    .container li a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 11px;
+        text-decoration: none;
+    }
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    .none a{
+      color: #000000;
+    }
+    .container li a:hover {
+        background-color: #0088A8;
+    }
+    .active a{
+      background-color: #443183;
+      color: #ffffff;
+    }    
+    .container a:hover {
+                text-decoration: underline;
+    }
+    html{
+      overflow-x: hidden;
+      background-image: url("http://localhost:8000/loginBackground.png"); 
+      font-family: 'Roboto', sans-serif;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -10px;
+      box-shadow: 5px 6px 5px #888888;
+    }
+    #logo {
+      margin-top: -60px;
+      margin-bottom: -70px;
+      margin-left: -10px;
+    }
+    #content{
+      background-color: #FAF7F7;
+      /* margin-right: 155px; */
+      margin-left: 150px;
+      margin-top: -35px;
+      border-radius: 5px;
+      border: 7px solid #8DAABD;
+      box-shadow: 3px 4px 15px;
+      width: 1025px;
+    }
+    .question{
+      background-color: #C7C1E0;
+      border-left: 5px solid #443183;
+      margin-left: 70px;
+      margin-right: 70px;
+    }
+    .response{
+      background-color: #d9d9db;
+      border-left: 5px solid #888888;
+      margin-top: -23px;
+      margin-left: 70px;
+      margin-right: 70px;
+    }
+    .q{
+      padding-bottom: 15px;
+      margin-top: -10px;
+      margin-left: 20px;
+      font-size: 20px;
+    }
+    .date{
+      float: right;
+      margin-top: -43px;
+      margin-right: 10px;
+    }
+    .viewProfile{
+      float: right;
+      margin-top: -46px;
+      margin-right: 334px;
+      color: #443183;
+      background-color: #8DAABD;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .title{
+      font-size: 22px;
+      font-weight: bold;
+      margin-left: 5px;
+      padding-top: 10px;
+    }
+    .replyButton{
+      float: right;
+      margin-top: -70px;
+      margin-right: 80.5px;
+    }
+    .this{
+      color: #443183;
+      background-color: #8DAABD;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .reply{
+      padding-bottom: 15px;
+      margin-top: -10px;
+      margin-left: 20px;
+      font-size: 20px;
+    }
+    .bold{
+      font-weight: bold;
+      font-size: 22px;
+      margin-left: 5px;
+      padding-top: 10px;
+    }
+    #newQ{
+      margin-top: 25px;
+      margin-left: 70px;
+    }
+    #newQ .textInput{
+      width: 705px;
+      font-size: 18px;
+    }
+    .centre{
+        text-align: center;
+    }
+    #newQ .this{
+      font-size: 18px;
+      height: 28px;
+    }
     </style>
 </html>

@@ -7,117 +7,235 @@
 
 <body>
 
+  <div id="logoBanner">
+    <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
     <div class="container">
         <ul>
-         <li><a href="home_page.html">Home</a></li>
-         <li><a href="myFeed_page.html">My Feed</a></li>
-         <li><a href="posts_page.html">Posts</a></li>
-         <li><a href="professional_page.html">Meet Professionals</a></li>
+         <li class="none"><a href="home_page.html">Home</a></li>
+         <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+         <li class="none"><a href="posts_page.html">Posts</a></li>
+         <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
          <li class="active"><a href="profile_page.html">Profile</a></li>
-         <li><a href="tips_page.html">Tips & Templates</a></li>
-         <li><a href="survey.html">Feedback</a></li>
-         <li><a href="logOut_page.html">Log Out</a></li>
-         <li><form action="/userSearch.html">
-            <input class="textInput" type="text" id="search" name="search" placeholder="Search...">
+         <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+         <li class="none"><a href="survey.html">Feedback</a></li>
+         <li class="none"><a href="logOut_page.html">Log Out</a></li>
+         <li class="none"><form action="/userSearch.html">
+            <input type="text" id="search" name="search" placeholder="Search...">
             <input id="submitButton" type="submit" value="Submit">
         </form></li>
         </ul>
-     </div>
+    </div>
+  </div>
+     
 
-<div class="container">
+<div class="bottom">
   <ul>
     <li class="active"><a href="profile_page.html">My Profile</a></li>
-    <li><a href="savedPosts_page.html">Saved Posts</a></li>
+    <li class="none2"><a href="savedPosts_page.html">Saved Posts</a></li>
   </ul>
 </div>
 
 <div id="content">
+  <div id="border">
   <div id="picture">
- <img style="width: 400px; height: 400px" src="http://localhost:8000/${imagename}" alt="default photo"> <br><br>
-
+ <img src="http://localhost:8000/${imagename}" alt="default photo"> <br><br>
+  
 <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" accept="image/*" name="photo" >
         <input type="submit" value="upload" name="thisname"> 
       </form>  
-</div>
+    </div>
 
 <div id="profileInfo">
   <form action="/profile_update.html">
-              
-              <label>First name:</label>
-              <input type="text" name="firstname" value="${firstname}">
-              <label>Last name:</label>
-              <input type="text" name="lastname" value="${lastname}">
-              <label>Username:</label>
-              <input type="text" name="username" value="${username}">
-              <label>Password:</label>
-              <input type="text" name="password" value="${password}">
-              <label>Email:</label>
-              <input type="text" name="email" value="${email}">
-              <label>School/Place of Work:</label>
-              <input type="text" name="school" value="${school}">
-              <!-- <label>Bio:</label>
-              <input type="text" name="bio" style="width: 180px; height: 100px" value="${bio}"> -->
-              <!-- <textarea name="bio" rows="4" cols="50" id="bio" value="${bio}">Tell us a bit about yourself...</textarea> -->
-              <label>Account Type: </label>
-              <input type="text" name="accountType" value="${accountType}" readonly="readonly">
-
-              <!-- <label name="accountType" value="${accountType}">Account Type: ${accountType}</label> -->
-              <!-- <select id="accountType" name="accountType" value="${accountType}">
-                <option value="student">Student</option>
-                <option value="employer">Employer</option>
-            </select> -->
+              <div id="colOne">
+                <label>First name:</label><br>
+                <input class="textInput" type="text" name="firstname" value="${firstname}"><br><br>
+                <label>Last name:</label><br>
+                <input class="textInput" type="text" name="lastname" value="${lastname}"><br><br>
+                <label>Username:</label><br>
+                <input class="textInput" type="text" name="username" value="${username}"><br><br>
+              </div>
+              <div id="colTwo">
+                <label>Password:</label><br>
+                <input class="textInput" type="text" name="password" value="${password}"><br><br>
+                <label>Email:</label><br>
+                <input class="textInput" type="text" name="email" value="${email}"><br><br>
+                <label>School/Place of Work:</label><br>
+                <input class="textInput" type="text" name="school" value="${school}"><br><br>
+                <label>Account Type: </label>
+                <input id="accountType" type="text" name="accountType" value="${accountType}" readonly="readonly">
+              </div>
               <input id="updateButton" type="submit" value="Update">
               <p>${message}</p>
   </form>
 </div>
 </div>
+</div>
 
 </body>
-              
-
 
 <style>
-    ul {
-        list-style-type: none;
-        margin-left: -10px;
-        padding: 0px;
-        overflow: hidden;
-        background-color: #212121;
-        display: inline-block;
-        font-size: 20px;
-        width: 1370px;
+  
+    .class2{
+      color: #443183;
     }
-    
-    li {
+    html{
+      overflow-x: hidden;
+      background-image: url("http://localhost:8000/loginBackground.png"); 
+      font-family: 'Roboto', sans-serif;
+    }
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    #accountType{
+      border: 1.5px solid #FAF7F7;
+      background-color: #FAF7F7;
+      float: right;
+      font-size: 25px;
+      width: 170px;
+      font-family: 'Times New Roman', 'Times', serif;
+    }
+    #colTwo{
+      margin-left: 505px;
+      margin-top: -237px;
+    }
+    #colOne{
+      margin-left: 160px;
+      margin-top: -300px;
+    }
+    #search{
+      margin-top: 15px;
+      margin-left: 6px;
+    }
+    #picture img{
+      width: 300px; 
+      height:300px;
+      margin-left: 30px;
+      margin-top: 30px;
+    }
+    #picture form{
+      margin-left: 25px;;
+    }
+    #border{
+      border: 2.5px solid #443183;
+    }
+    #updateButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      margin-left: 650px;
+      margin-bottom: 20px;
+    }
+    .textInput{
+      border: 1.5px solid #929292;
+      background-color: #e2e2e2;
+      margin-left: 200px;
+      font-size: 25px;
+      font-family: 'Times New Roman', 'Times', serif;
+    }
+    #accountType{
+      font-size: 23px;
+      margin-left: 340px;
+      margin-top: -29px;
+    }
+    label{
+      font-size: 23px;
+      margin-left: 200px;
+    }
+    #content{
+      background-color: #FAF7F7;
+      margin-right: 152px;
+      margin-left: 150px;
+      margin-top: -4px;
+      border-radius: 5px;
+      border: 7px solid #8DAABD;
+      box-shadow: 3px 4px 15px;
+    }
+    .bottom ul{
+      list-style-type: none;
+      margin-left: 500px;
+      padding: 0px;
+      margin-bottom: -4px;
+      overflow: hidden;
+      background-color: #8DAABD;
+      display: inline-block;
+      font-size: 20px;
+      width: 700px;
+      margin-top: 100px;
+      border-radius: 5px;
+      height: 50px;
+    }
+    .bottom li {
         float: left;
-        margin-left: 32.5px;
+        margin-left: 3px;
+        margin-top: 5px;
+        height: 45px;
     }
-    
-    li a {
+    .bottom li a {
         display: inline-block;
-        color: white;
         text-align: center;
         padding: 14px 11px;
         text-decoration: none;
     }
-    
-    li a:hover {
+    .bottom li a:hover {
+        background-color: #0088A8;
+    }  
+    .bottom a:hover {
+      text-decoration: underline;
+    }
+    .container ul {
+        list-style-type: none;
+        margin-left: 260px;
+        padding: 0px;
+        margin-bottom: -4px;
+        overflow: hidden;
+        background-color: #FAF7F7;
+        display: inline-block;
+        font-size: 20px;
+        width: 1100px;
+        margin-top: -100px;
+    }
+    .container li {
+        float: left;
+        margin-left: -5px;
+    }
+    .container li a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 11px;
+        text-decoration: none;
+    }
+    .none a{
+      color: #000000;
+    }
+    .container li a:hover {
         background-color: #0088A8;
     }
-    
-    .active {
-                background: #0088A8;
-    }
-    
-    .container {
-                margin-top: -30px;
-                display: inline-block;
-                position: relative;
-    }
-    
+    .active a{
+      background-color: #443183;
+      color: #ffffff;
+    }    
     .container a:hover {
                 text-decoration: underline;
+    }
+    #logoBanner{
+      background-color: #FAF7F7;
+      width: 1370px;
+      margin-left: -10px;
+      margin-top: -10px;
+      box-shadow: 5px 6px 5px #888888;
+    }
+    #logo {
+      margin-top: -60px;
+      margin-bottom: -70px;
+      margin-left: -10px;
     }
 </style>
 </html>
