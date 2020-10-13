@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>About Us</title>
+    </head>
+    <body>
+        <div id="logoBanner">
+            <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <div class="container">
+                <ul>
+                 <li class="none"><a href="home_page.html">Home</a></li>
+                 <li class="none"><a href="myFeed_page.html">My Feed</a></li>
+                 <li class="none"><a href="posts_page.html">Posts</a></li>
+                 <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
+                 <li class="none"><a href="profile_page.html">Profile</a></li>
+                 <li class="none"><a href="tips_page.html">Tips</a></li>
+                 <li class="active"><a href="about_page.html">About Us</a></li>
+                 <li class="none"><a href="survey.html">Feedback</a></li>
+                 <li class="none"><a href="logOut_page.html">Log Out</a></li>
+                 <li class="none"><form action="/userSearch.html">
+                    <input type="text" id="search" name="search" placeholder="Search...">
+                    <input id="submitButton" type="submit" value="Submit">
+                </form></li>
+                </ul>
+            </div>
+          </div>
+
+        <br>
+
+        
+    </body>
+    <style>
+         .container ul {
+          list-style-type: none;
+          margin-left: 260px;
+          padding: 0px;
+          margin-bottom: -4px;
+          overflow: hidden;
+          background-color: #FAF7F7;
+          display: inline-block;
+          font-size: 20px;
+          width: 1100px;
+          margin-top: -100px;
+      }
+      .container li {
+          float: left;
+          margin-left: -5px;
+      }
+      .container li a {
+          display: inline-block;
+          text-align: center;
+          padding: 14px 11px;
+          text-decoration: none;
+      }
+      .container #submitButton{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 15px;
+      }
+      .none a{
+        color: #000000;
+      }
+      .container li a:hover {
+          background-color: #0088A8;
+      }
+      .active a{
+        background-color: #443183;
+        color: #ffffff;
+      }    
+      .container a:hover {
+                  text-decoration: underline;
+      }
+      .container #submitButton{
+        color: #443183;
+        background-color: #c7c1e0;
+        border: 1px solid #443183; 
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 15px;
+      }
+      html{
+        background-image: url("http://localhost:8000/loginBackground.png"); 
+        font-family: 'Roboto', sans-serif;
+      }
+      #logoBanner{
+        background-color: #FAF7F7;
+        width: 1370px;
+        margin-left: -10px;
+        margin-top: -10px;
+        box-shadow: 5px 6px 5px #888888;
+      }
+      #logo {
+        margin-top: -60px;
+        margin-bottom: -70px;
+        margin-left: -10px;
+      }
+      #search{
+        margin-top: 15px;
+        margin-left: 6px;
+      }
+      .centre{
+          text-align: center;
+      }
+      </style>
+</html>

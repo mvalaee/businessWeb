@@ -16,7 +16,8 @@
          <li class="none"><a href="posts_page.html">Posts</a></li>
          <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
          <li class="active"><a href="profile_page.html">Profile</a></li>
-         <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+         <li class="none"><a href="tips_page.html">Tips</a></li>
+         <li class="none"><a href="about_page.html">About Us</a></li>
          <li class="none"><a href="survey.html">Feedback</a></li>
          <li class="none"><a href="logOut_page.html">Log Out</a></li>
          <li class="none"><form action="/userSearch.html">
@@ -26,64 +27,171 @@
         </ul>
     </div>
   </div>
+     
 
-     <div class="bottom">
-        <ul>
-          <li class="active"><a href="profile_page.html">My Profile</a></li>
-          <li class="none"><a href="savedPosts_page.html">Saved Posts</a></li>
-          <li class="none"><form action="/myPosts_page.html">
-            <input type="hidden" name="name" value="cruella">
-            <input type="submit" value="Opportunities Posted"></form>
-            </li>
-          <li class="none"><form action="/wall_page.html">
-            <input type="hidden" name="name" value="cruella">
-            <input type="submit" value="Q&A Wall"></form>
-            </li>
-        </ul>
-      </div>
+<div class="bottom">
+  <ul>
+    <li class="active"><a href="profile_page.html">My Profile</a></li>
+    <li class="none2"><a href="savedPosts_page.html">Saved Posts</a></li>
+  </ul>
+</div>
 
 <div id="content">
+  <div id="border">
   <div id="picture">
  <img src="http://localhost:8000/avatar.jpg" alt="default photo"> <br><br>
-
+  
 <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" accept="image/*" name="photo" >
         <input type="submit" value="upload" name="thisname"> 
       </form>  
-</div>
+    </div>
 
 <div id="profileInfo">
   <form action="/profile_update.html">
               <div id="colOne">
                 <label>First name:</label><br>
-                <input class="textInput" type="text" name="firstname" value="Cruella"><br><br>
+                <input class="textInput" type="text" name="firstname" value="Melissa"><br><br>
                 <label>Last name:</label><br>
-                <input class="textInput" type="text" name="lastname" value="De Vil"><br><br>
+                <input class="textInput" type="text" name="lastname" value="Valaee"><br><br>
                 <label>Username:</label><br>
-                <input class="textInput" type="text" name="username" value="cruella"><br><br>
+                <input class="textInput" type="text" name="username" value="mvalaee"><br><br>
               </div>
               <div id="colTwo">
                 <label>Password:</label><br>
                 <input class="textInput" type="text" name="password" value="password"><br><br>
                 <label>Email:</label><br>
-                <input class="textInput" type="text" name="email" value="cruella@gmail.com"><br><br>
+                <input class="textInput" type="text" name="email" value="mvalaee@bayviewglen.ca"><br><br>
                 <label>School/Place of Work:</label><br>
-                <input class="textInput" type="text" name="school" value="Dragon Hall"><br><br>
+                <input class="textInput" type="text" name="school" value="Bayview Glen"><br><br>
                 <label>Account Type: </label>
-                <input type="text" id="accountType" name="accountType" value="employer" readonly="readonly"><br>
+                <input id="accountType" type="text" name="accountType" value="student" readonly="readonly">
               </div>
               <input id="updateButton" type="submit" value="Update">
               <p></p>
   </form>
 </div>
 </div>
-
+</div>
 
 </body>
 
 <style>
-
-   .container ul {
+  
+    .class2{
+      color: #443183;
+    }
+    html{
+      overflow-x: hidden;
+      background-image: url("http://localhost:8000/loginBackground.png"); 
+      font-family: 'Roboto', sans-serif;
+    }
+    .container #submitButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 15px;
+    }
+    #accountType{
+      border: 1.5px solid #FAF7F7;
+      background-color: #FAF7F7;
+      float: right;
+      font-size: 25px;
+      width: 170px;
+      font-family: 'Times New Roman', 'Times', serif;
+    }
+    #colTwo{
+      margin-left: 505px;
+      margin-top: -237px;
+    }
+    #colOne{
+      margin-left: 160px;
+      margin-top: -300px;
+    }
+    #search{
+      margin-top: 15px;
+      margin-left: 6px;
+    }
+    #picture img{
+      width: 300px; 
+      height:300px;
+      margin-left: 30px;
+      margin-top: 30px;
+    }
+    #picture form{
+      margin-left: 25px;;
+    }
+    #border{
+      border: 2.5px solid #443183;
+    }
+    #updateButton{
+      color: #443183;
+      background-color: #c7c1e0;
+      border: 1px solid #443183; 
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      margin-left: 650px;
+      margin-bottom: 20px;
+    }
+    .textInput{
+      border: 1.5px solid #929292;
+      background-color: #e2e2e2;
+      margin-left: 200px;
+      font-size: 25px;
+      font-family: 'Times New Roman', 'Times', serif;
+    }
+    #accountType{
+      font-size: 23px;
+      margin-left: 340px;
+      margin-top: -29px;
+    }
+    label{
+      font-size: 23px;
+      margin-left: 200px;
+    }
+    #content{
+      background-color: #FAF7F7;
+      margin-right: 152px;
+      margin-left: 150px;
+      margin-top: -4px;
+      border-radius: 5px;
+      border: 7px solid #8DAABD;
+      box-shadow: 3px 4px 15px;
+    }
+    .bottom ul{
+      list-style-type: none;
+      margin-left: 500px;
+      padding: 0px;
+      margin-bottom: -4px;
+      overflow: hidden;
+      background-color: #8DAABD;
+      display: inline-block;
+      font-size: 20px;
+      width: 700px;
+      margin-top: 100px;
+      border-radius: 5px;
+      height: 50px;
+    }
+    .bottom li {
+        float: left;
+        margin-left: 3px;
+        margin-top: 5px;
+        height: 45px;
+    }
+    .bottom li a {
+        display: inline-block;
+        text-align: center;
+        padding: 14px 11px;
+        text-decoration: none;
+    }
+    .bottom li a:hover {
+        background-color: #0088A8;
+    }  
+    .bottom a:hover {
+      text-decoration: underline;
+    }
+    .container ul {
         list-style-type: none;
         margin-left: 260px;
         padding: 0px;
@@ -95,132 +203,6 @@
         width: 1100px;
         margin-top: -100px;
     }
-    #updateButton{
-      color: #443183;
-      background-color: #c7c1e0;
-      border: 1px solid #443183; 
-      font-family: 'Times New Roman', Times, serif;
-      font-size: 20px;
-      margin-left: 650px;
-      float: right;
-      margin-bottom: 20px;
-      margin-top: -60px;
-      margin-right: 265px;
-    }
-    #accountType{
-      border: 1.5px solid #FAF7F7;
-      background-color: #FAF7F7;
-      float: right;
-      font-size: 25px;
-      width: 170px;
-      font-family: 'Times New Roman', 'Times', serif;
-    }
-    label{
-      font-size: 23px;
-      margin-left: 200px;
-    }
-    #content{
-      background-color: #FAF7F7;
-      margin-right: 162px;
-      margin-left: 175px;
-      margin-top: -4px;
-      border-radius: 5px;
-      border: 7px solid #8DAABD;
-      box-shadow: 3px 4px 15px;
-    }
-    .bottom input{
-      background-color: #8DAABD;
-      border: 1.5px solid #8DAABD;
-      font-size: 20px;
-      margin-top: -2px;
-      color: #443183;
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-    .bottom input:hover{
-      background-color: #0088A8;
-      text-decoration: underline;
-    }
-    .bottom ul{
-      list-style-type: none;
-      margin-left: 489.5px;
-      padding: 0px;
-      margin-bottom: -6px;
-      overflow: hidden;
-      background-color: #8DAABD;
-      display: inline-block;
-      font-size: 20px;
-      width: 700px;
-      margin-top: 60px;
-      border-radius: 5px;
-      height: 50px;
-  
-    }
-    .bottom li {
-        float: left;
-        margin-left: 3px;
-        margin-top: 5px;
-        height: 45px;
-    }
-    .none{
-      color: black;
-    }
-    .bottom input{
-      color: black;
-    }
-    .bottom li a {
-        display: inline-block;
-        text-align: center;
-        padding: 14px 11px;
-        text-decoration: none;
-        
-    }
-    .bottom li a:hover {
-        background-color: #0088A8;
-    }  
-    .bottom a:hover {
-      text-decoration: underline;
-    }
-    .textInput{
-      border: 1.5px solid #929292;
-      background-color: #e2e2e2;
-      margin-left: 200px;
-      font-size: 25px;
-      font-family: 'Times New Roman', 'Times', serif;
-      width: 270px;
-    }
-    #colTwo{
-      /* margin-left: 500px; */
-      margin-top: -350px;
-      margin-right: 20px;
-      float: right;
-      z-index: 1;
-    }
-    #colOne{
-      margin-right: 310px;
-      margin-top: -350px;
-      float: right;
-    }
-    #search{
-      margin-top: 15px;
-      margin-left: 6px;
-    }
-    #picture img{
-      width: 300px; 
-      height:300px;
-      margin-left: 40px;
-      margin-top: 30px;
-    }
-    #picture form{
-      margin-left: 30px;
-    }
-    #accountType{
-      font-size: 23px;
-      /* margin-left: 305px; */
-      margin-top: -2px;
-      margin-right: 10px;
-      width: 100px;
-    }
     .container li {
         float: left;
         margin-left: -5px;
@@ -230,13 +212,6 @@
         text-align: center;
         padding: 14px 11px;
         text-decoration: none;
-    }
-    .container #submitButton{
-      color: #443183;
-      background-color: #c7c1e0;
-      border: 1px solid #443183; 
-      font-family: 'Times New Roman', Times, serif;
-      font-size: 15px;
     }
     .none a{
       color: #000000;
@@ -250,11 +225,6 @@
     }    
     .container a:hover {
                 text-decoration: underline;
-    }
-    html{
-      overflow-x: hidden;
-      background-image: url("http://localhost:8000/loginBackground.png"); 
-      font-family: 'Roboto', sans-serif;
     }
     #logoBanner{
       background-color: #FAF7F7;

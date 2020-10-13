@@ -9,9 +9,10 @@ var fs = require('fs');
 const multer = require('multer');
 var nodemailer = require('nodemailer');
 const { brotliDecompress } = require('zlib');
+const { ADDRGETNETWORKPARAMS } = require('dns');
 
 const PORT = 8000;
-const __dir = "/Users/mvalaee/ICS workspaces/newBusinessPlanPWA";
+const __dir = "/Users/mvalaee/ICS workspaces/newBusinessPlanPWA - Copy";
 const upload = multer({dest: __dir + '/images'});
 app.use(express.static(__dir + '/images'));
 app.use(cookieParser());
@@ -23,6 +24,7 @@ const DB_NAME = 'NEWACCOUNTDB';
 const ACCOUNT_COLLECTION = 'usernames';
 const POST_COLLECTION = 'titles';
 const QUESTION_COLLECTION = 'questions';
+const TIPS_COLLECTION = 'tips';
 
 const COOKIE_EXPIRY_TIME = 60 * 60 *1000;
 
@@ -108,13 +110,13 @@ app.route('/email_check.html').get(function(req, res){
 				var transporter = nodemailer.createTransport({
 					service: 'gmail',
 					auth: {
-					user: 'osstia.helpdesk@gmail.com',
-					pass: 'helpdesk1'
+					user: 'support@osstia.com',
+					pass: 'support@osstia1'
 					}
 				});
 
 				var mailOptions = {
-					from: 'osstia.helpdesk@gmail.com',
+					from: 'support@osstia.com',
 					to: email,
 					subject: 'OSSTIA Password Reset Key',
 					text: 'This is your verification key: ' + key
@@ -1448,8 +1450,8 @@ app.route('/askingWall.html').get(function(req, res){
 								var transporter = nodemailer.createTransport({
 									service: 'gmail',
 									auth: {
-									user: 'osstia.helpdesk@gmail.com',
-									pass: 'helpdesk1'
+									user: 'support@osstia.com',
+									pass: 'support@osstia1'
 									}
 								});
 										  
@@ -1458,7 +1460,7 @@ app.route('/askingWall.html').get(function(req, res){
 
 									if(profile){
 										var mailOptions = {
-											from: 'osstia.helpdesk@gmail.com',
+											from: 'support@osstia.com',
 											to: result.email,
 											subject: 'New Post On Your Wall',
 											text: profile.firstname + " " + profile.lastname + " posted on your wall: \n" + question
@@ -1526,13 +1528,13 @@ app.route('/replyWall.html').get(function(req, res){
 											var transporter = nodemailer.createTransport({
 												service: 'gmail',
 												auth: {
-												user: 'osstia.helpdesk@gmail.com',
-												pass: 'helpdesk1'
+												user: 'support@osstia.com',
+												pass: 'support@osstia1'
 												}
 											});
 		
 											var mailOptions = {
-												from: 'osstia.helpdesk@gmail.com',
+												from: 'support@osstia.com',
 												to: emailer.email,
 												subject: currProfile.firstname + ' ' + currProfile.lastname + ' Responded To Your Question',
 												text: currProfile.firstname + " " + currProfile.lastname + " posted on your wall: \nYour question: " + result.question + "\nReply: " + reply
@@ -1574,7 +1576,22 @@ app.route('/replyWall.html').get(function(req, res){
 
 app.route('/tips_page.html').get(function(req, res){
 	// createPage('tips_template.html', 'tips.html', )
-	res.sendFile(__dir + '/tips.html');
+	getTips((arr)=> {
+			createTipsPage('tips_template.html', 'tips.html', arr, () => {
+				res.sendFile(__dir + '/tips.html');
+			})
+		}
+	);
+	// getTips(num2Tip(), res);
+	// getTips((arr) => {
+	// 	createTipsPage('tips_template.html', 'tips.html', arr, () => {
+	// 		res.sendFile(__dir + '/tips.html');
+	// 	})
+	// });	
+});
+
+app.route('/about_page.html').get(function(req, res){
+	res.sendFile(__dir+'/aboutUs.html');
 });
 
 app.route('/survey.html').get(function(req, res){
@@ -1609,14 +1626,14 @@ app.route('/surveying.html').get(function(req, res){
 									var transporter = nodemailer.createTransport({
 										service: 'gmail',
 										auth: {
-										user: 'osstia.helpdesk@gmail.com',
-										pass: 'helpdesk1'
+										user: 'support@osstia.com',
+										pass: 'support@osstia1'
 										}
 									});
 
 									var mailOptions = {
-										from: 'osstia.helpdesk@gmail.com',
-										to: 'osstia.helpdesk@gmail.com',
+										from: 'support@osstia.com',
+										to: 'support@osstia1',
 										subject: 'FeedBack: Sending Email using Node.js',
 										text: message
 									};
@@ -2969,6 +2986,48 @@ function getDate() {
     return d;
 }
 
+function getTips(callback){
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		if (err) return console.log(err);
+		var ints = [];
+		var titles = [];
+		var dbc = client.db(DB_NAME).collection(TIPS_COLLECTION);
+		dbc.countDocuments().then((count) => {
+			for(let i = 0; i < 6;){
+				var randNum = Math.floor(Math.random() * count);
+				if(ints.includes(randNum) === false){
+					ints.push(randNum);
+					i++;
+				}
+				console.log(ints);
+				if(i === 5){
+					titlesName(ints, titles, callback);
+				}
+			}
+		});
+	});
+}
+
+function titlesName(ints, arr, callback){
+	MongoClient.connect(DB_URL, { useUnifiedTopology: true }, (err, client) => {
+		if (err) return console.log(err);
+		var dbc = client.db(DB_NAME).collection(TIPS_COLLECTION);
+		for(let j = 0; j < ints.length; j++){
+			dbc.findOne({num: ints[j]}, function(error, result){
+				if (error) return console.log(error);
+				if(result){
+					console.log(result);
+					arr.push(result.text);
+					console.log("ARR: " + arr);
+					if(j === ints.length-1){
+						callback(arr);
+					}
+				}
+			});
+		}
+	});
+}
+
 ///////////////////////////////////////////
 // functions used for sending html files //
 ///////////////////////////////////////////
@@ -3093,33 +3152,23 @@ function createMyPostsPage(inputFile, outputFile, str, profile, callback){
   	}); 
 }
 
-function createQuestionPage(inputFile, outputFile, myObj, callback){
+function createTipsPage(inputFile, outputFile, myObj, callback){
 	var data = fs.readFile(inputFile, function(err, data) {
 		if(err) throw (err);
         
-        console.log(myObj);
+        // console.log(myObj);
 
     	var str = data.toString();
-    	// var imagePath = __dir + "/images/" + myObj[5];
-    	// var imageFileName;
-
-    	// if (fs.existsSync(imagePath)) {
-    	// 	console.log("file exists")
-    	// 	imageFileName = myObj[5];
-    	// } else {
-    	// 	console.log("file does not exsit")
-    	// 	imageFileName = "avatar.jpg";
-		// }
-		
-		console.log(myObj);
+		// console.log(myObj);
     	
-	   var str0 =  str.replace('${to}', myObj[0]);  		
-	   var str1 = str0.replace('${from}', myObj[1]);
-	   var str2 = str1.replace('${value}' , myObj[0]);
-	   var str3 = str2.replace('${myPosts}', myObj[0]);
-	   var str4 = str3.replace('${profile}', myObj[0]);
+	   var str0 =  str.replace('$one', myObj[0]);  		
+	   var str1 = str0.replace('$two', myObj[1]);
+	   var str2 = str1.replace('$three' , myObj[2]);
+	   var str3 = str2.replace('$four', myObj[3]);
+	   var str4 = str3.replace('$five', myObj[4]);
+	   var str5 = str4.replace('$six', myObj[5]);
     	
-    	fs.writeFile(outputFile, str4,  function (err) {
+    	fs.writeFile(outputFile, str5,  function (err) {
 		 	if (err) throw err;
 			callback();
 		});
