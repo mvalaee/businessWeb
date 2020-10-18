@@ -8,7 +8,7 @@
 <body>
 
   <div id="logoBanner">
-    <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+    <a href="home_page.html"><img id="logo" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
     <div class="container">
         <ul>
          <li class="none"><a href="home_page.html">Home</a></li>
@@ -16,7 +16,8 @@
          <li class="none"><a href="posts_page.html">Posts</a></li>
          <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
          <li class="active"><a href="profile_page.html">Profile</a></li>
-         <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+         <li class="none"><a href="tips_page.html">Tips</a></li>
+         <li class="none"><a href="about_page.html">About Us</a></li>
          <li class="none"><a href="survey.html">Feedback</a></li>
          <li class="none"><a href="logOut_page.html">Log Out</a></li>
          <li class="none"><form action="/userSearch.html">
@@ -32,17 +33,17 @@
           <li><a href="profile_page.html">My Profile</a></li>
           <li><a href="savedPosts_page.html">Saved Posts</a></li>
           <li><form action="/myPosts_page.html">
-            <input type="hidden" name="name" value="cruella">
+            <input type="hidden" name="name" value="mazadeh">
             <input type="submit" value="Opportunities Posted"></form>
             </li>
           <li class="active"><form action="/wall_page.html">
-            <input type="hidden" name="name" value="cruella">
+            <input type="hidden" name="name" value="mazadeh">
             <input type="submit" value="Q&A Wall"></form>
             </li>
         </ul>
       </div>
 
-<p><div id='content'><form id='newQ' action='/askingWall.html'><input type='hidden' id='to' name='to' value='cruella' required><input type='hidden' id='from' name='from' value='cruella' required><input class='textInput' type='text' id='question' name='question' placeholder='Ask a question...' required><input class='this' type='submit' value='Ask A New Question'></form><div class='post'><div class='question'><p class='title'>Melissa Valaee (mvalaee) asked a question</p><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='mvalaee'><input type='submit' class='viewProfile' value='View Profile'></form><p class='date'> Date: Tue Sep 8 2020 15:48 </p><p class='q'>I have a question</p></div><div class='response'><p class='bold'>Reply: </p><p class='reply'>This is my response</p></div></div></div></p>
+<p><div id='content'><form id='newQ' action='/askingWall.html'><input type='hidden' id='to' name='to' value='mazadeh' required><input type='hidden' id='from' name='from' value='mazadeh' required><input class='textInput' type='text' id='question' name='question' placeholder='Ask a question...' required><input class='this' type='submit' value='Ask A New Question'></form><p class='centre'>There are no questions on this wall</p></div></p>
 
 </body>
               
@@ -146,6 +147,7 @@
                 text-decoration: underline;
     }
     html{
+      overflow-x: hidden;
       background-image: url("http://localhost:8000/loginBackground.png"); 
       font-family: 'Roboto', sans-serif;
     }
@@ -155,11 +157,15 @@
       margin-left: -10px;
       margin-top: -10px;
       box-shadow: 5px 6px 5px #888888;
+      height: 105px;
     }
     #logo {
-      margin-top: -60px;
+      margin-top: 10px;
       margin-bottom: -70px;
-      margin-left: -10px;
+    }
+    .container{
+      margin-left: 20px;
+      margin-top: 42.5px;
     }
     #content{
       background-color: #FAF7F7;

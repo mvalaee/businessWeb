@@ -8,7 +8,7 @@
 <body>
 
     <div id="logoBanner">
-        <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+        <a href="home_page.html"><img id="logo" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
         <div class="container">
             <ul>
              <li class="none"><a href="home_page.html">Home</a></li>
@@ -16,7 +16,8 @@
              <li class="none"><a href="posts_page.html">Posts</a></li>
              <li class="none"><a href="professional_page.html">Meet Professionals</a></li>
              <li class="active"><a href="profile_page.html">Profile</a></li>
-             <li class="none"><a href="tips_page.html">Tips & Templates</a></li>
+             <li class="none"><a href="tips_page.html">Tips</a></li>
+             <li class="none"><a href="about_page.html">About Us</a></li>
              <li class="none"><a href="survey.html">Feedback</a></li>
              <li class="none"><a href="logOut_page.html">Log Out</a></li>
              <li class="none"><form action="/userSearch.html">
@@ -32,11 +33,11 @@
               <li><a href="profile_page.html">My Profile</a></li>
               <li><a href="savedPosts_page.html">Saved Posts</a></li>
               <li class="active"><form action="/myPosts_page.html">
-                <input type="hidden" name="name" value="cruella">
+                <input type="hidden" name="name" value="mazadeh">
                 <input type="submit" value="Opportunities Posted"></form>
                 </li>
               <li><form action="/wall_page.html">
-                <input type="hidden" name="name" value="cruella">
+                <input type="hidden" name="name" value="mazadeh">
                 <input type="submit" value="Q&A Wall"></form>
                 </li>
             </ul>
@@ -83,15 +84,15 @@
         <input class="textInput" type="text" id="city" name="city" placeholder="City">
         <label for="country">Country: </label>
         <input class="textInput" type="text" id="country" name="country" placeholder="Country">
-        <input type="hidden" name="profile" value="cruella">
+        <input type="hidden" name="profile" value="mazadeh">
         <input id="submitButton" type="submit" value="Submit">
     </form>
     <br>
     <form action="/myPosts_seeAll.html">
-        <button id="seeAllButton" name="profile" value="cruella">See all posts</button>
+        <button id="seeAllButton" name="profile" value="mazadeh">See all posts</button>
     </form>
 </div>
-<p><form action='/create_post.html'><button id='newPostButton' value='newPost'>Create a New Post</button></form><table><tr><td><div class='post'><p class='name'>Cruella De Vil</p><p class='username'>cruella</p><p class='title'> First Post</p><p class='description'>ertghj</p><p class='address'><span class='color'>Address:</span> 271 Empress avenue, Toronto, Canada, M2N3V2</p><p class='age'><span class='color'>Minimum Age:</span> 13</p><p class='supervisor'><span class='color'>Supervisor:</span> EMERSON</p><p class='contactInfo'><span class='color'>Contact Information:</span> fasgfhg</p><p class='oppType'>Volunteer</p><p class='discipline'><span class='color'>Discipline:</span> math</p><p class='virt'><span class='color'>Virtual/In Person:</span> Virtual</p><p class='date'>Fri Sep 25 2020 10:24 </p><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='cruella'><input class='viewProfile' type='submit' value='View Profile'></form><form action='/deletePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='PO1601043884549'><input class='deletePost' type='submit' value='Delete Post'></form><form action='/savePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='PO1601043884549'><input class='savePost' type='submit' value='Save Post'></form></div></td></tr></table></p>
+<p><form action='/create_post.html'><button id='newPostButton' value='newPost'>Create a New Post</button></form><table><tr><td><div class='post'><p class='name'>Min Azadeh</p><p class='username'>mazadeh</p><p class='title'> Boom boom room</p><p class='description'>ygo</p><p class='address'><span class='color'>Address:</span> underworld, underworld, Greece, Olympus</p><p class='age'><span class='color'>Minimum Age:</span> 16</p><p class='supervisor'><span class='color'>Supervisor:</span> khfjfhgckv</p><p class='contactInfo'><span class='color'>Contact Information:</span> fgvhl</p><p class='oppType'>Volunteer</p><p class='discipline'><span class='color'>Discipline:</span> medicine</p><p class='virt'><span class='color'>Virtual/In Person:</span> undefined</p><p class='date'>Fri Oct 9 2020 21:56 </p><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='mazadeh'><input class='viewProfile' type='submit' value='View Profile'></form><form action='/deletePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='PO1602295019402'><input class='deletePost' type='submit' value='Delete Post'></form><form action='/savePost.html'><input type='hidden' name='page' value='opp'><input type='hidden' name='post' value='PO1602295019402'><input class='savePost' type='submit' value='Save Post'></form></div></td></tr></table></p>
 
 </body>
 
@@ -155,17 +156,22 @@
       background-image: url("http://localhost:8000/loginBackground.png"); 
       font-family: 'Roboto', sans-serif;
     }
+    .container{
+      margin-left: 20px;
+      margin-top: 42.5px;
+    }
     #logoBanner{
       background-color: #FAF7F7;
       width: 1370px;
       margin-left: -10px;
       margin-top: -10px;
       box-shadow: 5px 6px 5px #888888;
+      height: 105px;
     }
     #logo {
-      margin-top: -60px;
+      margin-top: 10px;
       margin-bottom: -70px;
-      margin-left: -10px;
+      /* margin-left: -10px; */
     }
     .bottom input{
       background-color: #8DAABD;

@@ -8,7 +8,7 @@
 <body>
 
   <div id="logoBanner">
-    <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+    <a href="home_page.html"><img id="logo" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
     <div class="container">
         <ul>
          <li class="none"><a href="home_page.html">Home</a></li>
@@ -56,6 +56,12 @@
                 <input class="textInput" type="text" name="lastname" value="${lastname}"><br><br>
                 <label>Username:</label><br>
                 <input class="textInput" type="text" name="username" value="${username}"><br><br>
+                <label>Resume:</label><br>
+                <form id="resume" action="/uploadResume" method="post" enctype="multipart/form-data">
+                  <input type="file" accept="image/*" name="resume" >
+                  <input type="submit" value="upload" name="thisname"> 
+                </form>  
+              </div>
               </div>
               <div id="colTwo">
                 <label>Password:</label><br>
@@ -232,11 +238,15 @@
       margin-left: -10px;
       margin-top: -10px;
       box-shadow: 5px 6px 5px #888888;
+      height: 105px;
     }
     #logo {
-      margin-top: -60px;
+      margin-top: 10px;
       margin-bottom: -70px;
-      margin-left: -10px;
+    }
+    .container{
+      margin-left: 20px;
+      margin-top: 42.5px;
     }
 </style>
 </html>

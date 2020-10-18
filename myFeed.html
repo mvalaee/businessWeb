@@ -5,7 +5,7 @@
     </head>
     <body>
         <div id="logoBanner">
-            <a href="home_page.html"><img id="logo" style="width: 250px; height: 220px" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
+            <a href="home_page.html"><img id="logo" src="http://localhost:8000/osstiaLogo.png" alt="Osstia Logo"></a>
             <div class="container">
                 <ul>
                  <li class="none"><a href="home_page.html">Home</a></li>
@@ -75,7 +75,7 @@
         </form>
     </div>
 
-        <p><p class='centre'>There are no posts yet</p></p>
+        <p><form action='/create_post.html'><button id='newPostButton' value='newPost'>Create a New Post</button></form><table><tr><td><div class='post'><p class='name'>Cruella De Vil</p><p class='username'>cruella</p><p class='title'> First Post</p><p class='description'>ertghj</p><p class='address'><span class='color'>Address:</span> 271 Empress avenue, Toronto, Canada, M2N3V2</p><p class='age'><span class='color'>Minimum Age:</span> 13</p><p class='supervisor'><span class='color'>Supervisor:</span> EMERSON</p><p class='contactInfo'><span class='color'>Contact Information:</span> fasgfhg</p><p class='oppType'>Volunteer</p><p class='discipline'><span class='color'>Discipline:</span> math</p><p class='virt'><span class='color'>Virtual/In Person:</span> Virtual</p><p class='date'>Fri Sep 25 2020 10:24 </p><form action='/searchedProfile_page.html'><input type='hidden' name='searchedProfile' value='cruella'><input class='viewProfile' type='submit' value='View Profile'></form><form action='/removePost.html'><input type='hidden' name='page' value='feed'><input type='hidden' name='post' value='PO1601043884549'><input class='savePost' type='submit' value='Unsave Post'></form></div></td></tr></table></p>
 
         
     </body>
@@ -135,17 +135,22 @@
       background-image: url("http://localhost:8000/loginBackground.png"); 
       font-family: 'Roboto', sans-serif;
     }
+    .container{
+      margin-left: 20px;
+      margin-top: 42.5px;
+    }
     #logoBanner{
       background-color: #FAF7F7;
       width: 1370px;
       margin-left: -10px;
       margin-top: -10px;
       box-shadow: 5px 6px 5px #888888;
+      height: 105px;
     }
     #logo {
-      margin-top: -60px;
+      margin-top: 10px;
       margin-bottom: -70px;
-      margin-left: -10px;
+      /* margin-left: -10px; */
     }
     #search{
       margin-top: 15px;

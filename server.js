@@ -232,6 +232,7 @@ app.route('/registering_page.html').get(function(req,res){
 							school: school,
 							accountType: aCCountType,
 							imgName: iMgName,
+							resume: iMgName,
 							discipline: discipline,
 							followingList: followingList,
 							savedPosts: savedPosts
